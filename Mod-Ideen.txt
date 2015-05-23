@@ -1,0 +1,17 @@
+Mod ideen:
+
+OC Laserlink:
+	Sichteverbindung nötig, lange strecken, verschieden gute linsen (zB aus Dia-Blocks oder Ähnlichem), Packet-Loss wahrscheinlichkeit höher mit distanz (je nach linsenqualität)
+	Blöcke: Laser Transmitter, Laser Receiver, Laser Tranceiver, Mirror, (Laser HV power supply for better Lasers) -> von allem 3 tiers wie bei OC mit gui um laser, linse und anderes zu tauschen
+	Wenn man auf Augenhöhe durch Laser läuft: Blindness für ein paar sekunden
+	In GUI: Latenz (entfernung), Link qualität (transparente Blöcke verschlechtern die Qualität)
+
+	Link-Check: einmalig alle chunks dazwischen laden und chunks merken wenn link möglich und dann nur bei geladenen chunks erneut prüfen.
+
+OC(+Galacticraft):
+	Sateliten (bei galacticraft ne space-station und von dort weiter zu anderen planeten. ansonsten ein leo satelit)
+	Multiblock struktur für sateliten Antenne (kleinere antenne is schlechteres signal)
+	koax-kabel
+	radio (der interface block für OC. 3 tiers. je nach tier und antenne verschiedene packets/sekunde möglich)
+
+AE2 integration
