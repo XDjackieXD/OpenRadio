@@ -1,0 +1,16 @@
+[
+{
+  "modid": "openradio",
+  "name": "Open Radio",
+  "description": "A mod which adds lasers and satellite communication (when finished :3)",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://chaosfield.at/",
+  "updateUrl": "",
+  "authorList": ["XDjackieXD","Cyborg00222"],
+  "credits": "The Forge and FML guys, for making this example and Sangae for OpenComputers!",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
