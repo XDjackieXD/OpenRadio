@@ -2,6 +2,8 @@ package at.chaosfield.openradio.common.block;
 
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -15,8 +17,8 @@ import net.minecraft.world.World;
  * Created by Jakob Riepler (XDjackieXD)
  */
 public class LaserBlock extends BlockContainer{
-    IIcon sideIcon;
-    IIcon topIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon[] Icons;
 
     public LaserBlock(){
         super(Material.iron);
@@ -30,22 +32,36 @@ public class LaserBlock extends BlockContainer{
         return new LaserTileEntity();
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister register){
-        blockIcon = register.registerIcon(OpenRadio.MODID + ":laserBottom");
-        sideIcon = register.registerIcon(OpenRadio.MODID + ":laserSide");
-        topIcon = register.registerIcon(OpenRadio.MODID + ":laserTop");
+        Icons = new IIcon[6];
+        Icons[0] = register.registerIcon(OpenRadio.MODID + ":laser0");
+        Icons[1] = register.registerIcon(OpenRadio.MODID + ":laser1");
+        Icons[2] = register.registerIcon(OpenRadio.MODID + ":laser2");
+        Icons[3] = register.registerIcon(OpenRadio.MODID + ":laser3");
+        Icons[4] = register.registerIcon(OpenRadio.MODID + ":laser4");
+        Icons[5] = register.registerIcon(OpenRadio.MODID + ":laser5");
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon(int side, int metadata){
         switch(side){
-            case 0:
-                return blockIcon;
-            case 1:
-                return topIcon;
+            case 0: //bottom
+                return Icons[0];
+            case 1: //top
+                return Icons[1];
+            case 2: //north
+                return Icons[2];
+            case 3: //south
+                return Icons[3];
+            case 4: //west
+                return Icons[4];
+            case 5: //east
+                return Icons[5];
             default:
-                return sideIcon;
+                return Icons[0];
         }
     }
 
