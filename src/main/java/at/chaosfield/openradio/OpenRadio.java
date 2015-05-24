@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
  */
 
 @Mod(name = "Open Radio", modid = OpenRadio.MODID, version = "0.1", modLanguage = "java", dependencies = "required-after:OpenComputers@[1.5.0,)")
-public class OpenRadio {
+public class OpenRadio{
 
     public static final String MODID = "openradio";
 

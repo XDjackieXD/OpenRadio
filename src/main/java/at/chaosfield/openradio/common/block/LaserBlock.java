@@ -39,10 +39,13 @@ public class LaserBlock extends BlockContainer{
 
     @Override
     public IIcon getIcon(int side, int metadata){
-        switch (side){
-            case 0: return blockIcon;
-            case 1: return topIcon;
-            default: return sideIcon;
+        switch(side){
+            case 0:
+                return blockIcon;
+            case 1:
+                return topIcon;
+            default:
+                return sideIcon;
         }
     }
 
