@@ -6,10 +6,9 @@ import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.util.StatCollector;
 
 /**
  * Created by Jakob Riepler (XDjackieXD)
@@ -17,23 +16,29 @@ import net.minecraft.world.World;
 @SideOnly(Side.CLIENT)
 public class LaserGui extends GuiContainer{
 
-    private int x, y, z;
-    private EntityPlayer player;
-    private World world;
     private int xSize = 176, ySize = 183;
 
-    private ResourceLocation backgroundimage = new ResourceLocation(OpenRadio.MODID + ":" + "textures/gui/LaserGui.png");
+    private ResourceLocation backgroundimage = new ResourceLocation(OpenRadio.MODID + ":" + "textures/gui/LaserGui.png");   //Get the background Texture
 
     public LaserGui(InventoryPlayer inventoryPlayer, LaserTileEntity tileEntity){
         super(new LaserContainer(inventoryPlayer, tileEntity));
     }
 
+    //Draw the background texture
     @Override
-    protected void drawGuiContainerBackgroundLayer(float renderPartialTicks, int mouseX, int mouseY){
+    public void drawGuiContainerBackgroundLayer(float renderPartialTicks, int mouseX, int mouseY){
         this.mc.getTextureManager().bindTexture(backgroundimage);
         int x = (this.width - xSize)/2;
         int y = (this.height - ySize)/2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
+    }
+
+    //Draw the text
+    @Override
+    public void drawGuiContainerForegroundLayer(int x, int y){
+        //TODO find a way to get the text y-position without trail-and-error :P
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("container." + OpenRadio.MODID + ":laser.name"), 8, -3, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, 78, 4210752);
     }
 
     @Override

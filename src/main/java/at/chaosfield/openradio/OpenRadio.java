@@ -27,21 +27,25 @@ public class OpenRadio{
     @Mod.Instance(MODID)
     public static OpenRadio instance;
 
+    //Get the logger
     public static Logger logger = LogManager.getLogger(OpenRadio.MODID);
 
+    //Get the right proxy (Client = ClientProxy, Server = CommonProxy)
     @SidedProxy(clientSide = "at.chaosfield.openradio.proxy.ClientProxy", serverSide = "at.chaosfield.openradio.CommonProxy")
     public static CommonProxy proxy;
 
+    //FML PreInit
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
         logger.info("Pre init complete.");
     }
 
+    //FML Init
     @Mod.EventHandler
     public void init(FMLInitializationEvent event){
-        GuiHandler.init();
-        proxy.registerTileEntities();
-        Blocks.init();
+        GuiHandler.init();              //Register the GUIs
+        proxy.registerTileEntities();   //Register all TileEntities
+        Blocks.init();                  //Register all Blocks
         logger.info("Init complete.");
     }
 }

@@ -10,6 +10,7 @@ import scala.tools.cmd.gen.AnyValReps;
  * Created by Jakob Riepler (XDjackieXD)
  */
 public class Blocks {
+    //Register all blocks (Has to be called during FML Init)
     public static void init(){
         GameRegistry.registerBlock(new LaserBlock(), OpenRadio.MODID + ".laser");
     }

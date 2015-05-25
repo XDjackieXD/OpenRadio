@@ -27,14 +27,16 @@ import java.util.Random;
  * Created by Jakob Riepler (XDjackieXD)
  */
 public class LaserBlock extends BlockContainer implements ITileEntityProvider{
+
+    //Textures for the block faces (Client side only)
     @SideOnly(Side.CLIENT)
     private IIcon[] Icons;
 
     public LaserBlock(){
-        super(Material.iron);
-        setCreativeTab(CreativeTabs.tabBlock);
-        setBlockName(OpenRadio.MODID + ":laser");
-        setHardness(3.0F);
+        super(Material.iron);                       //Material is like Iron
+        setCreativeTab(CreativeTabs.tabBlock);      //TODO create seperate creative tab
+        setBlockName(OpenRadio.MODID + ":laser");   //Set localized Block name (/src/main/resources/assets/openradio/lang/)
+        setHardness(3.0F);                          //Set hardness to 3
     }
 
     @Override
@@ -47,6 +49,7 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
         return true;
     }
 
+    //Register all Textures (client side only)
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister register){
@@ -65,6 +68,8 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
         return Icons[side];
     }
 
+
+    //On right click open the GUI (only on the server side and if the player isn't sneaking)
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float hitX, float hitY, float hitZ) {
         if(!world.isRemote) {
@@ -75,12 +80,14 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
         return true;
     }
 
+    //If the block gets broken, drop all items on the floor
     @Override
     public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
         dropItems(world, x, y, z);
         super.breakBlock(world, x, y, z, par5, par6);
     }
 
+    //randomly drop the items around the block
     private void dropItems(World world, int x, int y, int z){
         Random rand = new Random();
 

@@ -22,12 +22,10 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
  */
 
 public class LaserTileEntity extends TileEntityEnvironment implements IInventory{
-    private String name = "tileEntityLaser";
     private boolean powered;
     private int laserPower = 10;
     private double latency = 0;
     private boolean connected = false;
-    private String uid = "";
     private ItemStack[] inv;
 
     public LaserTileEntity(){
@@ -36,9 +34,12 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     public String getName(){
-        return name;
+        return OpenRadio.MODID + ".laser";
     }
 
+
+    //------------------------------------------------------------------------------------------------------------------
+    //Open Computers Integration
     public String getComponentName(){
         return "Laser";
     }
@@ -47,17 +48,15 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public Object[] getLatency(Context context, Arguments args){
         return new Object[]{latency};
     }
+    //------------------------------------------------------------------------------------------------------------------
 
+    //check, if the energy buffer isn't empty
     @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
             if(connected){
-                if((node() != null) && ((Connector) node()).tryChangeBuffer(laserPower / 10f * OpenRadio.energyMultiplier)){
-                    powered = true;
-                }else{
-                    powered = false;
-                }
+                powered = (node() != null) && ((Connector) node()).tryChangeBuffer(laserPower / 10f * OpenRadio.energyMultiplier);
             }
         }
     }

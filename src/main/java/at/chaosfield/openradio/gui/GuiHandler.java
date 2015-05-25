@@ -17,7 +17,7 @@ public class GuiHandler implements IGuiHandler{
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity tileEntity = world.getTileEntity(x, y, z);
-        if(tileEntity instanceof LaserTileEntity){
+        if(tileEntity instanceof LaserTileEntity){  //If The TileEntity is a Laser, open the Laser GUI (Server side)
             return new LaserContainer(player.inventory, (LaserTileEntity) tileEntity);
         }
         return null;
@@ -26,12 +26,13 @@ public class GuiHandler implements IGuiHandler{
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity tileEntity = world.getTileEntity(x, y, z);
-        if(tileEntity instanceof LaserTileEntity){
+        if(tileEntity instanceof LaserTileEntity){  //If The TileEntity is a Laser, open the Laser GUI (Client side)
             return new LaserGui(player.inventory, (LaserTileEntity) tileEntity);
         }
         return null;
     }
 
+    //Register all GUIs (has to be called during FML Init)
     public static void init(){
         NetworkRegistry.INSTANCE.registerGuiHandler(OpenRadio.instance, new GuiHandler());
     }
