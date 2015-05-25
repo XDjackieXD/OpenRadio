@@ -11,8 +11,6 @@ import scala.tools.cmd.gen.AnyValReps;
  */
 public class Blocks {
     public static void init(){
-        GameRegistry.registerTileEntity(LaserTileEntity.class, OpenRadio.MODID + ":laser");
-
         GameRegistry.registerBlock(new LaserBlock(), OpenRadio.MODID + ".laser");
     }
 }
