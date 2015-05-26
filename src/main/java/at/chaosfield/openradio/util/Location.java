@@ -6,11 +6,10 @@ import net.minecraft.world.World;
  * Created by Jakob Riepler (XDjackieXD
  */
 public class Location{
-    private int x, y, z;
-    private World world;
+    private int x, y, z, dim;
 
-    public Location(World world, int x, int y, int z){
-        this.world = world;
+    public Location(int dim, int x, int y, int z){
+        this.dim = dim;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -28,8 +27,8 @@ public class Location{
         return z;
     }
 
-    public World getWorld(){
-        return world;
+    public int getDim(){
+        return dim;
     }
 
     public void setX(int x){
@@ -44,7 +43,7 @@ public class Location{
         this.z = z;
     }
 
-    public void setWorld(World world){
-        this.world = world;
+    public void setDim(int dim){
+        this.dim = dim;
     }
 }

@@ -3,8 +3,7 @@ package at.chaosfield.openradio.common.tileentity;
 
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.common.entity.LaserEntity;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
+import at.chaosfield.openradio.util.Location;
 import li.cil.oc.api.API;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
@@ -13,7 +12,6 @@ import li.cil.oc.api.network.Connector;
 import li.cil.oc.api.network.Visibility;
 import li.cil.oc.api.prefab.TileEntityEnvironment;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,11 +19,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MovingObjectPosition;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jakob Riepler (XDjackieXD)
@@ -38,6 +32,8 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     private boolean connected = false;
     private ItemStack[] inv;
 
+    private Location otherLaser;
+
     public LaserTileEntity(){
         node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(OpenRadio.energyBuffer).create();
         inv = new ItemStack[5];
@@ -48,8 +44,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
 
-    //TODO instead of searching through all TEs in a world just shoot an entity containing the own position which gives this position to a hit laser
-    public Object[] searchOpponent(){
+    public void pingRequest(String uid){
         double posX, posY, posZ, accX, accY, accZ;
         switch(this.getBlockMetadata()){
             case 0:
@@ -110,8 +105,19 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         }
 
         OpenRadio.logger.info("Fired!"); //debugging!
-        this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.getWorldObj(), posX, posY, posZ, accX, accY, accZ));
-        return new Object[]{false, 0, 0, 0, 0};
+        this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, uid, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord));
+    }
+
+    public void hitByLaserEntity(String uid, int dim, int x, int y, int z){
+        OpenRadio.logger.info("Im a Laser at X=" + this.xCoord + ", Y=" + this.yCoord + ", Z=" + this.zCoord + ". my uid is: " + node.address() + "the data is: X=" + x + ", Y=" + y + ", Z=" + z + ", UID: " + uid); //debugging!
+        if(uid.equals(node.address()) && (x != this.xCoord || y != this.yCoord || z != this.zCoord)){
+            //This is the response of the other laser
+            this.otherLaser = new Location(dim, x, y, z);
+        }else if(!uid.equals(node.address())){
+            //this is the request of another laser
+            pingRequest(uid);
+            this.otherLaser = new Location(dim, x, y, z);
+        }
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -125,9 +131,17 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         return new Object[]{latency};
     }
 
-    @Callback(direct = true, doc = "function():{successful, World Name, x, y, z} -- Get the current latency")
+    @Callback(direct = true, doc = "function():{true} -- try to connect to other laser")
     public Object[] connect(Context context, Arguments args){
-        return searchOpponent();
+        pingRequest(node.address());
+        return new Object[]{true};
+    }
+
+    @Callback(direct = true, doc = "function():{connected, dimId, x, y, z} -- Get the other Laser")
+    public Object[] connected(Context context, Arguments args){
+        if(otherLaser != null)
+            return new Object[]{true, otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ()};
+        return new Object[]{false, 0, 0, 0, 0};
     }
     //------------------------------------------------------------------------------------------------------------------
 

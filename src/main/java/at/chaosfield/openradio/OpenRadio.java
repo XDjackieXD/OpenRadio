@@ -47,8 +47,8 @@ public class OpenRadio{
         GuiHandler.init();              //Register the GUIs
         EntityRegistry.registerModEntity(LaserEntity.class, OpenRadio.MODID + ".laserentity", 1, this, 80, 3, true); //temp for testing :)
         proxy.registerTileEntities();   //Register all TileEntities
-        proxy.registerRenders();
-        proxy.registerSounds();
+        //proxy.registerRenders();
+        //proxy.registerSounds();
         Blocks.init();                  //Register all Blocks
         logger.info("Init complete.");
     }
