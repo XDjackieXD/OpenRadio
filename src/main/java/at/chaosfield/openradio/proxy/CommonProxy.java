@@ -11,4 +11,7 @@ public class CommonProxy{
     public void registerTileEntities(){
         GameRegistry.registerTileEntity(LaserTileEntity.class, OpenRadio.MODID + ":laser");
     }
+
+    public void registerRenders(){}
+    public void registerSounds(){}
 }

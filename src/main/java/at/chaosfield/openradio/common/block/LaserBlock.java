@@ -7,10 +7,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -53,19 +55,23 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister register){
-        Icons = new IIcon[6];
-        Icons[0] = register.registerIcon(OpenRadio.MODID + ":laser0"); //bottom
-        Icons[1] = register.registerIcon(OpenRadio.MODID + ":laser1"); //top
-        Icons[2] = register.registerIcon(OpenRadio.MODID + ":laser2"); //north
-        Icons[3] = register.registerIcon(OpenRadio.MODID + ":laser3"); //south
-        Icons[4] = register.registerIcon(OpenRadio.MODID + ":laser4"); //west
-        Icons[5] = register.registerIcon(OpenRadio.MODID + ":laser5"); //east
+        Icons = new IIcon[2];
+        Icons[0] = register.registerIcon(OpenRadio.MODID + ":LaserFront");
+        Icons[1] = register.registerIcon(OpenRadio.MODID + ":LaserSide");
+    }
+
+    //This method is only used when the block is rendered in an inventory
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getIcon(int side, int meta){
+        if(side == 4) return Icons[0];
+        else return Icons[1];
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(int side, int metadata){
-        return Icons[side];
+    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){ //side 0=bottom, 1=top, 2=north, 3=south, 4=west, 5=east
+        return (side == world.getBlockMetadata(x, y, z)) ? this.Icons[0] : this.Icons[1];
     }
 
 
@@ -78,6 +84,13 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
             return true;
         }
         return true;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
+        // no need to figure out the right orientation again when the piston block can do it for us
+        int direction = BlockPistonBase.determineOrientation(world, x, y, z, entity);
+        world.setBlockMetadataWithNotify(x, y, z, direction, 2);
     }
 
     //If the block gets broken, drop all items on the floor
