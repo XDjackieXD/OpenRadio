@@ -109,7 +109,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 accZ = 0;
         }
 
-        OpenRadio.logger.info("Fired!"); //debugging!
+        //OpenRadio.logger.info("Fired!"); //debugging!
         this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, uid, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord));
     }
 
@@ -117,24 +117,28 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         OpenRadio.logger.info("Im a Laser at X=" + this.xCoord + ", Y=" + this.yCoord + ", Z=" + this.zCoord + ". my uid is: " + node.address() + "the data is: X=" + x + ", Y=" + y + ", Z=" + z + ", UID: " + uid); //debugging!
         if(uid.equals(node.address()) && (x != this.xCoord || y != this.yCoord || z != this.zCoord)){
             //This is the response of the other laser
-            this.otherLaser = new Location(dim, x, y, z);
-            if(!worldObj.isRemote) {
-                TileEntity te = DimensionManager.getWorld(dim).getTileEntity(x, y, z);
-                if (te instanceof LaserTileEntity) {
-                    otherLaserTe = (LaserTileEntity) te;
-                }
-            }
+            tryConnect(dim, x, y, z);
         }else if(!uid.equals(node.address())){
             //this is the request of another laser
             pingRequest(uid);
-            this.otherLaser = new Location(dim, x, y, z);
-            if(!worldObj.isRemote) {
-                TileEntity te = DimensionManager.getWorld(dim).getTileEntity(x, y, z);
-                if (te instanceof LaserTileEntity) {
-                    otherLaserTe = (LaserTileEntity) te;
-                }
+            tryConnect(dim, x, y, z);
+        }
+    }
+
+    private void tryConnect(int dimId, int x, int y, int z){
+        if(!worldObj.isRemote) {
+            TileEntity te = DimensionManager.getWorld(dimId).getTileEntity(x, y, z);
+            if (te instanceof LaserTileEntity) {
+                otherLaserTe = (LaserTileEntity) te;
+                this.connected = true;
+                this.otherLaser = new Location(dimId, x, y, z);
+            }else{
+                this.connected = false;
+                otherLaserTe = null;
+                otherLaser = null;
             }
         }
+
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -165,7 +169,10 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public void onMessage(Message message){
         super.onMessage(message);
         if(message.name().equals("network.message")){
-            if(!otherLaserTe.isInvalid()){
+            if(otherLaserTe == null){
+                tryConnect(otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
+            }
+            if(!otherLaserTe.isInvalid() && connected){
                 otherLaserTe.node.sendToReachable("network.message", message.data());
             }
         }
@@ -271,24 +278,11 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         super.readFromNBT(tagCompound);
 
         if(tagCompound.getBoolean("otherLaserConnected")){
-            otherLaser = new Location(0,0,0,0);
-            otherLaser.setDim(tagCompound.getInteger("otherLaserDimId"));
-            otherLaser.setX(tagCompound.getInteger("otherLaserX"));
-            otherLaser.setY(tagCompound.getInteger("otherLaserY"));
-            otherLaser.setZ(tagCompound.getInteger("otherLaserZ"));
-            this.connected = true;
-            if(!worldObj.isRemote) {
-                TileEntity te = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
-                if (te instanceof LaserTileEntity) {
-                    otherLaserTe = (LaserTileEntity) te;
-                }
-            }
+            otherLaser = new Location(tagCompound.getInteger("otherLaserDimId"), tagCompound.getInteger("otherLaserX"), tagCompound.getInteger("otherLaserY"), tagCompound.getInteger("otherLaserZ"));
         }else{
             otherLaser = null;
             this.connected = false;
         }
-
-        tagCompound.getInteger("otherLaserDimId");
 
         NBTTagList tagList = tagCompound.getTagList("Inventory", tagCompound.getId());
         for(int i = 0; i < tagList.tagCount(); i++){
@@ -304,7 +298,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public void writeToNBT(NBTTagCompound tagCompound){
         super.writeToNBT(tagCompound);
 
-        if(otherLaser != null && connected) {
+        if(connected) {
             tagCompound.setBoolean("otherLaserConnected", true);
             tagCompound.setInteger("otherLaserDimId", otherLaser.getDim());
             tagCompound.setInteger("otherLaserX", otherLaser.getX());

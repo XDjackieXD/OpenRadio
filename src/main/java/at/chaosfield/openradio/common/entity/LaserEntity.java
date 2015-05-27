@@ -228,25 +228,7 @@ public class LaserEntity extends Entity implements IProjectile{
             if(mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK){
                 TileEntity te = this.worldObj.getTileEntity(mop.blockX, mop.blockY, mop.blockZ);
                 if(te instanceof LaserTileEntity){
-
-                    //Dirty workaround cause the Entity hit swaps north/south and east/west (why does it do that? o.O)
-                    //TODO search the reason why this only happens on my PC and not on my Laptop...
-                    int sideHit = mop.sideHit;
-                    /*switch(sideHit){
-                        case 2:
-                            sideHit = 3;
-                            break;
-                        case 3:
-                            sideHit = 2;
-                            break;
-                        case 4:
-                            sideHit = 5;
-                            break;
-                        case 5:
-                            sideHit = 4;
-                    }*/
-
-                    if(sideHit == te.getBlockMetadata())
+                    if(mop.sideHit == te.getBlockMetadata())
                         ((LaserTileEntity) te).hitByLaserEntity(this.uid, this.laserDim, this.laserX, this.laserY, this.laserZ);
                     OpenRadio.logger.info("Hit Laser at X=" + mop.blockX + ", Y=" + mop.blockY + ", Z=" + mop.blockZ + " on block side " + mop.sideHit + ", the laser is on side " + te.getBlockMetadata() + ". my uid is: " + this.uid); //debugging!
                 }
