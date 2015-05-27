@@ -1,5 +1,3 @@
-Mod ideen:
-
 laser link:
 	needs line-of-sight
 	long distances
@@ -11,7 +9,7 @@ laser link:
 		-Laser HV power supply for better Lasers
 		-NSA-o-mat (aka the signal interceptor)
 
-	Ich you run through a laser on eye-height you get Blindness for a few seconds
+	If you run through a laser on eye-height you get Blindness for a few seconds
 	latency is calculated through distance and gets increased through a signal interceptor
 
 	Link check:
