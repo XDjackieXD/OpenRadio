@@ -1,0 +1,43 @@
+Mod ideen:
+
+laser link:
+	needs line-of-sight
+	long distances
+	different lenses (Diamond, Quartz, Glass and others)
+	The probability that a Packet gets lost increases with decrease of signal quality (Transparent blocks & distance decrease quality, better components make link quality better)
+	Blocks: (multiple tiers?)
+		-Laser Casing
+		-Mirror
+		-Laser HV power supply for better Lasers
+		-NSA-o-mat (aka the signal interceptor)
+
+	Ich you run through a laser on eye-height you get Blindness for a few seconds
+	latency is calculated through distance and gets increased through a signal interceptor
+
+	Link check:
+	    -first time check through a flying Entity -> intra-dimensional through portals possible
+	    -air blocks get marked by a overrideable block (like tall grass but invisible)
+	    -transparent blocks get randomly polled every few seconds
+
+Satellites:
+    Satellites and huge multiblock radio dishes :3
+	Galacticraft integration:
+	    -from Earth you can only reach space stations and the moon. bigger distances possible from there (other planets)
+
+	Blocks:
+	    -Antenna:
+	        -Multiblock dish antenna (very strong signal possible -> high data rate)
+	        -Omnidirectional antenna (not a very good signal but preferred signal direction. good for near field (<1000 blocks) communication)
+	    -Coaxial cable
+	        get the signal from the radio to the antenna.
+	        -not needed (radio can be placed at the base of the antenna)
+	        -has signal loss over distance
+	    -Radio
+	        converts the network messages to "radio waves"
+	        -different tiers with better input amp and higher output power
+	        -higher packet rate and less packet loss with higher tiers
+	    -Satellite
+	        has get into an orbit somehow :P
+
+AE2 integration:
+    maybe link two AE2-networks over a laser link?
