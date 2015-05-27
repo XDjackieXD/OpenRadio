@@ -9,6 +9,8 @@ import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.Connector;
+import li.cil.oc.api.network.Message;
+import li.cil.oc.api.network.Packet;
 import li.cil.oc.api.network.Visibility;
 import li.cil.oc.api.prefab.TileEntityEnvironment;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,8 +19,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.WorldProvider;
+import net.minecraftforge.common.DimensionManager;
 
 
 /**
@@ -33,6 +37,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     private ItemStack[] inv;
 
     private Location otherLaser;
+    private LaserTileEntity otherLaserTe;
 
     public LaserTileEntity(){
         node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(OpenRadio.energyBuffer).create();
@@ -113,10 +118,22 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(uid.equals(node.address()) && (x != this.xCoord || y != this.yCoord || z != this.zCoord)){
             //This is the response of the other laser
             this.otherLaser = new Location(dim, x, y, z);
+            if(!worldObj.isRemote) {
+                TileEntity te = DimensionManager.getWorld(dim).getTileEntity(x, y, z);
+                if (te instanceof LaserTileEntity) {
+                    otherLaserTe = (LaserTileEntity) te;
+                }
+            }
         }else if(!uid.equals(node.address())){
             //this is the request of another laser
             pingRequest(uid);
             this.otherLaser = new Location(dim, x, y, z);
+            if(!worldObj.isRemote) {
+                TileEntity te = DimensionManager.getWorld(dim).getTileEntity(x, y, z);
+                if (te instanceof LaserTileEntity) {
+                    otherLaserTe = (LaserTileEntity) te;
+                }
+            }
         }
     }
 
@@ -142,6 +159,16 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(otherLaser != null)
             return new Object[]{true, otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ()};
         return new Object[]{false, 0, 0, 0, 0};
+    }
+
+    @Override
+    public void onMessage(Message message){
+        super.onMessage(message);
+        if(message.name().equals("network.message")){
+            if(!otherLaserTe.isInvalid()){
+                otherLaserTe.node.sendToReachable("network.message", message.data());
+            }
+        }
     }
     //------------------------------------------------------------------------------------------------------------------
 
@@ -242,6 +269,27 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     @Override
     public void readFromNBT(NBTTagCompound tagCompound){
         super.readFromNBT(tagCompound);
+
+        if(tagCompound.getBoolean("otherLaserConnected")){
+            otherLaser = new Location(0,0,0,0);
+            otherLaser.setDim(tagCompound.getInteger("otherLaserDimId"));
+            otherLaser.setX(tagCompound.getInteger("otherLaserX"));
+            otherLaser.setY(tagCompound.getInteger("otherLaserY"));
+            otherLaser.setZ(tagCompound.getInteger("otherLaserZ"));
+            this.connected = true;
+            if(!worldObj.isRemote) {
+                TileEntity te = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
+                if (te instanceof LaserTileEntity) {
+                    otherLaserTe = (LaserTileEntity) te;
+                }
+            }
+        }else{
+            otherLaser = null;
+            this.connected = false;
+        }
+
+        tagCompound.getInteger("otherLaserDimId");
+
         NBTTagList tagList = tagCompound.getTagList("Inventory", tagCompound.getId());
         for(int i = 0; i < tagList.tagCount(); i++){
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
@@ -255,6 +303,16 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     @Override
     public void writeToNBT(NBTTagCompound tagCompound){
         super.writeToNBT(tagCompound);
+
+        if(otherLaser != null && connected) {
+            tagCompound.setBoolean("otherLaserConnected", true);
+            tagCompound.setInteger("otherLaserDimId", otherLaser.getDim());
+            tagCompound.setInteger("otherLaserX", otherLaser.getX());
+            tagCompound.setInteger("otherLaserY", otherLaser.getY());
+            tagCompound.setInteger("otherLaserZ", otherLaser.getZ());
+        }else{
+            tagCompound.setBoolean("otherLaserConnected", false);
+        }
 
         NBTTagList itemList = new NBTTagList();
         for(int i = 0; i < inv.length; i++){
@@ -270,7 +328,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     @Override
-    public Packet getDescriptionPacket(){
+    public net.minecraft.network.Packet getDescriptionPacket(){
         NBTTagCompound tag = new NBTTagCompound();
         writeToNBT(tag);
         return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);

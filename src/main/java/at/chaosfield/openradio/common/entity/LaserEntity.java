@@ -230,8 +230,9 @@ public class LaserEntity extends Entity implements IProjectile{
                 if(te instanceof LaserTileEntity){
 
                     //Dirty workaround cause the Entity hit swaps north/south and east/west (why does it do that? o.O)
+                    //TODO search the reason why this only happens on my PC and not on my Laptop...
                     int sideHit = mop.sideHit;
-                    switch(sideHit){
+                    /*switch(sideHit){
                         case 2:
                             sideHit = 3;
                             break;
@@ -243,7 +244,7 @@ public class LaserEntity extends Entity implements IProjectile{
                             break;
                         case 5:
                             sideHit = 4;
-                    }
+                    }*/
 
                     if(sideHit == te.getBlockMetadata())
                         ((LaserTileEntity) te).hitByLaserEntity(this.uid, this.laserDim, this.laserX, this.laserY, this.laserZ);
