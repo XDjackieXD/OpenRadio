@@ -169,10 +169,10 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public void onMessage(Message message){
         super.onMessage(message);
         if(message.name().equals("network.message")){
-            if(otherLaserTe == null){
+            if(otherLaserTe == null && otherLaser != null){
                 tryConnect(otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
             }
-            if(!otherLaserTe.isInvalid() && connected){
+            if(otherLaserTe != null && connected){
                 otherLaserTe.node.sendToReachable("network.message", message.data());
             }
         }
