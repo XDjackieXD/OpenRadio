@@ -2,6 +2,7 @@ package at.chaosfield.openradio.common.tileentity;
 
 
 import at.chaosfield.openradio.OpenRadio;
+import at.chaosfield.openradio.Settings;
 import at.chaosfield.openradio.common.entity.LaserEntity;
 import at.chaosfield.openradio.util.Location;
 import li.cil.oc.api.API;
@@ -57,7 +58,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 posY = this.yCoord+0.5 -1;
                 posZ = this.zCoord+0.5;
                 accX = 0;
-                accY = -0.1;
+                accY = -Settings.EntitySpeed;
                 accZ = 0;
                 break;
             case 1:
@@ -65,7 +66,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 posY = this.yCoord+0.5 +1;
                 posZ = this.zCoord+0.5;
                 accX = 0;
-                accY = +0.1;
+                accY = +Settings.EntitySpeed;
                 accZ = 0;
                 break;
             case 2:
@@ -74,7 +75,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 posZ = this.zCoord+0.5 -1;
                 accX = 0;
                 accY = 0;
-                accZ = -0.1;
+                accZ = -Settings.EntitySpeed;
                 break;
             case 3:
                 posX = this.xCoord+0.5;
@@ -82,13 +83,13 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 posZ = this.zCoord+0.5 +1;
                 accX = 0;
                 accY = 0;
-                accZ = 0.1;
+                accZ = Settings.EntitySpeed;
                 break;
             case 4:
                 posX = this.xCoord+0.5 -1;
                 posY = this.yCoord+0.5;
                 posZ = this.zCoord+0.5;
-                accX = -0.1;
+                accX = -Settings.EntitySpeed;
                 accY = 0;
                 accZ = 0;
                 break;
@@ -96,7 +97,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 posX = this.xCoord+0.5 +1;
                 posY = this.yCoord+0.5;
                 posZ = this.zCoord+0.5;
-                accX = 0.1;
+                accX = Settings.EntitySpeed;
                 accY = 0;
                 accZ = 0;
                 break;
@@ -109,7 +110,6 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 accZ = 0;
         }
 
-        //OpenRadio.logger.info("Fired!"); //debugging!
         this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, uid, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord));
     }
 

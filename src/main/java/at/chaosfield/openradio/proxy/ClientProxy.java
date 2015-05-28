@@ -11,7 +11,6 @@ import net.minecraft.item.ItemSnowball;
 public class ClientProxy extends CommonProxy{
     @Override
     public void registerRenders(){
-        RenderingRegistry.registerEntityRenderingHandler(LaserEntity.class, new RenderSnowball(new ItemSnowball()));
     }
 
     @Override

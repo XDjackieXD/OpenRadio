@@ -7,15 +7,18 @@ laser link:
 		-Laser Casing
 		-Mirror
 		-Laser HV power supply for better Lasers
-		-NSA-o-mat (aka the signal interceptor)
+		    lasers tier 2 and 3 need a separate power supply which has to be powered by RF
+		-Signal Sniffer (aka the NSA-o-mat (I don't think you will get that pun if you don't speak german ^^)) alternative names: Big Brother, Spy Machine
+			increases the signal latency (so it can be detected if someone spies on you :P)
 
 	If you run through a laser on eye-height you get Blindness for a few seconds
-	latency is calculated through distance and gets increased through a signal interceptor
+	latency is calculated through distance and gets increased through a signal sniffer
 
 	Link check:
 	    -first time check through a flying Entity -> intra-dimensional through portals possible
 	    -air blocks get marked by a overrideable block (like tall grass but invisible)
 	    -transparent blocks get randomly polled every few seconds
+	        Maybe only allow two transparent blocks without air in between. this would eliminate the need for polling and the fake-air-blocks could just check (if one of their neighbours is one of the transparent blocks) on block updates, if their neighbor still is the block it was.
 
 Satellites:
     Satellites and huge multiblock radio dishes :3

@@ -2,6 +2,7 @@ package at.chaosfield.openradio;
 
 import at.chaosfield.openradio.common.entity.LaserEntity;
 import at.chaosfield.openradio.common.init.Blocks;
+import at.chaosfield.openradio.common.init.Entities;
 import at.chaosfield.openradio.gui.GuiHandler;
 import at.chaosfield.openradio.proxy.CommonProxy;
 import cpw.mods.fml.common.Mod;
@@ -45,10 +46,10 @@ public class OpenRadio{
     @Mod.EventHandler
     public void init(FMLInitializationEvent event){
         GuiHandler.init();              //Register the GUIs
-        EntityRegistry.registerModEntity(LaserEntity.class, OpenRadio.MODID + ".laserentity", 1, this, 80, 3, true); //temp for testing :)
+        Entities.init();
         proxy.registerTileEntities();   //Register all TileEntities
-        //proxy.registerRenders();
-        //proxy.registerSounds();
+        proxy.registerRenders();
+        proxy.registerSounds();
         Blocks.init();                  //Register all Blocks
         logger.info("Init complete.");
     }
