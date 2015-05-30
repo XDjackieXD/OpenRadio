@@ -19,6 +19,9 @@ laser link:
 	    -air blocks get marked by a overrideable block (like tall grass but invisible)
 	    -transparent blocks get randomly polled every few seconds
 	        Maybe only allow two transparent blocks without air in between. this would eliminate the need for polling and the fake-air-blocks could just check (if one of their neighbours is one of the transparent blocks) on block updates, if their neighbor still is the block it was.
+		New (probably better) idea:
+		    store a list of all block coords in between (using the fired entity) and check one of them each random block update (isChunk loaded? is block air or transparent?)
+
 
 Satellites:
     Satellites and huge multiblock radio dishes :3

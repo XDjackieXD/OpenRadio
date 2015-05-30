@@ -1,6 +1,5 @@
 package at.chaosfield.openradio;
 
-import at.chaosfield.openradio.common.entity.LaserEntity;
 import at.chaosfield.openradio.common.init.Blocks;
 import at.chaosfield.openradio.common.init.Entities;
 import at.chaosfield.openradio.gui.GuiHandler;
@@ -9,7 +8,6 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.EntityRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
