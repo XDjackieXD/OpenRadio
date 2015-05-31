@@ -2,16 +2,13 @@ package at.chaosfield.openradio.common.entity;
 
 
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.common.block.LaserBlock;
 import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.util.Location;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -21,7 +18,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
 
 import java.util.*;
 
@@ -36,8 +32,6 @@ public class LaserEntity extends Entity implements IProjectile{
     private int zTile = -1;
     private Block block;
     protected boolean inGround;
-    private EntityLivingBase thrower;
-    private String throwerName;
     private int ticksInGround;
     private int ticksInAir;
 
@@ -99,6 +93,7 @@ public class LaserEntity extends Entity implements IProjectile{
         this.motionY = accY;
         this.motionZ = accZ;
         float f3 = MathHelper.sqrt_double(accX * accX + accZ * accZ);
+        //noinspection SuspiciousNameCombination
         this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(accX, accZ) * 180.0D / 3.141592653589793D);
         this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(accY, (double) f3) * 180.0D / 3.141592653589793D);
         this.ticksInGround = 0;
@@ -161,8 +156,8 @@ public class LaserEntity extends Entity implements IProjectile{
             List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
             double f3 = 0.0D;
 
-            for(int j = 0; j < list.size(); ++j){
-                Entity entity1 = (Entity) list.get(j);
+            for(Object aList : list){
+                Entity entity1 = (Entity) aList;
                 if(entity1.canBeCollidedWith() && this.ticksInAir >= 5){
                     float f = 0.3F;
                     AxisAlignedBB axisalignedbb = entity1.boundingBox.expand((double) f, (double) f, (double) f);
@@ -224,11 +219,6 @@ public class LaserEntity extends Entity implements IProjectile{
         nbtTagCompound.setShort("zTile", (short) this.zTile);
         nbtTagCompound.setByte("inTile", (byte) Block.getIdFromBlock(this.block));
         nbtTagCompound.setByte("inGround", (byte) (this.inGround ? 1 : 0));
-        if((this.throwerName == null || this.throwerName.length() == 0) && this.thrower != null && this.thrower instanceof EntityPlayer){
-            this.throwerName = this.thrower.getCommandSenderName();
-        }
-
-        nbtTagCompound.setString("ownerName", this.throwerName == null ? "" : this.throwerName);
     }
 
     public void readEntityFromNBT(NBTTagCompound nbtTagCompound){
@@ -255,24 +245,12 @@ public class LaserEntity extends Entity implements IProjectile{
         this.zTile = nbtTagCompound.getShort("zTile");
         this.block = Block.getBlockById(nbtTagCompound.getByte("inTile") & 255);
         this.inGround = nbtTagCompound.getByte("inGround") == 1;
-        this.throwerName = nbtTagCompound.getString("ownerName");
-        if(this.throwerName != null && this.throwerName.length() == 0){
-            this.throwerName = null;
-        }
 
     }
 
     @SideOnly(Side.CLIENT)
     public float getShadowSize(){
         return 0.0F;
-    }
-
-    public EntityLivingBase getThrower(){
-        if(this.thrower == null && this.throwerName != null && this.throwerName.length() > 0){
-            this.thrower = this.worldObj.getPlayerEntityByName(this.throwerName);
-        }
-
-        return this.thrower;
     }
 
     protected void onImpact(MovingObjectPosition mop){

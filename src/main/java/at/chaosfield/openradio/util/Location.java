@@ -1,7 +1,5 @@
 package at.chaosfield.openradio.util;
 
-import net.minecraft.world.World;
-
 /**
  * Created by Jakob Riepler (XDjackieXD
  */

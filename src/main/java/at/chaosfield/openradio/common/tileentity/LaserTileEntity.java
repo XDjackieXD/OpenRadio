@@ -11,10 +11,8 @@ import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.Connector;
 import li.cil.oc.api.network.Message;
-import li.cil.oc.api.network.Packet;
 import li.cil.oc.api.network.Visibility;
 import li.cil.oc.api.prefab.TileEntityEnvironment;
-import net.minecraft.block.BlockStone;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
@@ -24,7 +22,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.WorldProvider;
 import net.minecraftforge.common.DimensionManager;
 
 import java.util.ArrayList;
@@ -212,10 +209,6 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         }
     }
 
-    public boolean isPowered(){
-        return powered;
-    }
-
     @Override
     public int getSizeInventory(){
         return inv.length;
@@ -370,5 +363,9 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
         readFromNBT(pkt.func_148857_g());
+    }
+
+    public boolean isPowered(){
+        return powered;
     }
 }

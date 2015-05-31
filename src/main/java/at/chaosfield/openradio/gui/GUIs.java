@@ -1,7 +1,7 @@
 package at.chaosfield.openradio.gui;
 
 /**
- * Created by jakob on 24.05.15.
+ * Created by Jakob Riepler (XDjackieXD)
  */
 public enum GUIs{
     LASER

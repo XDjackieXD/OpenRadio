@@ -16,7 +16,7 @@ import net.minecraft.util.StatCollector;
 @SideOnly(Side.CLIENT)
 public class LaserGui extends GuiContainer{
 
-    private int xSize = 176, ySize = 183;
+    private final int xSize = 176, ySize = 183;
 
     private ResourceLocation backgroundimage = new ResourceLocation(OpenRadio.MODID + ":" + "textures/gui/LaserGui.png");   //Get the background Texture
 

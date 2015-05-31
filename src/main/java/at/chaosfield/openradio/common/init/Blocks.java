@@ -2,9 +2,7 @@ package at.chaosfield.openradio.common.init;
 
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.common.block.LaserBlock;
-import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
 import cpw.mods.fml.common.registry.GameRegistry;
-import scala.tools.cmd.gen.AnyValReps;
 
 /**
  * Created by Jakob Riepler (XDjackieXD)
