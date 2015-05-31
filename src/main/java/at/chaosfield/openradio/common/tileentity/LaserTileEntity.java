@@ -14,7 +14,9 @@ import li.cil.oc.api.network.Message;
 import li.cil.oc.api.network.Packet;
 import li.cil.oc.api.network.Visibility;
 import li.cil.oc.api.prefab.TileEntityEnvironment;
+import net.minecraft.block.BlockStone;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,6 +26,9 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.WorldProvider;
 import net.minecraftforge.common.DimensionManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -39,8 +44,10 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     private Location otherLaser;
     private LaserTileEntity otherLaserTe;
+    private List<Location> blocks = new ArrayList<Location>();
 
     public LaserTileEntity(){
+        super();
         node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(OpenRadio.energyBuffer).create();
         inv = new ItemStack[5];
     }
@@ -113,14 +120,16 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, uid, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord));
     }
 
-    public void hitByLaserEntity(String uid, int dim, int x, int y, int z){
+    public void hitByLaserEntity(String uid, int dim, int x, int y, int z, List<Location> blocks){
         OpenRadio.logger.info("Im a Laser at X=" + this.xCoord + ", Y=" + this.yCoord + ", Z=" + this.zCoord + ". my uid is: " + node.address() + "the data is: X=" + x + ", Y=" + y + ", Z=" + z + ", UID: " + uid); //debugging!
         if(uid.equals(node.address()) && (x != this.xCoord || y != this.yCoord || z != this.zCoord)){
             //This is the response of the other laser
             tryConnect(dim, x, y, z);
+            this.blocks = blocks;
         }else if(!uid.equals(node.address())){
             //this is the request of another laser
             pingRequest(uid);
+            this.blocks = blocks;
             tryConnect(dim, x, y, z);
         }
     }
@@ -164,6 +173,19 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             return new Object[]{true, otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ()};
         return new Object[]{false, 0, 0, 0, 0};
     }
+
+
+    @Callback(direct = true, doc = "function():{String} -- DEBUGGING! sets all blocks between the lasers to stone")
+    public Object[] stoneIt(Context context, Arguments args){
+        if(blocks != null){
+            for(Location loc : blocks){
+                DimensionManager.getWorld(loc.getDim()).setBlock(loc.getX(), loc.getY(), loc.getZ(), Blocks.stone);
+            }
+            return new Object[]{"Set " + blocks.size() + " Blocks"};
+        }else
+            return new Object[]{"blocks is null"};
+    }
+
 
     @Override
     public void onMessage(Message message){
@@ -284,6 +306,12 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             this.connected = false;
         }
 
+        NBTTagList blocks = tagCompound.getTagList("Blocks", tagCompound.getId());
+        for(int i = 0; i < blocks.tagCount(); i++){
+            NBTTagCompound tag = blocks.getCompoundTagAt(i);
+            this.blocks.add(new Location(tag.getInteger("Dim"), tag.getInteger("X"), tag.getInteger("Y"), tag.getInteger("Z")));
+        }
+
         NBTTagList tagList = tagCompound.getTagList("Inventory", tagCompound.getId());
         for(int i = 0; i < tagList.tagCount(); i++){
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
@@ -307,6 +335,17 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         }else{
             tagCompound.setBoolean("otherLaserConnected", false);
         }
+
+        NBTTagList blocks = new NBTTagList();
+        for(Location loc: this.blocks){
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setInteger("X", loc.getX());
+            tag.setInteger("Y", loc.getY());
+            tag.setInteger("Z", loc.getZ());
+            tag.setInteger("Dim", loc.getDim());
+            blocks.appendTag(tag);
+        }
+        tagCompound.setTag("Blocks", blocks);
 
         NBTTagList itemList = new NBTTagList();
         for(int i = 0; i < inv.length; i++){
