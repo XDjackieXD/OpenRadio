@@ -75,7 +75,10 @@ public class LaserEntity extends Entity implements IProjectile{
         this.laserY = laserY;
         this.laserZ = laserZ;
 
-        this.locNow = new Location(world.provider.dimensionId, (int) x, (int) y, (int) z);
+        if(!worldObj.isRemote){
+            this.locNow = new Location(world.provider.dimensionId, (int)Math.floor(x), (int)Math.floor(y), (int)Math.floor(z));
+            this.blocks.add(new Location(this.locNow.getDim(), this.locNow.getX(), this.locNow.getY(), this.locNow.getZ()));
+        }
     }
 
     public void setThrowableHeading(double accX, double accY, double accZ, float accMult, float accRand){
