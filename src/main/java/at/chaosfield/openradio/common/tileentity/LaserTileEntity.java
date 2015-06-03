@@ -42,6 +42,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     private Location otherLaser;
     private LaserTileEntity otherLaserTe;
     private List<Location> blocks = new ArrayList<Location>();
+    private List<Location> toCheck = new ArrayList<Location>();
 
     public LaserTileEntity(){
         super();
@@ -121,8 +122,8 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         OpenRadio.logger.info("Im a Laser at X=" + this.xCoord + ", Y=" + this.yCoord + ", Z=" + this.zCoord + ". my uid is: " + node.address() + "the data is: X=" + x + ", Y=" + y + ", Z=" + z + ", UID: " + uid); //debugging!
         if(uid.equals(node.address()) && (x != this.xCoord || y != this.yCoord || z != this.zCoord)){
             //This is the response of the other laser
-            tryConnect(dim, x, y, z);
             this.blocks = blocks;
+            tryConnect(dim, x, y, z);
         }else if(!uid.equals(node.address())){
             //this is the request of another laser
             pingRequest(uid);
@@ -147,6 +148,11 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     }
 
+    private boolean checkBlock(Location location){
+        return !DimensionManager.getWorld(location.getDim()).getBlock(location.getX(), location.getY(), location.getZ()).isOpaqueCube();
+    }
+
+
     //------------------------------------------------------------------------------------------------------------------
     //Open Computers Integration
     public String getComponentName(){
@@ -166,7 +172,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     @Callback(direct = true, doc = "function():{connected, dimId, x, y, z} -- Get the other Laser")
     public Object[] connected(Context context, Arguments args){
-        if(otherLaser != null)
+        if(otherLaser != null && this.connected)
             return new Object[]{true, otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ()};
         return new Object[]{false, 0, 0, 0, 0};
     }
@@ -205,6 +211,14 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(!worldObj.isRemote){
             if(connected){
                 powered = (node() != null) && ((Connector) node()).tryChangeBuffer(laserPower / 10f * OpenRadio.energyMultiplier);
+
+                if(toCheck.size() <= 0)
+                    toCheck = new ArrayList<Location>(blocks);
+
+                if(checkBlock(toCheck.get(0)))
+                    toCheck.remove(0);
+                else
+                    connected = false;
             }
         }
     }

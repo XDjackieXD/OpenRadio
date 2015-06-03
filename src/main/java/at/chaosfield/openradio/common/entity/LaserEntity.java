@@ -31,9 +31,6 @@ public class LaserEntity extends Entity implements IProjectile{
     private int yTile = -1;
     private int zTile = -1;
     private Block block;
-    protected boolean inGround;
-    private int ticksInGround;
-    private int ticksInAir;
 
     private String uid = "";
     private int laserX;
@@ -62,7 +59,6 @@ public class LaserEntity extends Entity implements IProjectile{
 
     public LaserEntity(World world, double x, double y, double z, double accX, double accY, double accZ, String uid, int laserDim, int laserX, int laserY, int laserZ){
         super(world);
-        this.ticksInGround = 0;
         this.setSize(0.25F, 0.25F);
         this.setPosition(x, y, z);
         this.yOffset = 0.0F;
@@ -76,7 +72,7 @@ public class LaserEntity extends Entity implements IProjectile{
         this.laserZ = laserZ;
 
         if(!worldObj.isRemote){
-            this.locNow = new Location(world.provider.dimensionId, (int)Math.floor(x), (int)Math.floor(y), (int)Math.floor(z));
+            this.locNow = new Location(world.provider.dimensionId, (int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
             this.blocks.add(new Location(this.locNow.getDim(), this.locNow.getX(), this.locNow.getY(), this.locNow.getZ()));
         }
     }
@@ -99,7 +95,6 @@ public class LaserEntity extends Entity implements IProjectile{
         //noinspection SuspiciousNameCombination
         this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(accX, accZ) * 180.0D / 3.141592653589793D);
         this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(accY, (double) f3) * 180.0D / 3.141592653589793D);
-        this.ticksInGround = 0;
     }
 
     @SideOnly(Side.CLIENT)
@@ -117,7 +112,7 @@ public class LaserEntity extends Entity implements IProjectile{
 
         if(!worldObj.isRemote){
             if(this.locNow != null){
-                if(((int)Math.floor(this.posX) != this.locNow.getX()) || ((int)Math.floor(this.posY) != this.locNow.getY()) || ((int)Math.floor(this.posZ) != this.locNow.getZ()) || (worldObj.provider.dimensionId != this.locNow.getDim())){
+                if(((int) Math.floor(this.posX) != this.locNow.getX()) || ((int) Math.floor(this.posY) != this.locNow.getY()) || ((int) Math.floor(this.posZ) != this.locNow.getZ()) || (worldObj.provider.dimensionId != this.locNow.getDim())){
                     this.locNow.setX((int) Math.floor(this.posX));
                     this.locNow.setY((int) Math.floor(this.posY));
                     this.locNow.setZ((int) Math.floor(this.posZ));
@@ -125,30 +120,17 @@ public class LaserEntity extends Entity implements IProjectile{
                     this.blocks.add(new Location(this.locNow.getDim(), this.locNow.getX(), this.locNow.getY(), this.locNow.getZ()));
                 }
             }else{
-                this.locNow = new Location(worldObj.provider.dimensionId, (int)Math.floor(this.posX), (int)Math.floor(this.posY), (int)Math.floor(this.posZ));
+                this.locNow = new Location(worldObj.provider.dimensionId, (int) Math.floor(this.posX), (int) Math.floor(this.posY), (int) Math.floor(this.posZ));
             }
-        }
-        if(this.inGround){
-            if(this.worldObj.getBlock(this.xTile, this.yTile, this.zTile) == this.block){
-                ++this.ticksInGround;
-                if(this.ticksInGround == 1200){
-                    this.setDead();
-                }
-
-                return;
-            }
-
-            this.inGround = false;
-            this.ticksInGround = 0;
-            this.ticksInAir = 0;
-        }else{
-            ++this.ticksInAir;
         }
 
         Vec3 posVec = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
         Vec3 nextPosVec = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
         MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(posVec, nextPosVec);
-        posVec = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
+
+
+        //Don't collide with entities
+        /*posVec = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
         nextPosVec = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
         if(movingobjectposition != null){
             nextPosVec = Vec3.createVectorHelper(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
@@ -161,7 +143,7 @@ public class LaserEntity extends Entity implements IProjectile{
 
             for(Object aList : list){
                 Entity entity1 = (Entity) aList;
-                if(entity1.canBeCollidedWith() && this.ticksInAir >= 5){
+                if(entity1.canBeCollidedWith()){
                     float f = 0.3F;
                     AxisAlignedBB axisalignedbb = entity1.boundingBox.expand((double) f, (double) f, (double) f);
                     MovingObjectPosition movingobjectposition1 = axisalignedbb.calculateIntercept(posVec, nextPosVec);
@@ -178,14 +160,15 @@ public class LaserEntity extends Entity implements IProjectile{
             if(entity != null){
                 movingobjectposition = new MovingObjectPosition(entity);
             }
-        }
+        }*/
 
         if(movingobjectposition != null){
-            if(movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && this.worldObj.getBlock(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ) == Blocks.portal){
-                this.setInPortal();
-            }else{
-                this.onImpact(movingobjectposition);
-            }
+            if(movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+                if(this.worldObj.getBlock(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ) == Blocks.portal){
+                    this.setInPortal();
+                }else if(this.worldObj.getBlock(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ).isOpaqueCube()){ //only collide with solid blocks
+                    this.onImpact(movingobjectposition);
+                }
         }
 
         this.posX += this.motionX;
@@ -221,7 +204,6 @@ public class LaserEntity extends Entity implements IProjectile{
         nbtTagCompound.setShort("yTile", (short) this.yTile);
         nbtTagCompound.setShort("zTile", (short) this.zTile);
         nbtTagCompound.setByte("inTile", (byte) Block.getIdFromBlock(this.block));
-        nbtTagCompound.setByte("inGround", (byte) (this.inGround ? 1 : 0));
     }
 
     public void readEntityFromNBT(NBTTagCompound nbtTagCompound){
@@ -247,8 +229,6 @@ public class LaserEntity extends Entity implements IProjectile{
         this.yTile = nbtTagCompound.getShort("yTile");
         this.zTile = nbtTagCompound.getShort("zTile");
         this.block = Block.getBlockById(nbtTagCompound.getByte("inTile") & 255);
-        this.inGround = nbtTagCompound.getByte("inGround") == 1;
-
     }
 
     @SideOnly(Side.CLIENT)

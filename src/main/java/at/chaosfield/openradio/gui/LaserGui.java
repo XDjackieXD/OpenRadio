@@ -28,8 +28,8 @@ public class LaserGui extends GuiContainer{
     @Override
     public void drawGuiContainerBackgroundLayer(float renderPartialTicks, int mouseX, int mouseY){
         this.mc.getTextureManager().bindTexture(backgroundimage);
-        int x = (this.width - xSize)/2;
-        int y = (this.height - ySize)/2;
+        int x = (this.width - xSize) / 2;
+        int y = (this.height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
     }
 
