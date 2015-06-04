@@ -5,6 +5,7 @@ import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.Settings;
 import at.chaosfield.openradio.common.entity.LaserEntity;
 import at.chaosfield.openradio.util.Location;
+import at.chaosfield.openradio.util.LocationPair;
 import li.cil.oc.api.API;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
@@ -39,6 +40,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     private boolean connected = false;
     private ItemStack[] inv;
 
+    private LocationPair laserPair;
     private Location otherLaser;
     private LaserTileEntity otherLaserTe;
     private List<Location> blocks = new ArrayList<Location>();
@@ -48,6 +50,9 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         super();
         node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(OpenRadio.energyBuffer).create();
         inv = new ItemStack[5];
+        if(connected && !OpenRadio.renderWorldEvent.lasers.contains(laserPair)){
+            OpenRadio.renderWorldEvent.lasers.add(laserPair);
+        }
     }
 
     public String getName(){
@@ -139,8 +144,11 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 otherLaserTe = (LaserTileEntity) te;
                 this.connected = true;
                 this.otherLaser = new Location(dimId, x, y, z);
+                this.laserPair = new LocationPair(new Location(worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord), otherLaser);
+                OpenRadio.renderWorldEvent.lasers.add(laserPair);
             }else{
                 this.connected = false;
+                OpenRadio.renderWorldEvent.lasers.remove(laserPair);
                 otherLaserTe = null;
                 otherLaser = null;
             }
@@ -217,8 +225,10 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
                 if(checkBlock(toCheck.get(0)))
                     toCheck.remove(0);
-                else
+                else{
                     connected = false;
+                    OpenRadio.renderWorldEvent.lasers.remove(laserPair);
+                }
             }
         }
     }

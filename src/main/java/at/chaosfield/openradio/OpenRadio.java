@@ -1,5 +1,6 @@
 package at.chaosfield.openradio;
 
+import at.chaosfield.openradio.common.events.RenderWorldEvent;
 import at.chaosfield.openradio.common.init.Blocks;
 import at.chaosfield.openradio.common.init.Entities;
 import at.chaosfield.openradio.gui.GuiHandler;
@@ -8,6 +9,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,6 +29,8 @@ public class OpenRadio{
     @Mod.Instance(MODID)
     public static OpenRadio instance;
 
+    public static RenderWorldEvent renderWorldEvent = new RenderWorldEvent();
+
     //Get the logger
     public static Logger logger = LogManager.getLogger(OpenRadio.MODID);
 
@@ -37,6 +41,7 @@ public class OpenRadio{
     //FML PreInit
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
+        MinecraftForge.EVENT_BUS.register(renderWorldEvent);
         logger.info("Pre init complete.");
     }
 
