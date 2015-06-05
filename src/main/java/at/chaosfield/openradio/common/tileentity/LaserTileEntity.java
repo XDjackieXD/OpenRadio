@@ -40,7 +40,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     private boolean connected = false;
     private ItemStack[] inv;
 
-    private LocationPair laserPair;
+    public LocationPair laserPair;
     private Location otherLaser;
     private LaserTileEntity otherLaserTe;
     private List<Location> blocks = new ArrayList<Location>();
@@ -50,9 +50,8 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         super();
         node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(OpenRadio.energyBuffer).create();
         inv = new ItemStack[5];
-        if(connected && !OpenRadio.renderWorldEvent.lasers.contains(laserPair)){
-            OpenRadio.renderWorldEvent.lasers.add(laserPair);
-        }
+        if(otherLaser != null)
+            tryConnect(otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
     }
 
     public String getName(){
@@ -160,6 +159,14 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         return !DimensionManager.getWorld(location.getDim()).getBlock(location.getX(), location.getY(), location.getZ()).isOpaqueCube();
     }
 
+    public void disconnect(){
+        if(connected){
+            connected = false;
+            OpenRadio.renderWorldEvent.lasers.remove(laserPair);
+            OpenRadio.renderWorldEvent.lasers.remove(otherLaserTe.laserPair);
+        }
+    }
+
 
     //------------------------------------------------------------------------------------------------------------------
     //Open Computers Integration
@@ -184,19 +191,6 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             return new Object[]{true, otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ()};
         return new Object[]{false, 0, 0, 0, 0};
     }
-
-
-    @Callback(direct = true, doc = "function():{String} -- DEBUGGING! sets all blocks between the lasers to stone")
-    public Object[] stoneIt(Context context, Arguments args){
-        if(blocks != null){
-            for(Location loc : blocks){
-                DimensionManager.getWorld(loc.getDim()).setBlock(loc.getX(), loc.getY(), loc.getZ(), Blocks.stone);
-            }
-            return new Object[]{"Set " + blocks.size() + " Blocks"};
-        }else
-            return new Object[]{"blocks is null"};
-    }
-
 
     @Override
     public void onMessage(Message message){

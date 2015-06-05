@@ -97,6 +97,9 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
     @Override
     public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
         dropItems(world, x, y, z);
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if(tileEntity instanceof LaserTileEntity)
+            ((LaserTileEntity)tileEntity).disconnect();
         super.breakBlock(world, x, y, z, par5, par6);
     }
 
