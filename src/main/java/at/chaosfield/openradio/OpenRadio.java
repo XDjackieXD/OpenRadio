@@ -2,6 +2,7 @@ package at.chaosfield.openradio;
 
 import at.chaosfield.openradio.common.init.Blocks;
 import at.chaosfield.openradio.common.init.Entities;
+import at.chaosfield.openradio.common.init.Items;
 import at.chaosfield.openradio.gui.GuiHandler;
 import at.chaosfield.openradio.proxy.CommonProxy;
 import cpw.mods.fml.common.Mod;
@@ -37,6 +38,8 @@ public class OpenRadio{
     //FML PreInit
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
+        Blocks.init();                  //Register all Blocks
+        Items.init();                   //Register all Items
         logger.info("Pre init complete.");
     }
 
@@ -48,7 +51,7 @@ public class OpenRadio{
         proxy.registerTileEntities();   //Register all TileEntities
         proxy.registerRenders();
         proxy.registerSounds();
-        Blocks.init();                  //Register all Blocks
+
         logger.info("Init complete.");
     }
 }

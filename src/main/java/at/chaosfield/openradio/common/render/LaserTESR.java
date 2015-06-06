@@ -8,10 +8,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.DimensionManager;
 import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
 
 /**
  * Created by Jakob Riepler (XDjackieXD)
@@ -28,8 +25,8 @@ public class LaserTESR extends TileEntitySpecialRenderer{
 
         tileEntity.getWorldObj().scheduleBlockUpdate(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, Blocks.laserBlock, 10);
 
-        Location otherLaser = ((LaserTileEntity) tileEntity).getOtherLaser();
-        if(((LaserTileEntity) tileEntity).isConnected()){
+        /*if(((LaserTileEntity) tileEntity).isConnected()){
+            Location otherLaser = ((LaserTileEntity) tileEntity).getOtherLaser();
             OpenRadio.logger.info("render!");
 
             this.bindTexture(TextureMap.locationBlocksTexture);
@@ -51,7 +48,7 @@ public class LaserTESR extends TileEntitySpecialRenderer{
 
             tessellator.draw();
             GL11.glPopMatrix();
-        }
+        }*/
 
 
         /*Location otherLaser = ((LaserTileEntity)tileEntity).getOtherLaser();

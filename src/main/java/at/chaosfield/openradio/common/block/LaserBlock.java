@@ -1,5 +1,6 @@
 package at.chaosfield.openradio.common.block;
 
+import at.chaosfield.openradio.CreativeTab;
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.gui.GUIs;
@@ -36,9 +37,9 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
 
     public LaserBlock(){
         super(Material.iron);                       //Material is like Iron
-        setCreativeTab(CreativeTabs.tabBlock);      //TODO create seperate creative tab
         setBlockName(OpenRadio.MODID + ":laser");   //Set localized Block name (/src/main/resources/assets/openradio/lang/)
         setHardness(3.0F);                          //Set hardness to 3
+        setCreativeTab(CreativeTab.instance);
     }
 
     @Override

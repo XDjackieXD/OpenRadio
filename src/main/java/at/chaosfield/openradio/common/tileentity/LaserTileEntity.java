@@ -52,7 +52,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         super();
         node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(OpenRadio.energyBuffer).create();
         inv = new ItemStack[5];
-        if(otherLaser != null)
+        if(otherLaser != null && otherLaserTe == null && !connected)
             tryConnect(otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
     }
 
@@ -160,9 +160,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     public void disconnect(){
-        if(connected){
-            connected = false;
-        }
+        connected = false;
     }
 
     public Location getOtherLaser(){
@@ -316,6 +314,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
         if(tagCompound.getBoolean("otherLaserConnected")){
             otherLaser = new Location(tagCompound.getInteger("otherLaserDimId"), tagCompound.getInteger("otherLaserX"), tagCompound.getInteger("otherLaserY"), tagCompound.getInteger("otherLaserZ"));
+            tryConnect(otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
         }else{
             otherLaser = null;
             this.connected = false;

@@ -1,2 +1,4 @@
 tile.openradio:laser.name=Laser
 container.openradio:laser.name=Laser
+item.openradio:lens.name=Lens
+itemGroup.openradio=OpenRadio
