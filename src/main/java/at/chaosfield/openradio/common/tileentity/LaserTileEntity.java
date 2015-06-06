@@ -14,6 +14,7 @@ import li.cil.oc.api.network.Connector;
 import li.cil.oc.api.network.Message;
 import li.cil.oc.api.network.Visibility;
 import li.cil.oc.api.prefab.TileEntityEnvironment;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
@@ -21,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.DimensionManager;
@@ -63,57 +65,57 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         double posX, posY, posZ, accX, accY, accZ;
         switch(this.getBlockMetadata()){
             case 0:
-                posX = this.xCoord+0.5;
-                posY = this.yCoord+0.5 -1;
-                posZ = this.zCoord+0.5;
+                posX = this.xCoord + 0.5;
+                posY = this.yCoord + 0.5 - 1;
+                posZ = this.zCoord + 0.5;
                 accX = 0;
                 accY = -Settings.EntitySpeed;
                 accZ = 0;
                 break;
             case 1:
-                posX = this.xCoord+0.5;
-                posY = this.yCoord+0.5 +1;
-                posZ = this.zCoord+0.5;
+                posX = this.xCoord + 0.5;
+                posY = this.yCoord + 0.5 + 1;
+                posZ = this.zCoord + 0.5;
                 accX = 0;
                 accY = +Settings.EntitySpeed;
                 accZ = 0;
                 break;
             case 2:
-                posX = this.xCoord+0.5;
-                posY = this.yCoord+0.5;
-                posZ = this.zCoord+0.5 -1;
+                posX = this.xCoord + 0.5;
+                posY = this.yCoord + 0.5;
+                posZ = this.zCoord + 0.5 - 1;
                 accX = 0;
                 accY = 0;
                 accZ = -Settings.EntitySpeed;
                 break;
             case 3:
-                posX = this.xCoord+0.5;
-                posY = this.yCoord+0.5;
-                posZ = this.zCoord+0.5 +1;
+                posX = this.xCoord + 0.5;
+                posY = this.yCoord + 0.5;
+                posZ = this.zCoord + 0.5 + 1;
                 accX = 0;
                 accY = 0;
                 accZ = Settings.EntitySpeed;
                 break;
             case 4:
-                posX = this.xCoord+0.5 -1;
-                posY = this.yCoord+0.5;
-                posZ = this.zCoord+0.5;
+                posX = this.xCoord + 0.5 - 1;
+                posY = this.yCoord + 0.5;
+                posZ = this.zCoord + 0.5;
                 accX = -Settings.EntitySpeed;
                 accY = 0;
                 accZ = 0;
                 break;
             case 5:
-                posX = this.xCoord+0.5 +1;
-                posY = this.yCoord+0.5;
-                posZ = this.zCoord+0.5;
+                posX = this.xCoord + 0.5 + 1;
+                posY = this.yCoord + 0.5;
+                posZ = this.zCoord + 0.5;
                 accX = Settings.EntitySpeed;
                 accY = 0;
                 accZ = 0;
                 break;
             default:
-                posX = this.xCoord+0.5;
-                posY = this.yCoord+0.5 +1;
-                posZ = this.zCoord+0.5;
+                posX = this.xCoord + 0.5;
+                posY = this.yCoord + 0.5 + 1;
+                posZ = this.zCoord + 0.5;
                 accX = 0;
                 accY = 0;
                 accZ = 0;
@@ -136,18 +138,16 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         }
     }
 
-    private void tryConnect(int dimId, int x, int y, int z){
-        if(!worldObj.isRemote) {
+    public void tryConnect(int dimId, int x, int y, int z){
+        if(!worldObj.isRemote){
             TileEntity te = DimensionManager.getWorld(dimId).getTileEntity(x, y, z);
-            if (te instanceof LaserTileEntity) {
+            if(te instanceof LaserTileEntity){
                 otherLaserTe = (LaserTileEntity) te;
                 this.connected = true;
                 this.otherLaser = new Location(dimId, x, y, z);
                 this.laserPair = new LocationPair(new Location(worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord), otherLaser);
-                OpenRadio.renderWorldEvent.lasers.add(laserPair);
             }else{
-                this.connected = false;
-                OpenRadio.renderWorldEvent.lasers.remove(laserPair);
+                disconnect();
                 otherLaserTe = null;
                 otherLaser = null;
             }
@@ -156,17 +156,22 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     private boolean checkBlock(Location location){
-        return !DimensionManager.getWorld(location.getDim()).getBlock(location.getX(), location.getY(), location.getZ()).isOpaqueCube();
+        return !DimensionManager.getWorld(location.getDim()).getBlock(location.getX(), location.getY(), location.getZ()).getMaterial().isSolid();
     }
 
     public void disconnect(){
         if(connected){
             connected = false;
-            OpenRadio.renderWorldEvent.lasers.remove(laserPair);
-            OpenRadio.renderWorldEvent.lasers.remove(otherLaserTe.laserPair);
         }
     }
 
+    public Location getOtherLaser(){
+        return otherLaser;
+    }
+
+    public boolean isConnected(){
+        return connected;
+    }
 
     //------------------------------------------------------------------------------------------------------------------
     //Open Computers Integration
@@ -221,7 +226,6 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                     toCheck.remove(0);
                 else{
                     connected = false;
-                    OpenRadio.renderWorldEvent.lasers.remove(laserPair);
                 }
             }
         }
@@ -337,7 +341,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public void writeToNBT(NBTTagCompound tagCompound){
         super.writeToNBT(tagCompound);
 
-        if(connected) {
+        if(connected){
             tagCompound.setBoolean("otherLaserConnected", true);
             tagCompound.setInteger("otherLaserDimId", otherLaser.getDim());
             tagCompound.setInteger("otherLaserX", otherLaser.getX());
@@ -348,7 +352,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         }
 
         NBTTagList blocks = new NBTTagList();
-        for(Location loc: this.blocks){
+        for(Location loc : this.blocks){
             NBTTagCompound tag = new NBTTagCompound();
             tag.setInteger("X", loc.getX());
             tag.setInteger("Y", loc.getY());

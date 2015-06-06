@@ -8,8 +8,11 @@ import cpw.mods.fml.common.registry.GameRegistry;
  * Created by Jakob Riepler (XDjackieXD)
  */
 public class Blocks {
+    public static LaserBlock laserBlock;
+
     //Register all blocks (Has to be called during FML Init)
     public static void init(){
-        GameRegistry.registerBlock(new LaserBlock(), OpenRadio.MODID + ".laser");
+        laserBlock = new LaserBlock();
+        GameRegistry.registerBlock(laserBlock, OpenRadio.MODID + ".laser");
     }
 }
