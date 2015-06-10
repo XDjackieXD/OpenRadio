@@ -30,6 +30,7 @@ public class CreativeTab extends CreativeTabs{
         this.addBlock(Blocks.laserBlock);
 
         this.addItem(Items.lensItem);
+        this.addItem(Items.laserSocketItem);
     }
 
     @Override

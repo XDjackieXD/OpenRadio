@@ -289,8 +289,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer player){
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this &&
-                player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
+        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
     }
 
     @Override
@@ -304,8 +303,14 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     @Override
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_){
-        return false;
+    public boolean isItemValidForSlot(int slot, ItemStack itemStack){
+        OpenRadio.logger.info("Slot " + slot + ": " + itemStack.getUnlocalizedName());
+        switch(slot){
+            case 3:
+                return itemStack.getItem().getUnlocalizedName().equals(OpenRadio.MODID + ":lens");
+            default:
+                return false;
+        }
     }
 
     @Override
