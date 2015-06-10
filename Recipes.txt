@@ -3,40 +3,40 @@ OpenRadio Items :
 --------------------
 LASER
 --------------------
-Linsen :
+Lenses :
 
-Basic Linse
+Glass Lens
 
-G... Glas
+G... Glass
 
-X:G:X
+ :G:
 G:G:G
-X:G:X
+ :G:
 
-Quartz Infused Linse
+Quartz Infused Lens
 
-L... Basic Linse
-Q... Nether Quarz
+L... Glass Lens
+Q... Nether Quartz
 
-X:Q:X
+ :Q:
 Q:L:Q
-X:Q:X
+ :Q:
 
-Diamond Shaped Linse
+Shaped Diamond Lens
 
-L... Quarz Infused Linse
+L... Quartz Infused Lens
 G... Gold
-D... Diamant
+D... Diamond
 
 G:D:G
 D:L:D
 G:D:G
 
-Nether (AE2) Linse
+Nether (AE2) Lens
 
-L... Diamond Shaped Linse
+L... Shaped Diamond Lens
 N... Nether Star
-D... Diamant
+D... Diamond
 
 D:N:D
 N:L:N
@@ -44,35 +44,34 @@ D:N:D
 
 Basic Items :
 
-Linse Casing
+Lens Holder
 
 I... Iron
 G... Gold
 
 I:G:I
-I:X:I
+I: :I
 I:G:I
 
 Phototransistor
 
-D... Diamant
+D... Diamond
 T... Transistor (OpenComputers)
-S... Stone
-L... Linse Casing
+I... Iron
+G... Glass
 
-X:D:X
-S:T:L
-X:D:X
+I:D:I
+I:T:G
+I:D:I
 
 Laser Socket
 
-D... Diamant
-S... Stone
-L... Linse Casing
+D... Diamond
+I... Iron
 
-X:D:X
-S:X:L
-X:D:X
+I:D:I
+I: :I
+I:D:I
 
 Duplex Unit
 
@@ -86,40 +85,20 @@ E:P:E
 I:D:I
 E:L:E
 
+
 Blocks :
 
-Laser Transmitter - Upgradebar durch OC CPUs
+Laser Tranceiver
 
 L... Laser Socket
 N... Network Cable
 S... Switch (OpenComputers)
-I... Steel Block
+I... Steel
 
 I:I:I
 N:S:L
 I:I:I
 
-Laser Receiver - Upgradebar durch OC CPUs
-
-P... Phototransistor
-N... Network Cable
-S... Switch (OpenComputers)
-I... Steel Block
-
-I:I:I
-N:S:P
-I:I:I
-
-Laser Tranceiver - Upgradebar durch OC CPUs
-
-D... Duplex Unit
-N... Network Cable
-S... Switch (OpenComputers)
-I... Steel Block
-
-I:I:I
-N:S:D
-I:I:I
 
 Mirror
 
@@ -131,7 +110,7 @@ I:D:I
 I:G:I
 I:D:I
 
-NSA'o'mat - Schnüffelstation, braucht 2 Linsen!
+NSA'o'mat - Signal Interceptor (needs two lasers, phototransistors and Lenses!
 
 S... Switch
 D... Duplex Unit

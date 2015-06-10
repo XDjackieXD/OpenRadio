@@ -1,4 +1,7 @@
 tile.openradio:laser.name=Laser
 container.openradio:laser.name=Laser
 item.openradio:lens.name=Lens
+item.openradio:lens.glasslens.name=Glass lens
+item.openradio:lens.quartzlens.name=Quartz infused lens
+item.openradio:lens.diamondlens.name=Shaped diamond lens
 itemGroup.openradio=OpenRadio
