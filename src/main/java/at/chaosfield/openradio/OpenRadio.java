@@ -1,6 +1,7 @@
 package at.chaosfield.openradio;
 
 import at.chaosfield.openradio.common.init.Blocks;
+import at.chaosfield.openradio.common.init.Crafting;
 import at.chaosfield.openradio.common.init.Entities;
 import at.chaosfield.openradio.common.init.Items;
 import at.chaosfield.openradio.gui.GuiHandler;
@@ -47,8 +48,9 @@ public class OpenRadio{
     @Mod.EventHandler
     public void init(FMLInitializationEvent event){
         GuiHandler.init();              //Register the GUIs
-        Entities.init();
-        proxy.registerTileEntities();   //Register all TileEntities
+        Entities.init();                //Register the Entities
+        Crafting.init();                //Register the crafting recipes
+        proxy.registerTileEntities();   //Register the TileEntities
         proxy.registerRenders();
         proxy.registerSounds();
 
