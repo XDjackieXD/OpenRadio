@@ -4,4 +4,5 @@ item.openradio:lens.name=Lens
 item.openradio:lens.glasslens.name=Glass lens
 item.openradio:lens.quartzlens.name=Quartz infused lens
 item.openradio:lens.diamondlens.name=Shaped diamond lens
+item.openradio:lasersocket.name=Laser Socket
 itemGroup.openradio=OpenRadio
