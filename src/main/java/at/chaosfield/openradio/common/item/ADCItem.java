@@ -16,15 +16,13 @@ import java.util.List;
 /**
  * Created by Jakob Riepler (XDjackieXD)
  */
-public class LensItem extends Item{
-
-    public LensItem(){
-        maxStackSize = 1;
-        setUnlocalizedName(OpenRadio.MODID + ":lens");
+public class ADCItem extends Item{
+    public ADCItem(){
+        maxStackSize = 64;
+        setUnlocalizedName(OpenRadio.MODID + ":adc");
         setHasSubtypes(true);
         setCreativeTab(CreativeTab.instance);
     }
-
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
@@ -34,12 +32,12 @@ public class LensItem extends Item{
     public void registerIcons(IIconRegister par1IconRegister)
     {
         icons = new IIcon[3];
-        icons[0] = par1IconRegister.registerIcon(OpenRadio.MODID + ":glasslens");
-        icons[1] = par1IconRegister.registerIcon(OpenRadio.MODID + ":quartzlens");
-        icons[2] = par1IconRegister.registerIcon(OpenRadio.MODID + ":diamondlens");
+        icons[0] = par1IconRegister.registerIcon(OpenRadio.MODID + ":adct1");
+        icons[1] = par1IconRegister.registerIcon(OpenRadio.MODID + ":adct2");
+        icons[2] = par1IconRegister.registerIcon(OpenRadio.MODID + ":adct3");
     }
 
-    public static final String[] names = new String[] { "glasslens", "quartzlens", "diamondlens" };
+    public static final String[] names = new String[] { "t1", "t2", "t3" };
 
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack)
@@ -61,4 +59,4 @@ public class LensItem extends Item{
             itemList.add(new ItemStack(item, 1, i));
         }
     }
-  }
+}

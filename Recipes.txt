@@ -1,123 +1,161 @@
 OpenRadio Items :
 
 --------------------
-LASER
+Items
 --------------------
+
 Lenses :
 
-Glass Lens
+    Glass Lens
 
-G... Glass
+        G... Glass
 
- :G:
-G:G:G
- :G:
+         :G:
+        G:G:G
+         :G:
 
-Quartz Infused Lens
+    Quartz Infused Lens
 
-L... Glass Lens
-Q... Nether Quartz
+        L... Glass Lens
+        Q... Nether Quartz
 
- :Q:
-Q:L:Q
- :Q:
+         :Q:
+        Q:L:Q
+         :Q:
 
-Shaped Diamond Lens
+    Shaped Diamond Lens
 
-L... Quartz Infused Lens
-G... Gold
-D... Diamond
+        L... Quartz Infused Lens
+        G... Gold
+        D... Diamond
 
-G:D:G
-D:L:D
-G:D:G
+        G:D:G
+        D:L:D
+        G:D:G
 
-Nether (AE2) Lens
+    Nether (AE2) Lens
 
-L... Shaped Diamond Lens
-N... Nether Star
-D... Diamond
+        L... Shaped Diamond Lens
+        N... Nether Star
+        D... Diamond
 
-D:N:D
-N:L:N
-D:N:D
+        D:N:D
+        N:L:N
+        D:N:D
 
-Basic Items :
 
 Lens Holder
 
-I... Iron
-G... Gold
+    I... Iron
+    G... Gold
 
-I:G:I
-I: :I
-I:G:I
+    I:G:I
+    I: :I
+    I:G:I
 
 Phototransistor
 
-D... Diamond
-T... Transistor (OpenComputers)
-I... Iron
-G... Glass
+    D... Diamond
+    T... Transistor (OpenComputers)
+    I... Iron
+    G... Glass
 
-I:D:I
-I:T:G
-I:D:I
+    I:D:I
+    I:T:G
+    I:D:I
 
 Laser Socket
 
-D... Diamond
-I... Iron
+    D... Diamond
+    I... Iron
 
-I:D:I
-I: :I
-I:D:I
+    I:D:I
+    I: :I
+    I:D:I
 
 Duplex Unit
 
-E... Emerald
-P... Phototransistor
-I... Iron
-D... Diamond
-L... Laser Socket
+    E... Emerald
+    P... Phototransistor
+    I... Iron
+    D... Diamond
+    L... Laser Socket
 
-E:P:E
-I:D:I
-E:L:E
+    E:P:E
+    I:D:I
+    E:L:E
+
+DSP:
+
+    M... Microchip (Tier depending on DSP tier, OC)
+    C... Control Unit (OC)
+    A... A/D Converter (Tier depending on DSP tier)
+    I... Iron
+
+    I:A:I
+    M:C:M
+    I:A:I
+
+A/D Converter:
+
+    C... Comparator
+    I... Iron
+    M... Microchip (Tier depending on Converter tier, OC)
+
+    Tier1
+
+        I:I:I
+        I:M:I
+        I:C:I
+
+    Tier2
+
+        I:C:I
+        I:M:I
+        I:C:I
+
+    Tier3
+
+        I:C:I
+        C:M:C
+        I:C:I
 
 
-Blocks :
+
+--------------------
+Blocks
+--------------------
 
 Laser Tranceiver
 
-L... Laser Socket
-N... Network Cable
-S... Switch (OpenComputers)
-I... Steel
+    L... Laser Socket
+    N... Network Cable
+    S... Switch (OpenComputers)
+    I... Steel
 
-I:I:I
-N:S:L
-I:I:I
+    I:I:I
+    N:S:L
+    I:I:I
 
 
 Mirror
 
-G... Glas Panel
-I... Iron
-D... Diamant
+    G... Glas Panel
+    I... Iron
+    D... Diamant
 
-I:D:I
-I:G:I
-I:D:I
+    I:D:I
+    I:G:I
+    I:D:I
 
 NSA'o'mat - Signal Interceptor (needs two lasers, phototransistors and Lenses!
 
-S... Switch
-D... Duplex Unit
-N... Network Cable
-T... Nether Star
-I... Steel Block
+    S... Switch
+    D... Duplex Unit
+    N... Network Cable
+    T... Nether Star
+    I... Steel Block
 
-I:T:I
-D:S:D
-I:N:I
+    I:T:I
+    D:S:D
+    I:N:I

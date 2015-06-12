@@ -30,6 +30,42 @@ public class Crafting{
                 'I', "ingotIron",
                 'D', "gemDiamond"));
 
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.adcItem, 1, 0),      //ADC Tier 1
+                "III", "IMI", "ICI",
+                'I', "ingotIron",
+                'C', new ItemStack(net.minecraft.init.Items.comparator),
+                'M', li.cil.oc.api.Items.get("chip1").createItemStack(1)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.adcItem, 1, 1),      //ADC Tier 2
+                "ICI", "IMI", "ICI",
+                'I', "ingotIron",
+                'C', new ItemStack(net.minecraft.init.Items.comparator),
+                'M', li.cil.oc.api.Items.get("chip2").createItemStack(2)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.adcItem, 1, 2),      //ADC Tier 3
+                "ICI", "CMC", "ICI",
+                'I', "ingotIron",
+                'C', new ItemStack(net.minecraft.init.Items.comparator),
+                'M', li.cil.oc.api.Items.get("chip3").createItemStack(1)));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.dspItem, 1, 0),      //DSP Tier 1
+                "IAI", "MCM", "IAI",
+                'I', "ingotIron",
+                'M', li.cil.oc.api.Items.get("chip1").createItemStack(1),
+                'C', li.cil.oc.api.Items.get("cu").createItemStack(1),
+                'A', new ItemStack(Items.adcItem, 1, 0)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.dspItem, 1, 1),      //DSP Tier 2
+                "IAI", "MCM", "IAI",
+                'I', "ingotIron",
+                'M', li.cil.oc.api.Items.get("chip2").createItemStack(1),
+                'C', li.cil.oc.api.Items.get("cu").createItemStack(1),
+                'A', new ItemStack(Items.adcItem, 1, 1)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.dspItem, 1, 2),      //DSP Tier 3
+                "IAI", "MCM", "IAI",
+                'I', "ingotIron",
+                'M', li.cil.oc.api.Items.get("chip3").createItemStack(1),
+                'C', li.cil.oc.api.Items.get("cu").createItemStack(1),
+                'A', new ItemStack(Items.adcItem, 1, 2)));
+
+
         //**************************************************************************************************************
         //Register Blocks
         //TODO Use steel instead of iron if available

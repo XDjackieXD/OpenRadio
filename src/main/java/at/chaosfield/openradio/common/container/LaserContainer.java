@@ -1,6 +1,8 @@
 package at.chaosfield.openradio.common.container;
 
+import at.chaosfield.openradio.common.init.Items;
 import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
+import at.chaosfield.openradio.gui.RestrictedSlot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -16,10 +18,10 @@ public class LaserContainer extends Container{
     public LaserContainer(InventoryPlayer inventoryPlayer, LaserTileEntity te){
         tileEntity = te;
 
-        addSlotToContainer(new Slot(tileEntity, 0, 33, 18));    //DSP
+        addSlotToContainer(new RestrictedSlot(Items.dspItem, 1, tileEntity, 0, 33, 18));     //DSP
         addSlotToContainer(new Slot(tileEntity, 1, 56, 18));    //PhotoReceptor
         addSlotToContainer(new Slot(tileEntity, 2, 89, 18));    //SemiReflectiveMirror
-        addSlotToContainer(new Slot(tileEntity, 3, 127, 18));   //Lens
+        addSlotToContainer(new RestrictedSlot(Items.lensItem, 1, tileEntity, 3, 127, 18));   //Lens
         addSlotToContainer(new Slot(tileEntity, 4, 89, 51));    //Laser
 
         //commonly used vanilla code that adds the player's inventory
