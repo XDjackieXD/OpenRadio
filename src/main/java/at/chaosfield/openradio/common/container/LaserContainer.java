@@ -19,7 +19,7 @@ public class LaserContainer extends Container{
         tileEntity = te;
 
         addSlotToContainer(new RestrictedSlot(Items.dspItem, 1, tileEntity, 0, 33, 18));     //DSP
-        addSlotToContainer(new Slot(tileEntity, 1, 56, 18));    //PhotoReceptor
+        addSlotToContainer(new RestrictedSlot(Items.photoReceptorItem, 1, tileEntity, 1, 56, 18));    //PhotoReceptor
         addSlotToContainer(new Slot(tileEntity, 2, 89, 18));    //SemiReflectiveMirror
         addSlotToContainer(new RestrictedSlot(Items.lensItem, 1, tileEntity, 3, 127, 18));   //Lens
         addSlotToContainer(new Slot(tileEntity, 4, 89, 51));    //Laser
@@ -64,9 +64,9 @@ public class LaserContainer extends Container{
             }
             //Item is in Player inventory. Transfer into container
             //TODO Shift-click deletes all items over containers maximum stack size
-            else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) {
-                return null;
-            }
+            //else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) {
+            //    return null;
+            //}
 
             if (stackInSlot.stackSize == 0) {
                 slotObject.putStack(null);
