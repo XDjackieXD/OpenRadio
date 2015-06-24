@@ -65,6 +65,12 @@ public class Crafting{
                 'C', li.cil.oc.api.Items.get("cu").createItemStack(1),
                 'A', new ItemStack(Items.adcItem, 1, 2)));
 
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.photoReceptorItem),  //Laser Socket
+                "IDI", "TGT", "IDI",
+                'I', "ingotIron",
+                'D', "gemDiamond",
+                'G', "blockGlass",
+                'T', li.cil.oc.api.Items.get("transistor").createItemStack(1)));
 
         //**************************************************************************************************************
         //Register Blocks
