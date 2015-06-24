@@ -53,7 +53,7 @@ Lens Holder
     I: :I
     I:G:I
 
-Phototransistor
+Photoreceptor
 
     D... Diamond
     T... Transistor (OpenComputers)
@@ -61,7 +61,7 @@ Phototransistor
     G... Glass
 
     I:D:I
-    I:T:G
+    T:G:T
     I:D:I
 
 Laser Socket
@@ -120,7 +120,15 @@ A/D Converter:
         C:M:C
         I:C:I
 
+Half Translucent Mirror:
 
+    I... Iron
+    G... Glass
+    D... Diamond
+
+     :I:G
+    I:G:D
+    G:D:
 
 --------------------
 Blocks

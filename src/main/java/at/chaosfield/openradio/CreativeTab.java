@@ -33,6 +33,7 @@ public class CreativeTab extends CreativeTabs{
         this.addItem(Items.lensItem);
         this.addItem(Items.dspItem);
         this.addItem(Items.adcItem);
+        this.addItem(Items.photoReceptorItem);
     }
 
     @Override

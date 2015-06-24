@@ -60,7 +60,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         return OpenRadio.MODID + ".laser";
     }
 
-
+    //TODO remove the whole block checking and fire an entity every few seconds to check the connection. this resolves a few issues (cross dimension and other things) and should be faster
     public void pingRequest(String uid){
         double posX, posY, posZ, accX, accY, accZ;
         switch(this.getBlockMetadata()){
