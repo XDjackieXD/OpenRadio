@@ -11,5 +11,6 @@ item.openradio:adc.t1.name=A/D Converter (Tier 1)
 item.openradio:adc.t2.name=A/D Converter (Tier 2)
 item.openradio:adc.t3.name=A/D Converter (Tier 3)
 item.openradio:photoreceptor.name=Photoreceptor
+item.openradio:mirror.name=Semi Reflective Mirror
 item.openradio:lasersocket.name=Laser Socket
 itemGroup.openradio=OpenRadio

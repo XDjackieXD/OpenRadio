@@ -13,6 +13,7 @@ public class Items{
     public static DSPItem dspItem;
     public static ADCItem adcItem;
     public static PhotoReceptorItem photoReceptorItem;
+    public static MirrorItem mirrorItem;
 
     //Register all items (Has to be called during FML Init)
     public static void init(){
@@ -21,5 +22,6 @@ public class Items{
         GameRegistry.registerItem(dspItem = new DSPItem(), OpenRadio.MODID + ".dsp");
         GameRegistry.registerItem(photoReceptorItem = new PhotoReceptorItem(), OpenRadio.MODID + ".photoreceptor");
         GameRegistry.registerItem(adcItem = new ADCItem(), OpenRadio.MODID + ".adc");
+        GameRegistry.registerItem(mirrorItem = new MirrorItem(), OpenRadio.MODID + ".mirror");
     }
 }

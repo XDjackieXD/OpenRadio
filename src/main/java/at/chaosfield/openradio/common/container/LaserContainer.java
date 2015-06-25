@@ -20,7 +20,7 @@ public class LaserContainer extends Container{
 
         addSlotToContainer(new RestrictedSlot(Items.dspItem, 1, tileEntity, 0, 33, 18));     //DSP
         addSlotToContainer(new RestrictedSlot(Items.photoReceptorItem, 1, tileEntity, 1, 56, 18));    //PhotoReceptor
-        addSlotToContainer(new Slot(tileEntity, 2, 89, 18));    //SemiReflectiveMirror
+        addSlotToContainer(new RestrictedSlot(Items.mirrorItem, 1, tileEntity, 2, 89, 18));    //SemiReflectiveMirror
         addSlotToContainer(new RestrictedSlot(Items.lensItem, 1, tileEntity, 3, 127, 18));   //Lens
         addSlotToContainer(new Slot(tileEntity, 4, 89, 51));    //Laser
 

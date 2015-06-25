@@ -120,7 +120,7 @@ A/D Converter:
         C:M:C
         I:C:I
 
-Half Translucent Mirror:
+Semi Reflective Mirror:
 
     I... Iron
     G... Glass
