@@ -22,7 +22,7 @@ public class LaserContainer extends Container{
         addSlotToContainer(new RestrictedSlot(Items.photoReceptorItem, 1, tileEntity, 1, 56, 18));    //PhotoReceptor
         addSlotToContainer(new RestrictedSlot(Items.mirrorItem, 1, tileEntity, 2, 89, 18));    //SemiReflectiveMirror
         addSlotToContainer(new RestrictedSlot(Items.lensItem, 1, tileEntity, 3, 127, 18));   //Lens
-        addSlotToContainer(new Slot(tileEntity, 4, 89, 51));    //Laser
+        addSlotToContainer(new RestrictedSlot(Items.laserItem, 1, tileEntity, 4, 89, 51));    //Laser
 
         //commonly used vanilla code that adds the player's inventory
         bindPlayerInventory(inventoryPlayer);
