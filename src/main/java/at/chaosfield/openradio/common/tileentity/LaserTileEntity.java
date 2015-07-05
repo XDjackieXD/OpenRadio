@@ -4,6 +4,7 @@ package at.chaosfield.openradio.common.tileentity;
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.Settings;
 import at.chaosfield.openradio.common.entity.LaserEntity;
+import at.chaosfield.openradio.common.init.Items;
 import at.chaosfield.openradio.util.Location;
 import at.chaosfield.openradio.util.LocationPair;
 import li.cil.oc.api.API;
@@ -152,7 +153,6 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 otherLaser = null;
             }
         }
-
     }
 
     private boolean checkBlock(Location location){
@@ -171,6 +171,10 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         return connected;
     }
 
+    public boolean hasNeededComponents(){
+        return (inv[0].getItem() == Items.dspItem) && (inv[1].getItem() == Items.photoReceptorItem) && (inv[2].getItem() == Items.mirrorItem) && (inv[3].getItem() == Items.lensItem) && (inv[4].getItem() == Items.laserItem);
+    }
+
     //------------------------------------------------------------------------------------------------------------------
     //Open Computers Integration
     public String getComponentName(){
@@ -184,8 +188,12 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     @Callback(direct = true, doc = "function():{true} -- try to connect to other laser")
     public Object[] connect(Context context, Arguments args){
-        pingRequest(node.address());
-        return new Object[]{true};
+        if(hasNeededComponents()){
+            pingRequest(node.address());
+            return new Object[]{true};
+        }else{
+            return new Object[]{false};
+        }
     }
 
     @Callback(direct = true, doc = "function():{connected, dimId, x, y, z} -- Get the other Laser")
@@ -216,6 +224,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(!worldObj.isRemote){
             if(connected){
                 powered = (node() != null) && ((Connector) node()).tryChangeBuffer(laserPower / 10f * OpenRadio.energyMultiplier);
+                if(!isPowered()) connected = false;
 
                 if(toCheck.size() <= 0)
                     toCheck = new ArrayList<Location>(blocks);
