@@ -31,7 +31,7 @@ import net.minecraftforge.common.DimensionManager;
 
 public class LaserTileEntity extends TileEntityEnvironment implements IInventory{
     private boolean powered;
-    private boolean turnedOn;
+    //private boolean turnedOn;
     private int laserPower = 10;
     private double distance;
     private Location otherLaser;
@@ -125,12 +125,10 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(!this.getWorldObj().isRemote){
             this.otherLaser = new Location(dim, x, y, z);
             this.distance = distance;
-            OpenRadio.logger.info("setDestination Dim: " + dim + ", X: " + x + ", Y: " + y + ", Z: " + z + ", Distance: " + distance); //debugging!
         }
     }
 
     public void disconnect(){
-        OpenRadio.logger.info("Disconnect!");
         this.otherLaser = null;
     }
 
@@ -290,7 +288,6 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemStack){
-        OpenRadio.logger.info("Slot " + slot + ": " + itemStack.getUnlocalizedName());
         switch(slot){
             case 3:
                 return itemStack.getItem().getUnlocalizedName().equals(OpenRadio.MODID + ":lens");

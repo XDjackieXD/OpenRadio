@@ -1,7 +1,6 @@
 package at.chaosfield.openradio.common.entity;
 
 
-import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.Settings;
 import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.util.Location;
@@ -234,7 +233,6 @@ public class LaserEntity extends Entity implements IProjectile{
                             ((LaserTileEntity) senderLaserTe).setDestination(this.worldObj.provider.dimensionId, mop.blockX, mop.blockY, mop.blockZ, this.distance);
                         else
                             ((LaserTileEntity) senderLaserTe).disconnect();
-                        OpenRadio.logger.info("Hit Laser at X=" + mop.blockX + ", Y=" + mop.blockY + ", Z=" + mop.blockZ + " on block side " + mop.sideHit + ", the laser is on side " + te.getBlockMetadata() + "."); //debugging!
                     }else
                         ((LaserTileEntity) senderLaserTe).disconnect();
                 }else
