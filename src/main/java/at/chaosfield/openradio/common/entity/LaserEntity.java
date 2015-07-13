@@ -2,6 +2,7 @@ package at.chaosfield.openradio.common.entity;
 
 
 import at.chaosfield.openradio.OpenRadio;
+import at.chaosfield.openradio.Settings;
 import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.util.Location;
 import cpw.mods.fml.relauncher.Side;
@@ -11,20 +12,20 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-
-import java.util.*;
+import net.minecraftforge.common.DimensionManager;
 
 
 /**
  * Created by Jakob Riepler (XDjackieXD)
  */
+
+//TODO if entity gets into an unloaded chunk destroy it and send a disconnect
+
 public class LaserEntity extends Entity implements IProjectile{
 
     private int xTile = -1;
@@ -32,15 +33,11 @@ public class LaserEntity extends Entity implements IProjectile{
     private int zTile = -1;
     private Block block;
 
-    private String uid = "";
-    private int laserX;
-    private int laserY;
-    private int laserZ;
-    private int laserDim;
+    private Location senderLaser;
 
     private Location locNow;
 
-    private List<Location> blocks = new ArrayList<Location>();
+    private double distance = 1;
 
     public LaserEntity(World world){
         super(world);
@@ -57,7 +54,7 @@ public class LaserEntity extends Entity implements IProjectile{
         return renderDistance < d1 * d1;
     }
 
-    public LaserEntity(World world, double x, double y, double z, double accX, double accY, double accZ, String uid, int laserDim, int laserX, int laserY, int laserZ){
+    public LaserEntity(World world, double x, double y, double z, double accX, double accY, double accZ, int laserDim, int laserX, int laserY, int laserZ){
         super(world);
         this.setSize(0.25F, 0.25F);
         this.setPosition(x, y, z);
@@ -65,15 +62,10 @@ public class LaserEntity extends Entity implements IProjectile{
         this.motionX = accX;
         this.motionY = accY;
         this.motionZ = accZ;
-        this.uid = uid;
-        this.laserDim = laserDim;
-        this.laserX = laserX;
-        this.laserY = laserY;
-        this.laserZ = laserZ;
+        this.senderLaser = new Location(laserDim, laserX, laserY, laserZ);
 
         if(!worldObj.isRemote){
             this.locNow = new Location(world.provider.dimensionId, (int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
-            this.blocks.add(new Location(this.locNow.getDim(), this.locNow.getX(), this.locNow.getY(), this.locNow.getZ()));
         }
     }
 
@@ -117,10 +109,19 @@ public class LaserEntity extends Entity implements IProjectile{
                     this.locNow.setY((int) Math.floor(this.posY));
                     this.locNow.setZ((int) Math.floor(this.posZ));
                     this.locNow.setDim(worldObj.provider.dimensionId);
-                    this.blocks.add(new Location(this.locNow.getDim(), this.locNow.getX(), this.locNow.getY(), this.locNow.getZ()));
+                    Block block = DimensionManager.getWorld(this.locNow.getDim()).getBlock(this.locNow.getX(), this.locNow.getY(), this.locNow.getZ());
+                    if(block.isAir(DimensionManager.getWorld(this.locNow.getDim()), this.locNow.getX(), this.locNow.getY(), this.locNow.getZ())){
+                        distance += Settings.DistancePerAir;
+                    }else if(!block.getMaterial().isSolid()){
+                        distance += Settings.DistancePerAir * Settings.DistanceMultiplierTransparent;
+                    }
                 }
             }else{
                 this.locNow = new Location(worldObj.provider.dimensionId, (int) Math.floor(this.posX), (int) Math.floor(this.posY), (int) Math.floor(this.posZ));
+            }
+            if(distance > Settings.LaserMaxDistance){
+                this.setDead();
+
             }
         }
 
@@ -166,7 +167,7 @@ public class LaserEntity extends Entity implements IProjectile{
             if(movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
                 if(this.worldObj.getBlock(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ) == Blocks.portal){
                     this.setInPortal();
-                }else if(this.worldObj.getBlock(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ).isOpaqueCube()){ //only collide with solid blocks
+                }else if(this.worldObj.getBlock(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ).getMaterial().isSolid()){ //only collide with solid blocks
                     this.onImpact(movingobjectposition);
                 }
         }
@@ -179,21 +180,12 @@ public class LaserEntity extends Entity implements IProjectile{
     }
 
     public void writeEntityToNBT(NBTTagCompound nbtTagCompound){
-        nbtTagCompound.setInteger("laserX", this.laserX);
-        nbtTagCompound.setInteger("laserY", this.laserY);
-        nbtTagCompound.setInteger("laserZ", this.laserZ);
-        nbtTagCompound.setInteger("laserDim", this.laserDim);
-        nbtTagCompound.setString("laserId", this.uid);
-        NBTTagList blocks = new NBTTagList();
-        for(Location loc : this.blocks){
-            NBTTagCompound tag = new NBTTagCompound();
-            tag.setInteger("X", loc.getX());
-            tag.setInteger("Y", loc.getY());
-            tag.setInteger("Z", loc.getZ());
-            tag.setInteger("Dim", loc.getDim());
-            blocks.appendTag(tag);
-        }
-        nbtTagCompound.setTag("Blocks", blocks);
+        nbtTagCompound.setInteger("laserX", this.senderLaser.getX());
+        nbtTagCompound.setInteger("laserY", this.senderLaser.getY());
+        nbtTagCompound.setInteger("laserZ", this.senderLaser.getZ());
+        nbtTagCompound.setInteger("laserDim", this.senderLaser.getDim());
+
+
 
         nbtTagCompound.setInteger("locNowX", this.locNow.getX());
         nbtTagCompound.setInteger("locNowY", this.locNow.getY());
@@ -207,17 +199,11 @@ public class LaserEntity extends Entity implements IProjectile{
     }
 
     public void readEntityFromNBT(NBTTagCompound nbtTagCompound){
-        this.laserX = nbtTagCompound.getInteger("laserX");
-        this.laserY = nbtTagCompound.getInteger("laserY");
-        this.laserZ = nbtTagCompound.getInteger("laserZ");
-        this.laserDim = nbtTagCompound.getInteger("laserDim");
-        this.uid = nbtTagCompound.getString("laserId");
-
-        NBTTagList blocks = nbtTagCompound.getTagList("Blocks", nbtTagCompound.getId());
-        for(int i = 0; i < blocks.tagCount(); i++){
-            NBTTagCompound tag = blocks.getCompoundTagAt(i);
-            this.blocks.add(new Location(tag.getInteger("Dim"), tag.getInteger("X"), tag.getInteger("Y"), tag.getInteger("Z")));
-        }
+        if(this.senderLaser == null) this.senderLaser = new Location(0,0,0,0);
+        this.senderLaser.setX(nbtTagCompound.getInteger("laserX"));
+        this.senderLaser.setY(nbtTagCompound.getInteger("laserY"));
+        this.senderLaser.setZ(nbtTagCompound.getInteger("laserZ"));
+        this.senderLaser.setDim(nbtTagCompound.getInteger("laserDim"));
 
         this.locNow = new Location(0, 0, 0, 0);
         this.locNow.setX(nbtTagCompound.getInteger("locNowX"));
@@ -237,16 +223,22 @@ public class LaserEntity extends Entity implements IProjectile{
     }
 
     protected void onImpact(MovingObjectPosition mop){
+        this.setDead();
         if(!worldObj.isRemote){
-            OpenRadio.logger.info("Impact at X=" + this.posX + ", Y=" + this.posY + ", Z=" + this.posZ); //debugging!
-            this.setDead();
-            if(mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK){
-                TileEntity te = this.worldObj.getTileEntity(mop.blockX, mop.blockY, mop.blockZ);
-                if(te instanceof LaserTileEntity){
-                    if(mop.sideHit == te.getBlockMetadata())
-                        ((LaserTileEntity) te).hitByLaserEntity(this.uid, this.laserDim, this.laserX, this.laserY, this.laserZ, this.blocks);
-                    OpenRadio.logger.info("Hit Laser at X=" + mop.blockX + ", Y=" + mop.blockY + ", Z=" + mop.blockZ + " on block side " + mop.sideHit + ", the laser is on side " + te.getBlockMetadata() + ". my uid is: " + this.uid); //debugging!
-                }
+            TileEntity senderLaserTe = DimensionManager.getWorld(senderLaser.getDim()).getTileEntity(senderLaser.getX(), senderLaser.getY(), senderLaser.getZ());
+            if(senderLaserTe instanceof LaserTileEntity){
+                if(mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK){
+                    TileEntity te = this.worldObj.getTileEntity(mop.blockX, mop.blockY, mop.blockZ);
+                    if(te instanceof LaserTileEntity){
+                        if(mop.sideHit == te.getBlockMetadata())
+                            ((LaserTileEntity) senderLaserTe).setDestination(this.worldObj.provider.dimensionId, mop.blockX, mop.blockY, mop.blockZ, this.distance);
+                        else
+                            ((LaserTileEntity) senderLaserTe).disconnect();
+                        OpenRadio.logger.info("Hit Laser at X=" + mop.blockX + ", Y=" + mop.blockY + ", Z=" + mop.blockZ + " on block side " + mop.sideHit + ", the laser is on side " + te.getBlockMetadata() + "."); //debugging!
+                    }else
+                        ((LaserTileEntity) senderLaserTe).disconnect();
+                }else
+                    ((LaserTileEntity) senderLaserTe).disconnect();
             }
         }
     }

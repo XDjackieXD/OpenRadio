@@ -6,7 +6,6 @@ import at.chaosfield.openradio.Settings;
 import at.chaosfield.openradio.common.entity.LaserEntity;
 import at.chaosfield.openradio.common.init.Items;
 import at.chaosfield.openradio.util.Location;
-import at.chaosfield.openradio.util.LocationPair;
 import li.cil.oc.api.API;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
@@ -15,21 +14,15 @@ import li.cil.oc.api.network.Connector;
 import li.cil.oc.api.network.Message;
 import li.cil.oc.api.network.Visibility;
 import li.cil.oc.api.prefab.TileEntityEnvironment;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.DimensionManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -38,31 +31,34 @@ import java.util.List;
 
 public class LaserTileEntity extends TileEntityEnvironment implements IInventory{
     private boolean powered;
+    private boolean turnedOn;
     private int laserPower = 10;
-    private double latency = 0;
-    private boolean connected = false;
+    private double distance;
+    private Location otherLaser;
+
     private ItemStack[] inv;
 
-    public LocationPair laserPair;
-    private Location otherLaser;
-    private LaserTileEntity otherLaserTe;
-    private List<Location> blocks = new ArrayList<Location>();
-    private List<Location> toCheck = new ArrayList<Location>();
+    private int counter = 0;
 
     public LaserTileEntity(){
         super();
         node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(OpenRadio.energyBuffer).create();
         inv = new ItemStack[5];
-        if(otherLaser != null && otherLaserTe == null && !connected)
-            tryConnect(otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
+        if(otherLaser != null && !worldObj.isRemote){
+            TileEntity otherLaserTe = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
+            if(otherLaserTe instanceof LaserTileEntity){
+                ((LaserTileEntity) otherLaserTe).setDestination(this.getWorldObj().provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, this.distance);
+            }else{
+                disconnect();
+            }
+        }
     }
 
     public String getName(){
         return OpenRadio.MODID + ".laser";
     }
 
-    //TODO remove the whole block checking and fire an entity every few seconds to check the connection. this resolves a few issues (cross dimension and other things) and should be faster
-    public void pingRequest(String uid){
+    public void sendEntity(){
         double posX, posY, posZ, accX, accY, accZ;
         switch(this.getBlockMetadata()){
             case 0:
@@ -122,57 +118,32 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 accZ = 0;
         }
 
-        this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, uid, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord));
+        this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord));
     }
 
-    public void hitByLaserEntity(String uid, int dim, int x, int y, int z, List<Location> blocks){
-        OpenRadio.logger.info("Im a Laser at X=" + this.xCoord + ", Y=" + this.yCoord + ", Z=" + this.zCoord + ". my uid is: " + node.address() + "the data is: X=" + x + ", Y=" + y + ", Z=" + z + ", UID: " + uid); //debugging!
-        if(uid.equals(node.address()) && (x != this.xCoord || y != this.yCoord || z != this.zCoord)){
-            //This is the response of the other laser
-            this.blocks = blocks;
-            tryConnect(dim, x, y, z);
-        }else if(!uid.equals(node.address())){
-            //this is the request of another laser
-            pingRequest(uid);
-            this.blocks = blocks;
-            tryConnect(dim, x, y, z);
+    public void setDestination(int dim, int x, int y, int z, double distance){
+        if(!this.getWorldObj().isRemote){
+            this.otherLaser = new Location(dim, x, y, z);
+            this.distance = distance;
+            OpenRadio.logger.info("setDestination Dim: " + dim + ", X: " + x + ", Y: " + y + ", Z: " + z + ", Distance: " + distance); //debugging!
         }
-    }
-
-    public void tryConnect(int dimId, int x, int y, int z){
-        if(!worldObj.isRemote){
-            TileEntity te = DimensionManager.getWorld(dimId).getTileEntity(x, y, z);
-            if(te instanceof LaserTileEntity){
-                otherLaserTe = (LaserTileEntity) te;
-                this.connected = true;
-                this.otherLaser = new Location(dimId, x, y, z);
-                this.laserPair = new LocationPair(new Location(worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord), otherLaser);
-            }else{
-                disconnect();
-                otherLaserTe = null;
-                otherLaser = null;
-            }
-        }
-    }
-
-    private boolean checkBlock(Location location){
-        return !DimensionManager.getWorld(location.getDim()).getBlock(location.getX(), location.getY(), location.getZ()).getMaterial().isSolid();
     }
 
     public void disconnect(){
-        connected = false;
+        OpenRadio.logger.info("Disconnect!");
+        this.otherLaser = null;
     }
 
     public Location getOtherLaser(){
-        return otherLaser;
+        return this.otherLaser;
     }
 
     public boolean isConnected(){
-        return connected;
+        return (otherLaser != null);
     }
 
     public boolean hasNeededComponents(){
-        return (inv[0].getItem() == Items.dspItem) && (inv[1].getItem() == Items.photoReceptorItem) && (inv[2].getItem() == Items.mirrorItem) && (inv[3].getItem() == Items.lensItem) && (inv[4].getItem() == Items.laserItem);
+        return inv[0] != null && inv[1] != null && inv[2] != null && inv[3] != null && inv[4] != null && (inv[0].getItem() == Items.dspItem) && (inv[1].getItem() == Items.photoReceptorItem) && (inv[2].getItem() == Items.mirrorItem) && (inv[3].getItem() == Items.lensItem) && (inv[4].getItem() == Items.laserItem);
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -183,57 +154,63 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     @Callback(direct = true, doc = "function():double -- Get the current latency")
     public Object[] getLatency(Context context, Arguments args){
-        return new Object[]{latency};
+        return new Object[]{distance};
     }
 
-    @Callback(direct = true, doc = "function():{true} -- try to connect to other laser")
+    /*@Callback(direct = true, doc = "function():{true} -- try to connect to other laser")
     public Object[] connect(Context context, Arguments args){
         if(hasNeededComponents()){
-            pingRequest(node.address());
+            sendEntity();
             return new Object[]{true};
         }else{
             return new Object[]{false};
         }
-    }
+    }*/
 
     @Callback(direct = true, doc = "function():{connected, dimId, x, y, z} -- Get the other Laser")
     public Object[] connected(Context context, Arguments args){
-        if(otherLaser != null && this.connected)
+        if(otherLaser != null) OpenRadio.logger.info("other Laser:" + otherLaser.toString());
+        if(isConnected())
             return new Object[]{true, otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ()};
-        return new Object[]{false, 0, 0, 0, 0};
+        else
+            return new Object[]{false, 0, 0, 0, 0};
     }
 
     @Override
     public void onMessage(Message message){
         super.onMessage(message);
         if(message.name().equals("network.message")){
-            if(otherLaserTe == null && otherLaser != null){
-                tryConnect(otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
-            }
-            if(otherLaserTe != null && connected){
-                otherLaserTe.node.sendToReachable("network.message", message.data());
+            if(isConnected()){
+                TileEntity tileEntity = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
+                if(tileEntity instanceof LaserTileEntity){
+                    ((LaserTileEntity) tileEntity).node.sendToReachable("network.message", message.data());
+                }else{
+                    disconnect();
+                }
             }
         }
     }
     //------------------------------------------------------------------------------------------------------------------
 
-    //check, if the energy buffer isn't empty
+
     @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(connected){
+            if(isConnected()){
                 powered = (node() != null) && ((Connector) node()).tryChangeBuffer(laserPower / 10f * OpenRadio.energyMultiplier);
-                if(!isPowered()) connected = false;
+                //if(!isPowered()) disconnect();
 
-                if(toCheck.size() <= 0)
-                    toCheck = new ArrayList<Location>(blocks);
+            }
 
-                if(checkBlock(toCheck.get(0)))
-                    toCheck.remove(0);
-                else{
-                    connected = false;
+            if(hasNeededComponents()){
+                counter++;
+                if(counter >= 20){
+                    counter = 0;
+                    sendEntity();
                 }
+            }else{
+                disconnect();
             }
         }
     }
@@ -327,17 +304,10 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         super.readFromNBT(tagCompound);
 
         if(tagCompound.getBoolean("otherLaserConnected")){
+            this.distance = tagCompound.getDouble("distance");
             otherLaser = new Location(tagCompound.getInteger("otherLaserDimId"), tagCompound.getInteger("otherLaserX"), tagCompound.getInteger("otherLaserY"), tagCompound.getInteger("otherLaserZ"));
-            tryConnect(otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
         }else{
-            otherLaser = null;
-            this.connected = false;
-        }
-
-        NBTTagList blocks = tagCompound.getTagList("Blocks", tagCompound.getId());
-        for(int i = 0; i < blocks.tagCount(); i++){
-            NBTTagCompound tag = blocks.getCompoundTagAt(i);
-            this.blocks.add(new Location(tag.getInteger("Dim"), tag.getInteger("X"), tag.getInteger("Y"), tag.getInteger("Z")));
+            disconnect();
         }
 
         NBTTagList tagList = tagCompound.getTagList("Inventory", tagCompound.getId());
@@ -354,7 +324,8 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public void writeToNBT(NBTTagCompound tagCompound){
         super.writeToNBT(tagCompound);
 
-        if(connected){
+        if(isConnected()){
+            tagCompound.setDouble("distance", this.distance);
             tagCompound.setBoolean("otherLaserConnected", true);
             tagCompound.setInteger("otherLaserDimId", otherLaser.getDim());
             tagCompound.setInteger("otherLaserX", otherLaser.getX());
@@ -363,17 +334,6 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         }else{
             tagCompound.setBoolean("otherLaserConnected", false);
         }
-
-        NBTTagList blocks = new NBTTagList();
-        for(Location loc : this.blocks){
-            NBTTagCompound tag = new NBTTagCompound();
-            tag.setInteger("X", loc.getX());
-            tag.setInteger("Y", loc.getY());
-            tag.setInteger("Z", loc.getZ());
-            tag.setInteger("Dim", loc.getDim());
-            blocks.appendTag(tag);
-        }
-        tagCompound.setTag("Blocks", blocks);
 
         NBTTagList itemList = new NBTTagList();
         for(int i = 0; i < inv.length; i++){
