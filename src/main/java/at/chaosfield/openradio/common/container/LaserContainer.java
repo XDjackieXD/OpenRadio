@@ -18,11 +18,11 @@ public class LaserContainer extends Container{
     public LaserContainer(InventoryPlayer inventoryPlayer, LaserTileEntity te){
         tileEntity = te;
 
-        addSlotToContainer(new RestrictedSlot(Items.dspItem, 1, tileEntity, 0, 33, 18));     //DSP
-        addSlotToContainer(new RestrictedSlot(Items.photoReceptorItem, 1, tileEntity, 1, 56, 18));    //PhotoReceptor
-        addSlotToContainer(new RestrictedSlot(Items.mirrorItem, 1, tileEntity, 2, 89, 18));    //SemiReflectiveMirror
-        addSlotToContainer(new RestrictedSlot(Items.lensItem, 1, tileEntity, 3, 127, 18));   //Lens
-        addSlotToContainer(new RestrictedSlot(Items.laserItem, 1, tileEntity, 4, 89, 51));    //Laser
+        addSlotToContainer(new RestrictedSlot(Items.dspItem, 1, tileEntity, 0, 33, 27));     //DSP
+        addSlotToContainer(new RestrictedSlot(Items.photoReceptorItem, 1, tileEntity, 1, 56, 27));    //PhotoReceptor
+        addSlotToContainer(new RestrictedSlot(Items.mirrorItem, 1, tileEntity, 2, 89, 27));    //SemiReflectiveMirror
+        addSlotToContainer(new RestrictedSlot(Items.lensItem, 1, tileEntity, 3, 127, 27));   //Lens
+        addSlotToContainer(new RestrictedSlot(Items.laserItem, 1, tileEntity, 4, 89, 60));    //Laser
 
         //commonly used vanilla code that adds the player's inventory
         bindPlayerInventory(inventoryPlayer);
@@ -38,12 +38,12 @@ public class LaserContainer extends Container{
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
                 addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
-                        8 + j * 18, 92 + i * 18));
+                        8 + j * 18, 101 + i * 18));
             }
         }
 
         for (int i = 0; i < 9; i++) {
-            addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 150));
+            addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 159));
         }
     }
 

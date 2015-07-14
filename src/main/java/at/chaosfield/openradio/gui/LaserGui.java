@@ -16,8 +16,6 @@ import net.minecraft.util.StatCollector;
 @SideOnly(Side.CLIENT)
 public class LaserGui extends GuiContainer{
 
-    private final int xSize = 176, ySize = 183;
-
     private ResourceLocation backgroundimage = new ResourceLocation(OpenRadio.MODID + ":" + "textures/gui/LaserGui.png");   //Get the background Texture
 
     public LaserGui(InventoryPlayer inventoryPlayer, LaserTileEntity tileEntity){
@@ -28,17 +26,14 @@ public class LaserGui extends GuiContainer{
     @Override
     public void drawGuiContainerBackgroundLayer(float renderPartialTicks, int mouseX, int mouseY){
         this.mc.getTextureManager().bindTexture(backgroundimage);
-        int x = (this.width - xSize) / 2;
-        int y = (this.height - ySize) / 2;
-        drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
+        drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 183);
     }
 
     //Draw the text
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        //TODO find a way to get the text y-position without trail-and-error :P
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("container." + OpenRadio.MODID + ":laser.name"), 8, -3, 4210752);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, 78, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("container." + OpenRadio.MODID + ":laser.name"), 8, 8, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, 89, 4210752);
     }
 
     @Override

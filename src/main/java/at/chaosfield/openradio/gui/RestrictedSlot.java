@@ -14,8 +14,8 @@ public class RestrictedSlot extends Slot{
     private Item restriction;
     private int limit;
 
-    public RestrictedSlot(Item restriction, int limit, IInventory inventory, int par2, int par3, int par4){
-        super(inventory, par2, par3, par4);
+    public RestrictedSlot(Item restriction, int limit, IInventory inventory, int slot, int x, int y){
+        super(inventory, slot, x, y);
         this.restriction = restriction;
         this.limit = limit;
     }
