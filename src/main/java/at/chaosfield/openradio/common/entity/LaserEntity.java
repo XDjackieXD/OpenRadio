@@ -1,6 +1,7 @@
 package at.chaosfield.openradio.common.entity;
 
 
+import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.Settings;
 import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.util.Location;
@@ -18,12 +19,14 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by Jakob Riepler (XDjackieXD)
  */
 
-//TODO if entity gets into an unloaded chunk destroy it and send a disconnect
+//TODO hate minecraft/forge for not having an onEntityUnload method :P
 
 public class LaserEntity extends Entity implements IProjectile{
 
@@ -65,6 +68,7 @@ public class LaserEntity extends Entity implements IProjectile{
 
         if(!worldObj.isRemote){
             this.locNow = new Location(world.provider.dimensionId, (int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
+            OpenRadio.logger.info("Created LaserEntity");
         }
     }
 
@@ -178,43 +182,18 @@ public class LaserEntity extends Entity implements IProjectile{
         this.setPosition(this.posX, this.posY, this.posZ);
     }
 
-    public void writeEntityToNBT(NBTTagCompound nbtTagCompound){
-        nbtTagCompound.setInteger("laserX", this.senderLaser.getX());
-        nbtTagCompound.setInteger("laserY", this.senderLaser.getY());
-        nbtTagCompound.setInteger("laserZ", this.senderLaser.getZ());
-        nbtTagCompound.setInteger("laserDim", this.senderLaser.getDim());
+    //As the entity should not be saved upon entering an unloaded chunk just override all the NBT writing methods
+    public void writeEntityToNBT(NBTTagCompound nbtTagCompound){ }
 
-
-
-        nbtTagCompound.setInteger("locNowX", this.locNow.getX());
-        nbtTagCompound.setInteger("locNowY", this.locNow.getY());
-        nbtTagCompound.setInteger("locNowZ", this.locNow.getZ());
-        nbtTagCompound.setInteger("locNowDim", this.locNow.getDim());
-
-        nbtTagCompound.setShort("xTile", (short) this.xTile);
-        nbtTagCompound.setShort("yTile", (short) this.yTile);
-        nbtTagCompound.setShort("zTile", (short) this.zTile);
-        nbtTagCompound.setByte("inTile", (byte) Block.getIdFromBlock(this.block));
+    public boolean writeToNBTOptional(NBTTagCompound nbtTagCompound){
+        return false;
+    }
+    public boolean writeMountToNBT(NBTTagCompound nbtTagCompound){
+        return false;
     }
 
-    public void readEntityFromNBT(NBTTagCompound nbtTagCompound){
-        if(this.senderLaser == null) this.senderLaser = new Location(0,0,0,0);
-        this.senderLaser.setX(nbtTagCompound.getInteger("laserX"));
-        this.senderLaser.setY(nbtTagCompound.getInteger("laserY"));
-        this.senderLaser.setZ(nbtTagCompound.getInteger("laserZ"));
-        this.senderLaser.setDim(nbtTagCompound.getInteger("laserDim"));
-
-        this.locNow = new Location(0, 0, 0, 0);
-        this.locNow.setX(nbtTagCompound.getInteger("locNowX"));
-        this.locNow.setY(nbtTagCompound.getInteger("locNowY"));
-        this.locNow.setZ(nbtTagCompound.getInteger("locNowZ"));
-        this.locNow.setDim(nbtTagCompound.getInteger("locNowDim"));
-
-        this.xTile = nbtTagCompound.getShort("xTile");
-        this.yTile = nbtTagCompound.getShort("yTile");
-        this.zTile = nbtTagCompound.getShort("zTile");
-        this.block = Block.getBlockById(nbtTagCompound.getByte("inTile") & 255);
-    }
+    //As we don't save anything we don't need to read anything either
+    public void readEntityFromNBT(NBTTagCompound nbtTagCompound){ }
 
     @SideOnly(Side.CLIENT)
     public float getShadowSize(){
