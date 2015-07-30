@@ -11,7 +11,7 @@
   "credits": "OpenComputers for some parts of the Textures",
   "logoFile": "",
   "screenshots": [],
-  "requiredMods": [ "Forge" ],
-  "dependencies": []
+  "requiredMods": [ "Forge", "OpenComputers@[1.5.0,)" ],
+  "dependencies": [ "appliedenergistics2" ]
 }
 ]

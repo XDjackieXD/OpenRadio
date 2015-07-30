@@ -2,6 +2,7 @@ package at.chaosfield.openradio;
 
 import at.chaosfield.openradio.common.init.Blocks;
 import at.chaosfield.openradio.common.init.Items;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -28,7 +29,9 @@ public class CreativeTab extends CreativeTabs{
         this.list = list;
 
         this.addBlock(Blocks.laserBlock);
-        this.addBlock(Blocks.aeencoderBlock);
+
+        if(Loader.isModLoaded("appliedenergistics2"))
+            this.addBlock(Blocks.aeencoderBlock);
 
         this.addItem(Items.laserSocketItem);
         this.addItem(Items.lensItem);
