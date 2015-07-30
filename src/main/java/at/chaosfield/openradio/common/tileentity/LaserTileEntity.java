@@ -5,6 +5,7 @@ import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.Settings;
 import at.chaosfield.openradio.common.entity.LaserEntity;
 import at.chaosfield.openradio.common.init.Items;
+import at.chaosfield.openradio.interfaces.ILaserAddon;
 import at.chaosfield.openradio.util.Location;
 import li.cil.oc.api.API;
 import li.cil.oc.api.machine.Arguments;
@@ -23,6 +24,9 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.ArrayList;
 
 
 /**
@@ -35,6 +39,8 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     private int laserPower = 10;
     private double distance;
     private Location otherLaser;
+
+    private ILaserAddon connectedAddons[] = {null, null, null, null, null, null};
 
     private ItemStack[] inv;
 
@@ -144,6 +150,22 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         return inv[0] != null && inv[1] != null && inv[2] != null && inv[3] != null && inv[4] != null && (inv[0].getItem() == Items.dspItem) && (inv[1].getItem() == Items.photoReceptorItem) && (inv[2].getItem() == Items.mirrorItem) && (inv[3].getItem() == Items.lensItem) && (inv[4].getItem() == Items.laserItem);
     }
 
+
+    public void connectAddon(ILaserAddon addon, int side){
+        if(this.connectedAddons[side] != addon){
+            OpenRadio.logger.info("connected addon!");
+            this.connectedAddons[side] = addon;
+            addon.connectToLaser(this);
+        }
+    }
+
+    public void disconnectAddon(int side){
+        if(this.connectedAddons[side] != null){
+            OpenRadio.logger.info("disconnected addon!");
+            this.connectedAddons[side] = null;
+        }
+    }
+
     //------------------------------------------------------------------------------------------------------------------
     //Open Computers Integration
     public String getComponentName(){
@@ -190,6 +212,8 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
     //------------------------------------------------------------------------------------------------------------------
 
+
+
     @Override
     public void updateEntity(){
         super.updateEntity();
@@ -209,6 +233,38 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             }else{
                 disconnect();
             }
+
+            if(this.worldObj.getTileEntity(this.xCoord+1, this.yCoord, this.zCoord) instanceof ILaserAddon){ //east
+                connectAddon((ILaserAddon)this.worldObj.getTileEntity(this.xCoord+1, this.yCoord, this.zCoord), ForgeDirection.EAST.ordinal());
+            }else{
+                disconnectAddon(ForgeDirection.EAST.ordinal());
+            }
+            if(this.worldObj.getTileEntity(this.xCoord-1, this.yCoord, this.zCoord) instanceof ILaserAddon){ //west
+                connectAddon((ILaserAddon)this.worldObj.getTileEntity(this.xCoord-1, this.yCoord, this.zCoord), ForgeDirection.WEST.ordinal());
+            }else{
+                disconnectAddon(ForgeDirection.WEST.ordinal());
+            }
+            if(this.worldObj.getTileEntity(this.xCoord, this.yCoord+1, this.zCoord) instanceof ILaserAddon){ //top
+                connectAddon((ILaserAddon)this.worldObj.getTileEntity(this.xCoord, this.yCoord+1, this.zCoord), ForgeDirection.UP.ordinal());
+            }else{
+                disconnectAddon(ForgeDirection.UP.ordinal());
+            }
+            if(this.worldObj.getTileEntity(this.xCoord, this.yCoord-1, this.zCoord) instanceof ILaserAddon){ //bottom
+                connectAddon((ILaserAddon)this.worldObj.getTileEntity(this.xCoord, this.yCoord-1, this.zCoord), ForgeDirection.DOWN.ordinal());
+            }else{
+                disconnectAddon(ForgeDirection.DOWN.ordinal());
+            }
+            if(this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord+1) instanceof ILaserAddon){ //south
+                connectAddon((ILaserAddon)this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord+1), ForgeDirection.SOUTH.ordinal());
+            }else{
+                disconnectAddon(ForgeDirection.SOUTH.ordinal());
+            }
+            if(this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord-1) instanceof ILaserAddon){ //north
+                connectAddon((ILaserAddon)this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord-1), ForgeDirection.NORTH.ordinal());
+            }else{
+                disconnectAddon(ForgeDirection.NORTH.ordinal());
+            }
+
         }
     }
 
