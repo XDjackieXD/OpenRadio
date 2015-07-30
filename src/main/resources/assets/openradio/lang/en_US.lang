@@ -1,4 +1,5 @@
 tile.openradio:laser.name=Laser
+tile.openradio:aeencoder.name=AE Encoder
 container.openradio:laser.name=Laser
 item.openradio:lens.name=Lens
 item.openradio:lens.glasslens.name=Glass lens

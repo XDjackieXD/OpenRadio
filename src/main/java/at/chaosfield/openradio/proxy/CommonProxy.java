@@ -1,6 +1,7 @@
 package at.chaosfield.openradio.proxy;
 
 import at.chaosfield.openradio.OpenRadio;
+import at.chaosfield.openradio.common.tileentity.AEEncoderTileEntity;
 import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -10,6 +11,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class CommonProxy{
     public void registerTileEntities(){
         GameRegistry.registerTileEntity(LaserTileEntity.class, OpenRadio.MODID + ":laser");
+        GameRegistry.registerTileEntity(AEEncoderTileEntity.class, OpenRadio.MODID + ":aeencoder");
     }
 
     public void registerRenders(){}

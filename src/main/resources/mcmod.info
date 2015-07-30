@@ -1,16 +1,17 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "openradio",
+  "name": "OpenRadio",
+  "description": "Lasers, Radio communication and more!",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://chaosfield.at/projects/openradio.html",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["XDjackieXD"],
+  "credits": "OpenComputers for some parts of the Textures",
   "logoFile": "",
   "screenshots": [],
+  "requiredMods": [ "Forge" ],
   "dependencies": []
 }
 ]

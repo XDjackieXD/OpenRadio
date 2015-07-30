@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'idea'
 apply plugin: 'forge'
 
-version = "0.2.0"
+version = "0.3.0"
 group = "at.chaosfield.openradio" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "OpenRadio"
 
@@ -49,6 +49,8 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
     compile "li.cil.oc:OpenComputers:MC1.7.10-1.5.+:api"
+    //compile "appeng:appliedenergistics2:rv2-stable-10:dev"
+    compile files('lib/appliedenergistics2-rv2-stable-10-dev.jar')
 }
 
 processResources
