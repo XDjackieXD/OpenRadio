@@ -68,7 +68,6 @@ public class LaserEntity extends Entity implements IProjectile{
 
         if(!worldObj.isRemote){
             this.locNow = new Location(world.provider.dimensionId, (int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
-            OpenRadio.logger.info("Created LaserEntity");
         }
     }
 

@@ -166,6 +166,10 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         }
     }
 
+    public ILaserAddon[] getAddons(){
+        return connectedAddons;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
     //Open Computers Integration
     public String getComponentName(){
