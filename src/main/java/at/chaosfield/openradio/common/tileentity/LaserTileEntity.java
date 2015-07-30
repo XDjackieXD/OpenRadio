@@ -190,7 +190,6 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
     //------------------------------------------------------------------------------------------------------------------
 
-
     @Override
     public void updateEntity(){
         super.updateEntity();

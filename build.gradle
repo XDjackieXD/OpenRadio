@@ -49,6 +49,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
     compile "li.cil.oc:OpenComputers:MC1.7.10-1.5.+:api"
+    compile "appeng:appliedenergistics2:rv2-stable-10:dev"
 }
 
 processResources
