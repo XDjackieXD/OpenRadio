@@ -26,8 +26,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.ArrayList;
-
 
 /**
  * Created by Jakob Riepler (XDjackieXD)
@@ -218,20 +216,9 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         return new Object[]{distance};
     }
 
-    /*@Callback(direct = true, doc = "function():{true} -- try to connect to other laser")
-    public Object[] connect(Context context, Arguments args){
-        if(hasNeededComponents()){
-            sendEntity();
-            return new Object[]{true};
-        }else{
-            return new Object[]{false};
-        }
-    }*/
-
     @Callback(direct = true, doc = "function():{connected, dimId, x, y, z} -- Get the other Laser")
     public Object[] connected(Context context, Arguments args){
-        if(otherLaser != null) OpenRadio.logger.info("other Laser:" + otherLaser.toString());
-        if(isConnected())
+        if(otherLaser != null && isConnected())
             return new Object[]{true, otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ()};
         else
             return new Object[]{false, 0, 0, 0, 0};

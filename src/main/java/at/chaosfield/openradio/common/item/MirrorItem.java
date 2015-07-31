@@ -5,7 +5,7 @@ import at.chaosfield.openradio.OpenRadio;
 import net.minecraft.item.Item;
 
 /**
- * Created by jakob on 25.06.15.
+ * Created by Jakob Riepler (XDjackieXD)
  */
 public class MirrorItem extends Item{
     public MirrorItem(){
