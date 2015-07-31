@@ -7,7 +7,6 @@ import appeng.me.cache.helpers.ConnectionWrapper;
 import appeng.tile.TileEvent;
 import appeng.tile.events.TileEventType;
 import appeng.tile.grid.AENetworkTile;
-import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.DimensionManager;
@@ -29,15 +28,17 @@ public class AEEncoderTileEntity extends AENetworkTile implements ILaserAddon {
             boolean foundOther = false;
             if (this.laser != null)
                 if (!this.laser.isInvalid()) {
-                    if (laser.isConnected()) {
-                        TileEntity other = DimensionManager.getWorld(laser.getOtherLaser().getDim()).getTileEntity(laser.getOtherLaser().getX(), laser.getOtherLaser().getY(), laser.getOtherLaser().getZ());
-                        if (other instanceof LaserTileEntity) {
-                            if (((LaserTileEntity) other).isConnected()) {
-                                for (ILaserAddon addon : ((LaserTileEntity) other).getAddons()) {
-                                    if (addon != null) {
-                                        if (addon.getTileEntity() instanceof AEEncoderTileEntity) {
-                                            connectToAEEncoder((AEEncoderTileEntity) addon.getTileEntity());
-                                            foundOther = true;
+                    if(laser.hasNeededComponents() && laser.getDSPTier() == 3){
+                        if(laser.isConnected()){
+                            TileEntity other = DimensionManager.getWorld(laser.getOtherLaser().getDim()).getTileEntity(laser.getOtherLaser().getX(), laser.getOtherLaser().getY(), laser.getOtherLaser().getZ());
+                            if(other instanceof LaserTileEntity){
+                                if(((LaserTileEntity) other).isConnected()){
+                                    for(ILaserAddon addon : ((LaserTileEntity) other).getAddons()){
+                                        if(addon != null){
+                                            if(addon.getTileEntity() instanceof AEEncoderTileEntity){
+                                                connectToAEEncoder((AEEncoderTileEntity) addon.getTileEntity());
+                                                foundOther = true;
+                                            }
                                         }
                                     }
                                 }

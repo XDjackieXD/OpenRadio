@@ -170,6 +170,14 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         return connectedAddons;
     }
 
+    public int getDSPTier(){
+        if(inv[0] != null)
+            if(inv[0].getItem() == Items.dspItem)
+                if(inv[0].getItemDamage() <= 2 && inv[0].getItemDamage() >= 0)
+                    return inv[0].getItemDamage()+1;
+        return 0;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
     //Open Computers Integration
     public String getComponentName(){
