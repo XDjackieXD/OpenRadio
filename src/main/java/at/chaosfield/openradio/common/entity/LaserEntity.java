@@ -1,7 +1,5 @@
 package at.chaosfield.openradio.common.entity;
 
-
-import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.Settings;
 import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.util.Location;
@@ -19,27 +17,19 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
-import java.util.ArrayList;
-
 
 /**
  * Created by Jakob Riepler (XDjackieXD)
  */
 
-//TODO hate minecraft/forge for not having an onEntityUnload method :P
-
 public class LaserEntity extends Entity implements IProjectile{
-
-    private int xTile = -1;
-    private int yTile = -1;
-    private int zTile = -1;
-    private Block block;
 
     private Location senderLaser;
 
     private Location locNow;
 
     private double distance = 1;
+    private double maxDistance = 0;
 
     public LaserEntity(World world){
         super(world);
@@ -56,7 +46,7 @@ public class LaserEntity extends Entity implements IProjectile{
         return renderDistance < d1 * d1;
     }
 
-    public LaserEntity(World world, double x, double y, double z, double accX, double accY, double accZ, int laserDim, int laserX, int laserY, int laserZ){
+    public LaserEntity(World world, double x, double y, double z, double accX, double accY, double accZ, int laserDim, int laserX, int laserY, int laserZ, double maxDistance){
         super(world);
         this.setSize(0.25F, 0.25F);
         this.setPosition(x, y, z);
@@ -65,6 +55,7 @@ public class LaserEntity extends Entity implements IProjectile{
         this.motionY = accY;
         this.motionZ = accZ;
         this.senderLaser = new Location(laserDim, laserX, laserY, laserZ);
+        this.maxDistance = maxDistance;
 
         if(!worldObj.isRemote){
             this.locNow = new Location(world.provider.dimensionId, (int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
@@ -121,7 +112,7 @@ public class LaserEntity extends Entity implements IProjectile{
             }else{
                 this.locNow = new Location(worldObj.provider.dimensionId, (int) Math.floor(this.posX), (int) Math.floor(this.posY), (int) Math.floor(this.posZ));
             }
-            if(distance > Settings.LaserMaxDistance){
+            if(distance > maxDistance){
                 this.setDead();
 
             }

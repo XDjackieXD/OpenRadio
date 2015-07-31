@@ -124,7 +124,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 accZ = 0;
         }
 
-        this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord));
+        this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, getMaxDistance()));
     }
 
     public void setDestination(int dim, int x, int y, int z, double distance){
@@ -176,6 +176,35 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 if(inv[0].getItemDamage() <= 2 && inv[0].getItemDamage() >= 0)
                     return inv[0].getItemDamage()+1;
         return 0;
+    }
+
+    public int getReceiverTier(){
+        if(inv[1] != null)
+            if(inv[1].getItem() == Items.photoReceptorItem)
+                if(inv[1].getItemDamage() <= 2 && inv[1].getItemDamage() >= 0)
+                    return inv[1].getItemDamage()+1;
+        return 0;
+    }
+
+    public int getLaserTier(){
+        if(inv[4] != null)
+            if(inv[4].getItem() == Items.laserItem)
+                if(inv[4].getItemDamage() <= 2 && inv[4].getItemDamage() >= 0)
+                    return inv[4].getItemDamage()+1;
+        return 0;
+    }
+
+    public double getMaxDistance(){
+        switch(getLaserTier()){
+            case 1:
+                return Settings.LaserMaxDistanceTier1;
+            case 2:
+                return Settings.LaserMaxDistanceTier2;
+            case 3:
+                return Settings.LaserMaxDistanceTier3;
+            default:
+                return 0;
+        }
     }
 
     //------------------------------------------------------------------------------------------------------------------
