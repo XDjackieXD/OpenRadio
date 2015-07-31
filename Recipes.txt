@@ -33,16 +33,6 @@ Lenses :
         D:L:D
         G:D:G
 
-    Nether (AE2) Lens
-
-        L... Shaped Diamond Lens
-        N... Nether Star
-        D... Diamond
-
-        D:N:D
-        N:L:N
-        D:N:D
-
 
 Lens Holder
 
@@ -129,6 +119,18 @@ Semi Reflective Mirror:
      :I:G
     I:G:D
     G:D:
+
+Laser:
+
+    Tier1
+
+
+
+    Tier2
+
+
+
+    Tier3
 
 --------------------
 Blocks
