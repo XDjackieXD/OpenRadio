@@ -139,18 +139,28 @@ Laser Tranceiver
     L... Laser Socket
     N... Network Cable
     S... Switch (OpenComputers)
-    I... Steel
+    I... Iron
 
     I:I:I
     N:S:L
     I:I:I
 
+AE Encoder
+
+    M... ME Controller
+    I... Iron
+    C... ME Fluix Cable
+    N... OC Network Cable
+
+    I:N:I
+    C:M:C
+    I:N:I
 
 Mirror
 
     G... Glas Panel
     I... Iron
-    D... Diamant
+    D... Diamond
 
     I:D:I
     I:G:I
