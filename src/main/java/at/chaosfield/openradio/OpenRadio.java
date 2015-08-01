@@ -23,9 +23,6 @@ public class OpenRadio{
 
     public static final String MODID = "openradio";
 
-    public static int energyBuffer = 100;
-    public static int energyMultiplier = 1;
-
     @Mod.Instance(MODID)
     public static OpenRadio instance;
 

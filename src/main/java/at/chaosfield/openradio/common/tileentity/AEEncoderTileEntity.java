@@ -7,6 +7,7 @@ import appeng.me.cache.helpers.ConnectionWrapper;
 import appeng.tile.TileEvent;
 import appeng.tile.events.TileEventType;
 import appeng.tile.grid.AENetworkTile;
+import at.chaosfield.openradio.Settings;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.DimensionManager;
@@ -46,8 +47,11 @@ public class AEEncoderTileEntity extends AENetworkTile implements ILaserAddon {
                         }
                     }
                 }
-            if (!foundOther)
+            if (foundOther){
+                laser.tryUsePower(Settings.EnergyUseExtraAE);
+            }else {
                 disconnectFromAEEncoder();
+            }
         }
     }
 
