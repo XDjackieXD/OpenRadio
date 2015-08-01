@@ -80,6 +80,26 @@ public class Crafting{
                 'D', "gemDiamond",
                 'G', "blockGlass"));
 
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.laserItem, 1, 0),      //Laser tier 1
+                "IGI", "INI", "ITI",
+                'I', "ingotIron",
+                'G', "blockGlass",
+                'N', "nuggetGold",
+                'T', li.cil.oc.api.Items.get("transistor").createItemStack(1)));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.laserItem, 1, 1),      //Laser tier 2
+                "GDG", "N N", "GDG",
+                'D', "gemDiamond",
+                'G', "blockGlass",
+                'N', "ingotGold"));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.laserItem, 1, 2),      //Laser tier 3
+                "IGI", "IEI", "INI",
+                'I', "ingotIron",
+                'G', "blockGlass",
+                'N', "nuggetGold",
+                'E', "gemEmerald"));
+
         //**************************************************************************************************************
         //Register Blocks
         //TODO Use steel instead of iron if available

@@ -122,15 +122,38 @@ Semi Reflective Mirror:
 
 Laser:
 
-    Tier1
+    Tier1 (Laser diode)
 
+        G... Glass
+        T... Transistor
+        I... Iron
+        N... Gold nugget
 
+        I:G:I
+        I:N:I
+        I:T:I
 
-    Tier2
+    Tier2 (CO2 Laser tube)
 
+        G... Glass
+        D... Diamond
+        N... Gold
 
+        G:D:G
+        N: :N
+        G:D:G
 
-    Tier3
+    Tier3 (Nd:YAG Laser)
+
+        I... Iron
+        G... Glass
+        E... Emerald
+        N... Gold
+
+        I:G:I
+        I:E:I
+        I:N:I
+
 
 --------------------
 Blocks
