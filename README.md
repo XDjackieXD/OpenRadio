@@ -6,9 +6,9 @@ A Little OpenComputers addon which adds laser links and (planned) satellites wit
 * I need better textures for the two laser tubes (Laser item tier 2 and 3) and recipes for all three laser tiers.
 * Basic AE2 integration is working (DSP tier 3 is required for the AE Encoder to work)
 * Maximum distance:
-..* Laser tier 1: 256 blocks
-..* Laser tier 2: 512 blocks
-..* Laser tier 3: 1024 blocks
+.. * Laser tier 1: 256 blocks
+.. * Laser tier 2: 512 blocks
+.. * Laser tier 3: 1024 blocks
 
 ## Build instructions
 1. Create a folder called `lib` and put the dev-version of Applied Energistics 2 in there (at least rv2-stable-10)
