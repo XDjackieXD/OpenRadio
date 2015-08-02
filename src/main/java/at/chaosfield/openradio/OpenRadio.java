@@ -30,7 +30,7 @@ public class OpenRadio{
     public static Logger logger = LogManager.getLogger(OpenRadio.MODID);
 
     //Get the right proxy (Client = ClientProxy, Server = CommonProxy)
-    @SidedProxy(clientSide = "at.chaosfield.openradio.proxy.ClientProxy", serverSide = "at.chaosfield.openradio.CommonProxy")
+    @SidedProxy(clientSide = "at.chaosfield.openradio.proxy.ClientProxy", serverSide = "at.chaosfield.openradio.proxy.CommonProxy")
     public static CommonProxy proxy;
 
     //FML PreInit
