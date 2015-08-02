@@ -47,9 +47,7 @@ public class AEEncoderTileEntity extends AENetworkTile implements ILaserAddon {
                         }
                     }
                 }
-            if (foundOther){
-                laser.tryUsePower(Settings.EnergyUseExtraAE);
-            }else {
+            if (!foundOther){
                 disconnectFromAEEncoder();
             }
         }
@@ -119,5 +117,10 @@ public class AEEncoderTileEntity extends AENetworkTile implements ILaserAddon {
     @Override
     public TileEntity getTileEntity() {
         return this;
+    }
+
+    @Override
+    public String getAddonName(){
+        return "aeencoder";
     }
 }

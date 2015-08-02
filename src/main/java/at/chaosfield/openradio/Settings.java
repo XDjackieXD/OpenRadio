@@ -7,12 +7,9 @@ public class Settings{
     public static double EntitySpeed = 1;
     public static double DistancePerAir = 1;
     public static double DistanceMultiplierTransparent = 2;
-    public static int EnergyUseLaserTier1 = 25;
-    public static int EnergyUseLaserTier2 = 50;
-    public static int EnergyUseLaserTier3 = 100;
-    public static int EnergyUseExtraAE = 1000;
+    public static double LaserMaxDistanceTier[] = {256, 512, 1024};
+    public static double LensMultiplierTier[] = {0.5, 0.75, 1};
+    public static int EnergyUseLaserTier[] = {25, 50, 100}; // RF/tick
+    public static int EnergyUseExtraAE = 1000;              // RF/tick
     public static int EnergyBuffer = 100;
-    public static double LaserMaxDistanceTier1 = 256;
-    public static double LaserMaxDistanceTier2 = 512;
-    public static double LaserMaxDistanceTier3 = 1024;
 }

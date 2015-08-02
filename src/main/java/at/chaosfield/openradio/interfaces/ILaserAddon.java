@@ -11,5 +11,6 @@ public interface ILaserAddon {
     public void connectToLaser(LaserTileEntity laser);
     public void disconnectFromLaser(LaserTileEntity laser);
     public TileEntity getTileEntity();
+    public String getAddonName();
 
 }

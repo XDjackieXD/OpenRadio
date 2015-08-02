@@ -31,39 +31,40 @@ import net.minecraftforge.common.util.ForgeDirection;
  * Created by Jakob Riepler (XDjackieXD)
  */
 
-public class LaserTileEntity extends TileEntityEnvironment implements IInventory {
+public class LaserTileEntity extends TileEntityEnvironment implements IInventory{
     private boolean powered;
-    //private boolean turnedOn;
     private double distance;
     private Location otherLaser;
+    private int additionalEnergyUsage = 0;
 
     private ILaserAddon connectedAddons[] = {null, null, null, null, null, null};
+    private String connectedAddonsType[] = {null, null, null, null, null, null};
 
     private ItemStack[] inv;
 
     private int counter = 0;
 
-    public LaserTileEntity() {
+    public LaserTileEntity(){
         super();
         node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(Settings.EnergyBuffer).create();
         inv = new ItemStack[5];
-        if (otherLaser != null && !worldObj.isRemote) {
+        if(otherLaser != null && !worldObj.isRemote){
             TileEntity otherLaserTe = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
-            if (otherLaserTe instanceof LaserTileEntity) {
+            if(otherLaserTe instanceof LaserTileEntity){
                 ((LaserTileEntity) otherLaserTe).setDestination(this.getWorldObj().provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, this.distance);
-            } else {
+            }else{
                 disconnect();
             }
         }
     }
 
-    public String getName() {
+    public String getName(){
         return OpenRadio.MODID + ".laser";
     }
 
-    public void sendEntity() {
+    public void sendEntity(){
         double posX, posY, posZ, accX, accY, accZ;
-        switch (this.getBlockMetadata()) {
+        switch(this.getBlockMetadata()){
             case 0:
                 posX = this.xCoord + 0.5;
                 posY = this.yCoord + 0.5 - 1;
@@ -124,114 +125,138 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, getMaxDistance()));
     }
 
-    public void setDestination(int dim, int x, int y, int z, double distance) {
-        if (!this.getWorldObj().isRemote) {
+    public void setDestination(int dim, int x, int y, int z, double distance){
+        if(!this.getWorldObj().isRemote){
             this.otherLaser = new Location(dim, x, y, z);
             this.distance = distance;
         }
     }
 
-    public void disconnect() {
+    public void disconnect(){
         this.otherLaser = null;
     }
 
-    public Location getOtherLaser() {
+    public Location getOtherLaser(){
         return this.otherLaser;
     }
 
-    public boolean isConnected() {
+    public boolean isConnected(){
         return (otherLaser != null) && isPowered() && hasNeededComponents();
     }
 
-    public boolean hasNeededComponents() {
+    public boolean hasNeededComponents(){
         return inv[0] != null && inv[1] != null && inv[2] != null && inv[3] != null && inv[4] != null && (inv[0].getItem() == Items.dspItem) && (inv[1].getItem() == Items.photoReceptorItem) && (inv[2].getItem() == Items.mirrorItem) && (inv[3].getItem() == Items.lensItem) && (inv[4].getItem() == Items.laserItem);
     }
 
 
-    public void connectAddon(ILaserAddon addon, int side) {
-        if (this.connectedAddons[side] != addon) {
-            OpenRadio.logger.info("connected addon!");
+    public void connectAddon(ILaserAddon addon, int side){
+        if(this.connectedAddons[side] != addon){
             this.connectedAddons[side] = addon;
+            this.connectedAddonsType[side] = addon.getAddonName();
             addon.connectToLaser(this);
+            if(addon.getAddonName().equals("aeencoder"))
+                additionalEnergyUsage += Settings.EnergyUseExtraAE;
         }
     }
 
-    public void disconnectAddon(int side) {
-        if (this.connectedAddons[side] != null) {
-            OpenRadio.logger.info("disconnected addon!");
+    public void disconnectAddon(int side){
+        if(this.connectedAddons[side] != null){
             this.connectedAddons[side] = null;
+            if(connectedAddonsType[side] != null)
+                if(connectedAddonsType[side].equals("aeencoder"))
+                    additionalEnergyUsage -= Settings.EnergyUseExtraAE;
+            this.connectedAddonsType[side] = null;
         }
     }
 
-    public ILaserAddon[] getAddons() {
+    public ILaserAddon[] getAddons(){
         return connectedAddons;
     }
 
-    public int getDSPTier() {
-        if (inv[0] != null)
-            if (inv[0].getItem() == Items.dspItem)
-                if (inv[0].getItemDamage() <= 2 && inv[0].getItemDamage() >= 0)
+    public int getDSPTier(){
+        if(inv[0] != null)
+            if(inv[0].getItem() == Items.dspItem)
+                if(inv[0].getItemDamage() <= 2 && inv[0].getItemDamage() >= 0)
                     return inv[0].getItemDamage() + 1;
         return 0;
     }
 
-    public int getReceiverTier() {
-        if (inv[1] != null)
-            if (inv[1].getItem() == Items.photoReceptorItem)
-                if (inv[1].getItemDamage() <= 2 && inv[1].getItemDamage() >= 0)
+    public int getReceiverTier(){
+        if(inv[1] != null)
+            if(inv[1].getItem() == Items.photoReceptorItem)
+                if(inv[1].getItemDamage() <= 2 && inv[1].getItemDamage() >= 0)
                     return inv[1].getItemDamage() + 1;
         return 0;
     }
 
-    public int getLaserTier() {
-        if (inv[4] != null)
-            if (inv[4].getItem() == Items.laserItem)
-                if (inv[4].getItemDamage() <= 2 && inv[4].getItemDamage() >= 0)
+    public int getLaserTier(){
+        if(inv[4] != null)
+            if(inv[4].getItem() == Items.laserItem)
+                if(inv[4].getItemDamage() <= 2 && inv[4].getItemDamage() >= 0)
                     return inv[4].getItemDamage() + 1;
         return 0;
     }
 
-    public double getMaxDistance() {
-        switch (getLaserTier()) {
-            case 1:
-                return Settings.LaserMaxDistanceTier1;
-            case 2:
-                return Settings.LaserMaxDistanceTier2;
-            case 3:
-                return Settings.LaserMaxDistanceTier3;
-            default:
-                return 0;
+    public int getLensTier(){
+        if(inv[3] != null)
+            if(inv[3].getItem() == Items.lensItem)
+                if(inv[3].getItemDamage() <= 2 && inv[3].getItemDamage() >= 0)
+                    return inv[3].getItemDamage() + 1;
+        return 0;
+    }
+
+    public double getMaxDistance(){
+        if(hasNeededComponents()){
+            return Settings.LaserMaxDistanceTier[getLaserTier()-1] * Settings.LensMultiplierTier[getLensTier()-1];
+        }else{
+            return 0;
         }
+    }
+
+    public boolean isPowered(){
+        return this.powered;
+    }
+
+    public void tryUsePower(int energy){
+        this.powered = (node() != null) && ((Connector) node()).tryChangeBuffer(energy / -10f);
+    }
+
+    public double calculateBasicEnergyUsage(){
+        int usage = 0;
+        if(hasNeededComponents()){
+            usage += Settings.EnergyUseLaserTier[getLaserTier()-1];
+        }
+        return usage;
     }
 
     //------------------------------------------------------------------------------------------------------------------
     //Open Computers Integration
-    public String getComponentName() {
+    public String getComponentName(){
         return "Laser";
     }
 
     @Callback(direct = true, doc = "function():double -- Get the current latency")
-    public Object[] getLatency(Context context, Arguments args) {
+    public Object[] getLatency(Context context, Arguments args){
         return new Object[]{distance};
     }
 
     @Callback(direct = true, doc = "function():{connected, dimId, x, y, z} -- Get the other Laser")
-    public Object[] connected(Context context, Arguments args) {
-        if (otherLaser != null && isConnected())
+    public Object[] connected(Context context, Arguments args){
+        if(otherLaser != null && isConnected())
             return new Object[]{true, otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ()};
         else
             return new Object[]{false, 0, 0, 0, 0};
     }
 
     @Override
-    public void onMessage(Message message) {
+    public void onMessage(Message message){
         super.onMessage(message);
-        if (message.name().equals("network.message")) {
-            if (isConnected()) {
+        if(message.name().equals("network.message")){
+            if(isConnected()){
                 TileEntity tileEntity = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
-                if (tileEntity instanceof LaserTileEntity) {
+                if(tileEntity instanceof LaserTileEntity){
                     ((LaserTileEntity) tileEntity).node.sendToReachable("network.message", message.data());
-                } else {
+                }else{
                     disconnect();
                 }
             }
@@ -241,64 +266,52 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
 
     @Override
-    public void updateEntity() {
+    public void updateEntity(){
         super.updateEntity();
-        if (!worldObj.isRemote) {
+        if(!worldObj.isRemote){
 
-            if (hasNeededComponents()) {
-                switch (getLaserTier()) {
-                    case 1:
-                        tryUsePower(Settings.EnergyUseLaserTier1);
-                        break;
-                    case 2:
-                        tryUsePower(Settings.EnergyUseLaserTier2);
-                        break;
-                    case 3:
-                        tryUsePower(Settings.EnergyUseLaserTier3);
-                        break;
-                    default:
-                        powered = false;
-                }
+            if(hasNeededComponents()){
+                tryUsePower((int) (calculateBasicEnergyUsage() + additionalEnergyUsage));
             }
 
-            if (hasNeededComponents() && isPowered()) {
+            if(hasNeededComponents() && isPowered()){
                 counter++;
-                if (counter >= 20) {
+                if(counter >= 20){
                     counter = 0;
                     sendEntity();
                 }
-            } else {
+            }else{
                 disconnect();
             }
 
-            if (this.worldObj.getTileEntity(this.xCoord + 1, this.yCoord, this.zCoord) instanceof ILaserAddon) { //east
+            if(this.worldObj.getTileEntity(this.xCoord + 1, this.yCoord, this.zCoord) instanceof ILaserAddon){ //east
                 connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.xCoord + 1, this.yCoord, this.zCoord), ForgeDirection.EAST.ordinal());
-            } else {
+            }else{
                 disconnectAddon(ForgeDirection.EAST.ordinal());
             }
-            if (this.worldObj.getTileEntity(this.xCoord - 1, this.yCoord, this.zCoord) instanceof ILaserAddon) { //west
+            if(this.worldObj.getTileEntity(this.xCoord - 1, this.yCoord, this.zCoord) instanceof ILaserAddon){ //west
                 connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.xCoord - 1, this.yCoord, this.zCoord), ForgeDirection.WEST.ordinal());
-            } else {
+            }else{
                 disconnectAddon(ForgeDirection.WEST.ordinal());
             }
-            if (this.worldObj.getTileEntity(this.xCoord, this.yCoord + 1, this.zCoord) instanceof ILaserAddon) { //top
+            if(this.worldObj.getTileEntity(this.xCoord, this.yCoord + 1, this.zCoord) instanceof ILaserAddon){ //top
                 connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.xCoord, this.yCoord + 1, this.zCoord), ForgeDirection.UP.ordinal());
-            } else {
+            }else{
                 disconnectAddon(ForgeDirection.UP.ordinal());
             }
-            if (this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord) instanceof ILaserAddon) { //bottom
+            if(this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord) instanceof ILaserAddon){ //bottom
                 connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord), ForgeDirection.DOWN.ordinal());
-            } else {
+            }else{
                 disconnectAddon(ForgeDirection.DOWN.ordinal());
             }
-            if (this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord + 1) instanceof ILaserAddon) { //south
+            if(this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord + 1) instanceof ILaserAddon){ //south
                 connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord + 1), ForgeDirection.SOUTH.ordinal());
-            } else {
+            }else{
                 disconnectAddon(ForgeDirection.SOUTH.ordinal());
             }
-            if (this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord - 1) instanceof ILaserAddon) { //north
+            if(this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord - 1) instanceof ILaserAddon){ //north
                 connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord - 1), ForgeDirection.NORTH.ordinal());
-            } else {
+            }else{
                 disconnectAddon(ForgeDirection.NORTH.ordinal());
             }
 
@@ -307,42 +320,42 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     @Override
-    public int getSizeInventory() {
+    public int getSizeInventory(){
         return inv.length;
     }
 
     @Override
-    public ItemStack getStackInSlot(int slot) {
+    public ItemStack getStackInSlot(int slot){
         return inv[slot];
     }
 
     @Override
-    public void setInventorySlotContents(int slot, ItemStack stack) {
+    public void setInventorySlotContents(int slot, ItemStack stack){
         inv[slot] = stack;
-        if (stack != null && stack.stackSize > getInventoryStackLimit()) {
+        if(stack != null && stack.stackSize > getInventoryStackLimit()){
             stack.stackSize = getInventoryStackLimit();
         }
     }
 
     @Override
-    public String getInventoryName() {
+    public String getInventoryName(){
         return OpenRadio.MODID + ".laser";
     }
 
     @Override
-    public boolean hasCustomInventoryName() {
+    public boolean hasCustomInventoryName(){
         return false;
     }
 
     @Override
-    public ItemStack decrStackSize(int slot, int amt) {
+    public ItemStack decrStackSize(int slot, int amt){
         ItemStack stack = getStackInSlot(slot);
-        if (stack != null) {
-            if (stack.stackSize <= amt) {
+        if(stack != null){
+            if(stack.stackSize <= amt){
                 setInventorySlotContents(slot, null);
-            } else {
+            }else{
                 stack = stack.splitStack(amt);
-                if (stack.stackSize == 0) {
+                if(stack.stackSize == 0){
                     setInventorySlotContents(slot, null);
                 }
             }
@@ -351,37 +364,37 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slot) {
+    public ItemStack getStackInSlotOnClosing(int slot){
         ItemStack stack = getStackInSlot(slot);
-        if (stack != null) {
+        if(stack != null){
             setInventorySlotContents(slot, null);
         }
         return stack;
     }
 
     @Override
-    public int getInventoryStackLimit() {
+    public int getInventoryStackLimit(){
         return 1;
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
+    public boolean isUseableByPlayer(EntityPlayer player){
         return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
     }
 
     @Override
-    public void openInventory() {
+    public void openInventory(){
 
     }
 
     @Override
-    public void closeInventory() {
+    public void closeInventory(){
 
     }
 
     @Override
-    public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
-        switch (slot) {
+    public boolean isItemValidForSlot(int slot, ItemStack itemStack){
+        switch(slot){
             case 3:
                 return itemStack.getItem().getUnlocalizedName().equals(OpenRadio.MODID + ":lens");
             default:
@@ -390,45 +403,45 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound) {
+    public void readFromNBT(NBTTagCompound tagCompound){
         super.readFromNBT(tagCompound);
 
-        if (tagCompound.getBoolean("otherLaserConnected")) {
+        if(tagCompound.getBoolean("otherLaserConnected")){
             this.distance = tagCompound.getDouble("distance");
             otherLaser = new Location(tagCompound.getInteger("otherLaserDimId"), tagCompound.getInteger("otherLaserX"), tagCompound.getInteger("otherLaserY"), tagCompound.getInteger("otherLaserZ"));
-        } else {
+        }else{
             disconnect();
         }
 
         NBTTagList tagList = tagCompound.getTagList("Inventory", tagCompound.getId());
-        for (int i = 0; i < tagList.tagCount(); i++) {
+        for(int i = 0; i < tagList.tagCount(); i++){
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
             byte slot = tag.getByte("Slot");
-            if (slot >= 0 && slot < inv.length) {
+            if(slot >= 0 && slot < inv.length){
                 inv[slot] = ItemStack.loadItemStackFromNBT(tag);
             }
         }
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tagCompound) {
+    public void writeToNBT(NBTTagCompound tagCompound){
         super.writeToNBT(tagCompound);
 
-        if (isConnected()) {
+        if(isConnected()){
             tagCompound.setDouble("distance", this.distance);
             tagCompound.setBoolean("otherLaserConnected", true);
             tagCompound.setInteger("otherLaserDimId", otherLaser.getDim());
             tagCompound.setInteger("otherLaserX", otherLaser.getX());
             tagCompound.setInteger("otherLaserY", otherLaser.getY());
             tagCompound.setInteger("otherLaserZ", otherLaser.getZ());
-        } else {
+        }else{
             tagCompound.setBoolean("otherLaserConnected", false);
         }
 
         NBTTagList itemList = new NBTTagList();
-        for (int i = 0; i < inv.length; i++) {
+        for(int i = 0; i < inv.length; i++){
             ItemStack stack = inv[i];
-            if (stack != null) {
+            if(stack != null){
                 NBTTagCompound tag = new NBTTagCompound();
                 tag.setByte("Slot", (byte) i);
                 stack.writeToNBT(tag);
@@ -439,23 +452,14 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     @Override
-    public net.minecraft.network.Packet getDescriptionPacket() {
+    public net.minecraft.network.Packet getDescriptionPacket(){
         NBTTagCompound tag = new NBTTagCompound();
         writeToNBT(tag);
         return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
         readFromNBT(pkt.func_148857_g());
-    }
-
-    public boolean isPowered() {
-        return powered;
-    }
-
-    public boolean tryUsePower(int energy){
-        powered = (node() != null) && ((Connector) node()).tryChangeBuffer(energy / -10f);
-        return powered;
     }
 }
