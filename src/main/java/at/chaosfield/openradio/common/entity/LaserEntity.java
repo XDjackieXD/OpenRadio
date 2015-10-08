@@ -1,6 +1,6 @@
 package at.chaosfield.openradio.common.entity;
 
-import at.chaosfield.openradio.Settings;
+import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.util.Location;
 import cpw.mods.fml.relauncher.Side;
@@ -104,9 +104,9 @@ public class LaserEntity extends Entity implements IProjectile{
                     this.locNow.setDim(worldObj.provider.dimensionId);
                     Block block = DimensionManager.getWorld(this.locNow.getDim()).getBlock(this.locNow.getX(), this.locNow.getY(), this.locNow.getZ());
                     if(block.isAir(DimensionManager.getWorld(this.locNow.getDim()), this.locNow.getX(), this.locNow.getY(), this.locNow.getZ())){
-                        distance += Settings.DistancePerAir;
+                        distance += OpenRadio.instance.settings.DistancePerAir;
                     }else if(!block.getMaterial().isSolid()){
-                        distance += Settings.DistancePerAir * Settings.DistanceMultiplierTransparent;
+                        distance += OpenRadio.instance.settings.DistancePerTransparent;
                     }
                 }
             }else{

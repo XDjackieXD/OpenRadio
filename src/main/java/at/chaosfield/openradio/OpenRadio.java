@@ -33,9 +33,14 @@ public class OpenRadio{
     @SidedProxy(clientSide = "at.chaosfield.openradio.proxy.ClientProxy", serverSide = "at.chaosfield.openradio.proxy.CommonProxy")
     public static CommonProxy proxy;
 
+    public Settings settings;
+
     //FML PreInit
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
+
+        settings = new Settings(event.getSuggestedConfigurationFile());
+
         Blocks.init();                  //Register all Blocks
         Items.init();                   //Register all Items
         logger.info("Pre init complete.");

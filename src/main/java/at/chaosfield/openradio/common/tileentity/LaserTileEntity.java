@@ -2,7 +2,6 @@ package at.chaosfield.openradio.common.tileentity;
 
 
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.Settings;
 import at.chaosfield.openradio.common.entity.LaserEntity;
 import at.chaosfield.openradio.common.init.Items;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
@@ -35,7 +34,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     private boolean powered;
     private double distance;
     private Location otherLaser;
-    private int energyMultiplier = 0;
+    private int energyMultiplier = 1;
 
     private ILaserAddon connectedAddons[] = {null, null, null, null, null, null};
     private String connectedAddonsType[] = {null, null, null, null, null, null};
@@ -46,7 +45,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     public LaserTileEntity(){
         super();
-        node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(Settings.EnergyBuffer).create();
+        node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(OpenRadio.instance.settings.EnergyBuffer).create();
         inv = new ItemStack[5];
         if(otherLaser != null && !worldObj.isRemote){
             TileEntity otherLaserTe = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
@@ -70,7 +69,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 posY = this.yCoord + 0.5 - 1;
                 posZ = this.zCoord + 0.5;
                 accX = 0;
-                accY = -Settings.EntitySpeed;
+                accY = -OpenRadio.instance.settings.EntitySpeed;
                 accZ = 0;
                 break;
             case 1:
@@ -78,7 +77,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 posY = this.yCoord + 0.5 + 1;
                 posZ = this.zCoord + 0.5;
                 accX = 0;
-                accY = +Settings.EntitySpeed;
+                accY = OpenRadio.instance.settings.EntitySpeed;
                 accZ = 0;
                 break;
             case 2:
@@ -87,7 +86,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 posZ = this.zCoord + 0.5 - 1;
                 accX = 0;
                 accY = 0;
-                accZ = -Settings.EntitySpeed;
+                accZ = -OpenRadio.instance.settings.EntitySpeed;
                 break;
             case 3:
                 posX = this.xCoord + 0.5;
@@ -95,13 +94,13 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 posZ = this.zCoord + 0.5 + 1;
                 accX = 0;
                 accY = 0;
-                accZ = Settings.EntitySpeed;
+                accZ = OpenRadio.instance.settings.EntitySpeed;
                 break;
             case 4:
                 posX = this.xCoord + 0.5 - 1;
                 posY = this.yCoord + 0.5;
                 posZ = this.zCoord + 0.5;
-                accX = -Settings.EntitySpeed;
+                accX = -OpenRadio.instance.settings.EntitySpeed;
                 accY = 0;
                 accZ = 0;
                 break;
@@ -109,7 +108,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 posX = this.xCoord + 0.5 + 1;
                 posY = this.yCoord + 0.5;
                 posZ = this.zCoord + 0.5;
-                accX = Settings.EntitySpeed;
+                accX = OpenRadio.instance.settings.EntitySpeed;
                 accY = 0;
                 accZ = 0;
                 break;
@@ -155,7 +154,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             this.connectedAddonsType[side] = addon.getAddonName();
             addon.connectToLaser(this);
             if(addon.getAddonName().equals("aeencoder"))
-                energyMultiplier += Settings.AEEnergyMultiplier;
+                energyMultiplier *= OpenRadio.instance.settings.AEEnergyMultiplier;
         }
     }
 
@@ -164,7 +163,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             this.connectedAddons[side] = null;
             if(connectedAddonsType[side] != null)
                 if(connectedAddonsType[side].equals("aeencoder"))
-                    energyMultiplier -= Settings.AEEnergyMultiplier;
+                    energyMultiplier /= OpenRadio.instance.settings.AEEnergyMultiplier;
             this.connectedAddonsType[side] = null;
         }
     }
@@ -207,7 +206,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     public double getMaxDistance(){
         if(hasNeededComponents()){
-            return Settings.LaserMaxDistanceTier[getLaserTier()-1] * Settings.LensMultiplierTier[getLensTier()-1];
+            return OpenRadio.instance.settings.LaserMaxDistanceTier[getLaserTier()-1] * OpenRadio.instance.settings.LensMultiplierTier[getLensTier()-1];
         }else{
             return 0;
         }
@@ -224,7 +223,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public double calculateBasicEnergyUsage(){
         int usage = 0;
         if(hasNeededComponents()){
-            usage += Settings.EnergyUseLaserTier[getLaserTier()-1];
+            usage += OpenRadio.instance.settings.EnergyUseLaserTier[getLaserTier()-1];
         }
         return usage;
     }
