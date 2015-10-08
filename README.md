@@ -3,7 +3,6 @@ A Little OpenComputers addon which adds laser links and (planned) satellites wit
 
 ## Current status
 * Lasers check if they have an opponent via regular entities (currently visible for debugging. 1 entity per second).
-* I need better textures for the two laser tubes (Laser item tier 2 and 3) and recipes for all three laser tiers.
 * Basic AE2 integration is working (DSP tier 3 is required for the AE Encoder to work)
 * Lasers need all inventory slots filled with the appropriate items (different tiers currently have no effect except for the laser tube and the DSP)
 * Maximum distance:
@@ -16,6 +15,10 @@ A Little OpenComputers addon which adds laser links and (planned) satellites wit
  * Laser tier 3: 100 RF/tick
  * AE Encoder multiplies this by 10
 
+## TODO
+* I need better textures for the two laser tubes (Laser item tier 2 and 3) and recipes for all three laser tiers.
+* Rendering of laser beams. Quite hard to do. Help and ideas are appreciated!
+* add all the fancy stuff from Ideas.txt :3
 
 ## Build instructions
 1. Create a folder called `lib` and put the dev-version of Applied Energistics 2 in there (at least rv2-stable-10)

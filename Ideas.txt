@@ -14,14 +14,11 @@ laser link:
 	If you run through a laser on eye-height you get Blindness for a few seconds
 	latency is calculated through distance and gets increased through a signal sniffer
 
-	Link check:
-	    -first time check through a flying Entity -> intra-dimensional through portals possible
-	    -air blocks get marked by a overrideable block (like tall grass but invisible)
-	    -transparent blocks get randomly polled every few seconds
-	        Maybe only allow two transparent blocks without air in between. this would eliminate the need for polling and the fake-air-blocks could just check (if one of their neighbours is one of the transparent blocks) on block updates, if their neighbor still is the block it was.
-		New (probably better) idea:
-		    store a list of all block coords in between (using the fired entity) and check one of them each random block update (isChunk loaded? is block air or transparent?)
-
+    Done:
+	    Link check:
+	        flying Entity -> intra-dimensional through portals possible
+        AE2 integration:
+            maybe link two AE2-networks over a laser link?
 
 Satellites:
     Satellites and huge multiblock radio dishes :3
@@ -41,7 +38,4 @@ Satellites:
 	        -different tiers with better input amp and higher output power
 	        -higher packet rate and less packet loss with higher tiers
 	    -Satellite
-	        has get into an orbit somehow :P
-
-AE2 integration:
-    maybe link two AE2-networks over a laser link?
+	        has to get into an orbit somehow :P
