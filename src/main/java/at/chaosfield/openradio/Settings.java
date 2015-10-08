@@ -22,9 +22,9 @@ public class Settings{
 
         config.load();
 
-        EntitySpeed = (double)config.getFloat("EntitySpeed", "misc", 1, 0.1f, 1, "speed of the connection-check entity (blocks/tick. max 1 for reliable block checking)");
-        DistancePerAir = (double)config.getFloat("DistancePerAir", "distances", 1, 0, 2048, "added distance per air block");
-        DistancePerTransparent = (double)config.getFloat("DistancePerTransparent", "distances", 2, 0, 2048, "added distance per transparent non-air block");
+        EntitySpeed = (double)config.getFloat("LaserEntitySpeed", "misc", 1, 0.1f, 1, "speed of the connection-check entity (blocks/tick. max 1 for reliable block checking)");
+        DistancePerAir = (double)config.getFloat("LaserDistancePerAir", "distances", 1, 0, 2048, "added distance per air block");
+        DistancePerTransparent = (double)config.getFloat("LaserDistancePerTransparent", "distances", 2, 0, 2048, "added distance per transparent non-air block");
 
         LaserMaxDistanceTier[0] = (double)config.getFloat("LaserTier1MasDistance", "distances", 256, 0, 16384, "maximum distance of a tier 1 laser");
         LaserMaxDistanceTier[1] = (double)config.getFloat("LaserTier2MasDistance", "distances", 512, 0, 16384, "maximum distance of a tier 2 laser");
