@@ -10,6 +10,6 @@ public class Settings{
     public static double LaserMaxDistanceTier[] = {256, 512, 1024};
     public static double LensMultiplierTier[] = {0.5, 0.75, 1};
     public static int EnergyUseLaserTier[] = {25, 50, 100}; // RF/tick
-    public static int EnergyUseExtraAE = 1000;              // RF/tick
+    public static int AEEnergyMultiplier = 10;
     public static int EnergyBuffer = 100;
 }

@@ -35,7 +35,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     private boolean powered;
     private double distance;
     private Location otherLaser;
-    private int additionalEnergyUsage = 0;
+    private int energyMultiplier = 0;
 
     private ILaserAddon connectedAddons[] = {null, null, null, null, null, null};
     private String connectedAddonsType[] = {null, null, null, null, null, null};
@@ -155,7 +155,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             this.connectedAddonsType[side] = addon.getAddonName();
             addon.connectToLaser(this);
             if(addon.getAddonName().equals("aeencoder"))
-                additionalEnergyUsage += Settings.EnergyUseExtraAE;
+                energyMultiplier += Settings.AEEnergyMultiplier;
         }
     }
 
@@ -164,7 +164,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             this.connectedAddons[side] = null;
             if(connectedAddonsType[side] != null)
                 if(connectedAddonsType[side].equals("aeencoder"))
-                    additionalEnergyUsage -= Settings.EnergyUseExtraAE;
+                    energyMultiplier -= Settings.AEEnergyMultiplier;
             this.connectedAddonsType[side] = null;
         }
     }
@@ -271,7 +271,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(!worldObj.isRemote){
 
             if(hasNeededComponents()){
-                tryUsePower((int) (calculateBasicEnergyUsage() + additionalEnergyUsage));
+                tryUsePower((int) (calculateBasicEnergyUsage() * energyMultiplier));
             }
 
             if(hasNeededComponents() && isPowered()){
