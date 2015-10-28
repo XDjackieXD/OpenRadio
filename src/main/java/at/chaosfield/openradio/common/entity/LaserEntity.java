@@ -139,9 +139,7 @@ public class LaserEntity extends Entity implements IProjectile{
                 lastParticle.xCoord = this.posX;
                 lastParticle.yCoord = this.posY;
                 lastParticle.zCoord = this.posZ;
-                EntityReddustFX particle = new EntityReddustFX(this.worldObj, this.posX, this.posY, this.posZ, 0.75F, this.colourR, this.colourG, this.colourB);
-                particle.setRBGColorF(this.colourR, this.colourG, this.colourB);
-                Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+                renderParticle();
             }
         }
 
@@ -199,6 +197,12 @@ public class LaserEntity extends Entity implements IProjectile{
         this.setPosition(this.posX, this.posY, this.posZ);
     }
 
+    @SideOnly(Side.CLIENT)
+    private void renderParticle(){
+        EntityReddustFX particle = new EntityReddustFX(this.worldObj, this.posX, this.posY, this.posZ, 0.75F, this.colourR, this.colourG, this.colourB);
+        particle.setRBGColorF(this.colourR, this.colourG, this.colourB);
+        Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+    }
 
     public void writeEntityToNBT(NBTTagCompound tagCompound) {
         tagCompound.setTag("direction", this.newDoubleNBTList(this.motionX, this.motionY, this.motionZ));

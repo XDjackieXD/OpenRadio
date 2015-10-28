@@ -20,6 +20,8 @@ public class LaserGui extends GuiContainer{
 
     public LaserGui(InventoryPlayer inventoryPlayer, LaserTileEntity tileEntity){
         super(new LaserContainer(inventoryPlayer, tileEntity));
+        this.xSize = 176;
+        this.ySize = 183;
     }
 
     //Draw the background texture
