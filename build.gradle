@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'idea'
 apply plugin: 'forge'
 
-version = "0.4.0"
+version = "0.5.0"
 group = "at.chaosfield.openradio" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "OpenRadio"
 

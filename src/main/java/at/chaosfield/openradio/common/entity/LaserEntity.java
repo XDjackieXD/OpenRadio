@@ -43,6 +43,7 @@ public class LaserEntity extends Entity implements IProjectile{
         this.colourR = 1.0F;
         this.colourG = 0;
         this.colourB = 0;
+        this.setInvisible(true);
     }
 
     protected void entityInit(){
@@ -50,9 +51,10 @@ public class LaserEntity extends Entity implements IProjectile{
 
     @SideOnly(Side.CLIENT)
     public boolean isInRangeToRenderDist(double renderDistance){
-        double d1 = this.boundingBox.getAverageEdgeLength() * 4.0D;
+        /*double d1 = this.boundingBox.getAverageEdgeLength() * 4.0D;
         d1 *= 64.0D;
-        return renderDistance < d1 * d1;
+        return renderDistance < d1 * d1;*/
+        return false;
     }
 
     public LaserEntity(World world, double x, double y, double z, double accX, double accY, double accZ, int laserDim, int laserX, int laserY, int laserZ, double maxDistance, float colourR, float colourG, float colourB){
