@@ -6,10 +6,13 @@ import at.chaosfield.openradio.util.Location;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.EntityReddustFX;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -25,15 +28,21 @@ import net.minecraftforge.common.DimensionManager;
 public class LaserEntity extends Entity implements IProjectile{
 
     private Location senderLaser;
-
     private Location locNow;
 
     private double distance = 1;
     private double maxDistance = 0;
 
+    private float colourR, colourG, colourB;
+    Vec3 lastParticle = Vec3.createVectorHelper(0, 0, 0);
+    private int lastParticleDim;
+
     public LaserEntity(World world){
         super(world);
         this.setSize(0.25F, 0.25F);
+        this.colourR = 1.0F;
+        this.colourG = 0;
+        this.colourB = 0;
     }
 
     protected void entityInit(){
@@ -46,7 +55,7 @@ public class LaserEntity extends Entity implements IProjectile{
         return renderDistance < d1 * d1;
     }
 
-    public LaserEntity(World world, double x, double y, double z, double accX, double accY, double accZ, int laserDim, int laserX, int laserY, int laserZ, double maxDistance){
+    public LaserEntity(World world, double x, double y, double z, double accX, double accY, double accZ, int laserDim, int laserX, int laserY, int laserZ, double maxDistance, float colourR, float colourG, float colourB){
         super(world);
         this.setSize(0.25F, 0.25F);
         this.setPosition(x, y, z);
@@ -60,6 +69,12 @@ public class LaserEntity extends Entity implements IProjectile{
         if(!worldObj.isRemote){
             this.locNow = new Location(world.provider.dimensionId, (int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
         }
+
+        this.colourR = colourR;
+        this.colourG = colourG;
+        this.colourB = colourB;
+        this.lastParticle = Vec3.createVectorHelper(x, y, z);
+        this.lastParticleDim = laserDim;
     }
 
     public void setThrowableHeading(double accX, double accY, double accZ, float accMult, float accRand){
@@ -114,7 +129,17 @@ public class LaserEntity extends Entity implements IProjectile{
             }
             if(distance > maxDistance){
                 this.setDead();
-
+            }
+        }else{
+            Vec3.createVectorHelper(this.posX, this.posY, this.posZ).distanceTo(lastParticle);
+            if(lastParticleDim != this.worldObj.provider.dimensionId || (Vec3.createVectorHelper(this.posX, this.posY, this.posZ).distanceTo(lastParticle) >= 1.0)){
+                lastParticleDim = this.worldObj.provider.dimensionId;
+                lastParticle.xCoord = this.posX;
+                lastParticle.yCoord = this.posY;
+                lastParticle.zCoord = this.posZ;
+                EntityReddustFX particle = new EntityReddustFX(this.worldObj, this.posX, this.posY, this.posZ, 0.75F, this.colourR, this.colourG, this.colourB);
+                particle.setRBGColorF(this.colourR, this.colourG, this.colourB);
+                Minecraft.getMinecraft().effectRenderer.addEffect(particle);
             }
         }
 
@@ -172,18 +197,43 @@ public class LaserEntity extends Entity implements IProjectile{
         this.setPosition(this.posX, this.posY, this.posZ);
     }
 
-    //As the entity should not be saved upon entering an unloaded chunk just override all the NBT writing methods
-    public void writeEntityToNBT(NBTTagCompound nbtTagCompound){ }
 
+    public void writeEntityToNBT(NBTTagCompound tagCompound) {
+        tagCompound.setTag("direction", this.newDoubleNBTList(this.motionX, this.motionY, this.motionZ));
+        tagCompound.setIntArray("senderLaser", new int[]{this.senderLaser.getDim(), this.senderLaser.getX(), this.senderLaser.getY(), this.senderLaser.getZ()});
+        tagCompound.setTag("colour", this.newFloatNBTList(this.colourR, this.colourG, this.colourB));
+        tagCompound.setInteger("lastParticleDim", this.lastParticleDim);
+        tagCompound.setDouble("distance", this.distance);
+        tagCompound.setDouble("macDistance", this.maxDistance);
+    }
+
+    public void readEntityFromNBT(NBTTagCompound tagCompound) {
+        if(tagCompound.hasKey("direction", 9)) {
+            NBTTagList nbttaglist = tagCompound.getTagList("direction", 6);
+            this.motionX = nbttaglist.func_150309_d(0);
+            this.motionY = nbttaglist.func_150309_d(1);
+            this.motionZ = nbttaglist.func_150309_d(2);
+        } else {
+            this.setDead();
+        }
+        int[] sender = tagCompound.getIntArray("senderLaser");
+        this.senderLaser = new Location(sender[0], sender[1], sender[2], sender[3]);
+
+        NBTTagList nbttaglist = tagCompound.getTagList("colour", 5);
+        this.colourR = nbttaglist.func_150308_e(0);
+        this.colourG = nbttaglist.func_150308_e(1);
+        this.colourB = nbttaglist.func_150308_e(2);
+OpenRadio.logger.info(this.colourR + " " + this.colourG + " " + this.colourB);
+        this.lastParticleDim = tagCompound.getInteger("lastParticleDim");
+        this.distance = tagCompound.getDouble("distance");
+        this.maxDistance = tagCompound.getDouble("maxDistance");
+    }
+
+    @Override
     public boolean writeToNBTOptional(NBTTagCompound nbtTagCompound){
+        //Don't save to disk!
         return false;
     }
-    public boolean writeMountToNBT(NBTTagCompound nbtTagCompound){
-        return false;
-    }
-
-    //As we don't save anything we don't need to read anything either
-    public void readEntityFromNBT(NBTTagCompound nbtTagCompound){ }
 
     @SideOnly(Side.CLIENT)
     public float getShadowSize(){

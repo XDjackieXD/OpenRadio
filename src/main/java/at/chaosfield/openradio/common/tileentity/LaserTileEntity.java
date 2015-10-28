@@ -121,7 +121,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 accZ = 0;
         }
 
-        this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, getMaxDistance()));
+        this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, getMaxDistance(), getLaserColourRed(), getLaserColourGreen(), getLaserColourBlue()));
     }
 
     public void setDestination(int dim, int x, int y, int z, double distance){
@@ -147,6 +147,45 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         return inv[0] != null && inv[1] != null && inv[2] != null && inv[3] != null && inv[4] != null && (inv[0].getItem() == Items.dspItem) && (inv[1].getItem() == Items.photoReceptorItem) && (inv[2].getItem() == Items.mirrorItem) && (inv[3].getItem() == Items.lensItem) && (inv[4].getItem() == Items.laserItem);
     }
 
+
+    private float getLaserColourRed(){
+        switch(getLaserTier()){
+            case 1:
+                return 1.0F;
+            case 2:
+                return 0.9137F;
+            case 3:
+                return 0;
+            default:
+                return 0;
+        }
+    }
+
+    private float getLaserColourGreen(){
+        switch(getLaserTier()){
+            case 1:
+                return 0;
+            case 2:
+                return 0.4745F;
+            case 3:
+                return 1.0F;
+            default:
+                return 0;
+        }
+    }
+
+    private float getLaserColourBlue(){
+        switch(getLaserTier()){
+            case 1:
+                return 0;
+            case 2:
+                return 1.0F;
+            case 3:
+                return 0;
+            default:
+                return 0;
+        }
+    }
 
     public void connectAddon(ILaserAddon addon, int side){
         if(this.connectedAddons[side] != addon){
