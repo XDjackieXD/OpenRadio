@@ -33,16 +33,13 @@ public class LaserEntity extends Entity implements IProjectile{
     private double distance = 1;
     private double maxDistance = 0;
 
-    private float colourR, colourG, colourB;
+    private float colourR = 1.0F, colourG = 0, colourB = 0;
     Vec3 lastParticle = Vec3.createVectorHelper(0, 0, 0);
     private int lastParticleDim;
 
     public LaserEntity(World world){
         super(world);
         this.setSize(0.25F, 0.25F);
-        this.colourR = 1.0F;
-        this.colourG = 0;
-        this.colourB = 0;
         this.setInvisible(true);
     }
 
@@ -57,7 +54,7 @@ public class LaserEntity extends Entity implements IProjectile{
         return false;
     }
 
-    public LaserEntity(World world, double x, double y, double z, double accX, double accY, double accZ, int laserDim, int laserX, int laserY, int laserZ, double maxDistance, float colourR, float colourG, float colourB){
+    public LaserEntity(World world, double x, double y, double z, double accX, double accY, double accZ, int laserDim, int laserX, int laserY, int laserZ, double maxDistance){
         super(world);
         this.setSize(0.25F, 0.25F);
         this.setPosition(x, y, z);
@@ -72,9 +69,6 @@ public class LaserEntity extends Entity implements IProjectile{
             this.locNow = new Location(world.provider.dimensionId, (int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
         }
 
-        this.colourR = colourR;
-        this.colourG = colourG;
-        this.colourB = colourB;
         this.lastParticle = Vec3.createVectorHelper(x, y, z);
         this.lastParticleDim = laserDim;
     }

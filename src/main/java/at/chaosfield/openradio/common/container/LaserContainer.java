@@ -18,11 +18,11 @@ public class LaserContainer extends Container{
     public LaserContainer(InventoryPlayer inventoryPlayer, LaserTileEntity te){
         tileEntity = te;
 
-        addSlotToContainer(new RestrictedSlot(Items.dspItem, 1, tileEntity, 0, 33, 27));     //DSP
-        addSlotToContainer(new RestrictedSlot(Items.photoReceptorItem, 1, tileEntity, 1, 56, 27));    //PhotoReceptor
-        addSlotToContainer(new RestrictedSlot(Items.mirrorItem, 1, tileEntity, 2, 89, 27));    //SemiReflectiveMirror
-        addSlotToContainer(new RestrictedSlot(Items.lensItem, 1, tileEntity, 3, 127, 27));   //Lens
-        addSlotToContainer(new RestrictedSlot(Items.laserItem, 1, tileEntity, 4, 89, 60));    //Laser
+        addSlotToContainer(new RestrictedSlot(Items.dspItem, 1, tileEntity, LaserTileEntity.SLOT_DSP, 33, 27));     //DSP
+        addSlotToContainer(new RestrictedSlot(Items.photoReceptorItem, 1, tileEntity, LaserTileEntity.SLOT_PHOTO_RECEPTOR, 56, 27));    //PhotoReceptor
+        addSlotToContainer(new RestrictedSlot(Items.mirrorItem, 1, tileEntity, LaserTileEntity.SLOT_MIRROR, 89, 27));    //SemiReflectiveMirror
+        addSlotToContainer(new RestrictedSlot(Items.lensItem, 1, tileEntity, LaserTileEntity.SLOT_LENS, 127, 27));   //Lens
+        addSlotToContainer(new RestrictedSlot(Items.laserItem, 1, tileEntity, LaserTileEntity.SLOT_LASER, 89, 60));    //Laser
 
         //commonly used vanilla code that adds the player's inventory
         bindPlayerInventory(inventoryPlayer);
@@ -49,12 +49,12 @@ public class LaserContainer extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
-        ItemStack stack = null;
+        ItemStack currentStack = null;
         Slot slotObject = (Slot) inventorySlots.get(slot);
 
         if (slotObject != null && slotObject.getHasStack()) {
             ItemStack stackInSlot = slotObject.getStack();
-            stack = stackInSlot.copy();
+            currentStack = stackInSlot.copy();
 
             //Item is in Container. Transfer to Player inventory
             if (slot < tileEntity.getSizeInventory()) {
@@ -74,11 +74,11 @@ public class LaserContainer extends Container{
                 slotObject.onSlotChanged();
             }
 
-            if (stackInSlot.stackSize == stack.stackSize) {
+            if (stackInSlot.stackSize == currentStack.stackSize) {
                 return null;
             }
             slotObject.onPickupFromSlot(player, stackInSlot);
         }
-        return stack;
+        return currentStack;
     }
 }

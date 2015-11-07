@@ -8,6 +8,7 @@ import appeng.tile.TileEvent;
 import appeng.tile.events.TileEventType;
 import appeng.tile.grid.AENetworkTile;
 import at.chaosfield.openradio.Settings;
+import at.chaosfield.openradio.common.init.Items;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.DimensionManager;
@@ -29,7 +30,7 @@ public class AEEncoderTileEntity extends AENetworkTile implements ILaserAddon {
             boolean foundOther = false;
             if (this.laser != null)
                 if (!this.laser.isInvalid()) {
-                    if(laser.hasNeededComponents() && laser.getDSPTier() == 3){
+                    if(laser.hasNeededComponents() && laser.getItemTier(LaserTileEntity.SLOT_DSP, Items.dspItem) == 3){
                         if(laser.isConnected()){
                             TileEntity other = DimensionManager.getWorld(laser.getOtherLaser().getDim()).getTileEntity(laser.getOtherLaser().getX(), laser.getOtherLaser().getY(), laser.getOtherLaser().getZ());
                             if(other instanceof LaserTileEntity){
@@ -53,11 +54,19 @@ public class AEEncoderTileEntity extends AENetworkTile implements ILaserAddon {
         }
     }
 
+    public boolean hasAllRequirenments(){
+        return this.laser != null &&
+                !this.laser.isInvalid() &&
+                laser.hasNeededComponents() &&
+                laser.getItemTier(LaserTileEntity.SLOT_DSP, Items.dspItem) == 3 &&
+                laser.isConnected();
+    }
+
     private void connectToAEEncoder(AEEncoderTileEntity encoder) {
         this.otherAEEncoder = encoder;
 
         if (otherAEEncoder != null) {
-            if (!otherAEEncoder.isInvalid()) {
+            if (!otherAEEncoder.isInvalid() && otherAEEncoder.hasAllRequirenments()) {
                 if (this.connection != null && this.connection.connection != null) {
                     IGridNode a = this.connection.connection.a();
                     IGridNode b = this.connection.connection.b();

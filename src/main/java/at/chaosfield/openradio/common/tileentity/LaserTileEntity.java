@@ -31,6 +31,13 @@ import net.minecraftforge.common.util.ForgeDirection;
  */
 
 public class LaserTileEntity extends TileEntityEnvironment implements IInventory{
+
+    public static final int SLOT_DSP = 0;
+    public static final int SLOT_PHOTO_RECEPTOR = 1;
+    public static final int SLOT_MIRROR = 2;
+    public static final int SLOT_LENS = 3;
+    public static final int SLOT_LASER = 4;
+
     private boolean powered;
     private double distance;
     private Location otherLaser;
@@ -121,7 +128,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 accZ = 0;
         }
 
-        this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, getMaxDistance(), getLaserColourRed(), getLaserColourGreen(), getLaserColourBlue()));
+        this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, getMaxDistance()));
     }
 
     public void setDestination(int dim, int x, int y, int z, double distance){
@@ -144,47 +151,16 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     public boolean hasNeededComponents(){
-        return inv[0] != null && inv[1] != null && inv[2] != null && inv[3] != null && inv[4] != null && (inv[0].getItem() == Items.dspItem) && (inv[1].getItem() == Items.photoReceptorItem) && (inv[2].getItem() == Items.mirrorItem) && (inv[3].getItem() == Items.lensItem) && (inv[4].getItem() == Items.laserItem);
-    }
-
-
-    private float getLaserColourRed(){
-        switch(getLaserTier()){
-            case 1:
-                return 1.0F;
-            case 2:
-                return 0.9137F;
-            case 3:
-                return 0;
-            default:
-                return 0;
-        }
-    }
-
-    private float getLaserColourGreen(){
-        switch(getLaserTier()){
-            case 1:
-                return 0;
-            case 2:
-                return 0.4745F;
-            case 3:
-                return 1.0F;
-            default:
-                return 0;
-        }
-    }
-
-    private float getLaserColourBlue(){
-        switch(getLaserTier()){
-            case 1:
-                return 0;
-            case 2:
-                return 1.0F;
-            case 3:
-                return 0;
-            default:
-                return 0;
-        }
+        return inv[SLOT_DSP] != null &&
+                inv[SLOT_PHOTO_RECEPTOR] != null &&
+                inv[SLOT_MIRROR] != null &&
+                inv[SLOT_LENS] != null &&
+                inv[SLOT_LASER] != null &&
+                inv[SLOT_DSP].getItem() == Items.dspItem &&
+                inv[SLOT_PHOTO_RECEPTOR].getItem() == Items.photoReceptorItem &&
+                inv[SLOT_MIRROR].getItem() == Items.mirrorItem &&
+                inv[SLOT_LENS].getItem() == Items.lensItem &&
+                inv[SLOT_LASER].getItem() == Items.laserItem;
     }
 
     public void connectAddon(ILaserAddon addon, int side){
@@ -211,41 +187,17 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         return connectedAddons;
     }
 
-    public int getDSPTier(){
-        if(inv[0] != null)
-            if(inv[0].getItem() == Items.dspItem)
-                if(inv[0].getItemDamage() <= 2 && inv[0].getItemDamage() >= 0)
-                    return inv[0].getItemDamage() + 1;
-        return 0;
-    }
-
-    public int getReceiverTier(){
-        if(inv[1] != null)
-            if(inv[1].getItem() == Items.photoReceptorItem)
-                if(inv[1].getItemDamage() <= 2 && inv[1].getItemDamage() >= 0)
-                    return inv[1].getItemDamage() + 1;
-        return 0;
-    }
-
-    public int getLaserTier(){
-        if(inv[4] != null)
-            if(inv[4].getItem() == Items.laserItem)
-                if(inv[4].getItemDamage() <= 2 && inv[4].getItemDamage() >= 0)
-                    return inv[4].getItemDamage() + 1;
-        return 0;
-    }
-
-    public int getLensTier(){
-        if(inv[3] != null)
-            if(inv[3].getItem() == Items.lensItem)
-                if(inv[3].getItemDamage() <= 2 && inv[3].getItemDamage() >= 0)
-                    return inv[3].getItemDamage() + 1;
+    public int getItemTier(int slot, Object item){
+        if(inv[slot] != null)
+            if(inv[slot].getItem() == item)
+                if(inv[slot].getItemDamage() <= 2 && inv[slot].getItemDamage() >= 0)
+                    return inv[slot].getItemDamage() + 1;
         return 0;
     }
 
     public double getMaxDistance(){
         if(hasNeededComponents()){
-            return OpenRadio.instance.settings.LaserMaxDistanceTier[getLaserTier()-1] * OpenRadio.instance.settings.LensMultiplierTier[getLensTier()-1];
+            return OpenRadio.instance.settings.LaserMaxDistanceTier[getItemTier(SLOT_LASER, Items.laserItem)-1] * OpenRadio.instance.settings.LensMultiplierTier[getItemTier(SLOT_LENS, Items.lensItem)-1];
         }else{
             return 0;
         }
@@ -262,7 +214,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public double calculateBasicEnergyUsage(){
         int usage = 0;
         if(hasNeededComponents()){
-            usage += OpenRadio.instance.settings.EnergyUseLaserTier[getLaserTier()-1];
+            usage += OpenRadio.instance.settings.EnergyUseLaserTier[getItemTier(SLOT_LASER, Items.laserItem)-1];
         }
         return usage;
     }
@@ -270,20 +222,12 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     //------------------------------------------------------------------------------------------------------------------
     //Open Computers Integration
     public String getComponentName(){
-        return "Laser";
+        return "laser";
     }
 
     @Callback(direct = true, doc = "function():double -- Get the current latency")
     public Object[] getLatency(Context context, Arguments args){
         return new Object[]{distance};
-    }
-
-    @Callback(direct = true, doc = "function():{connected, dimId, x, y, z} -- Get the other Laser")
-    public Object[] connected(Context context, Arguments args){
-        if(otherLaser != null && isConnected())
-            return new Object[]{true, otherLaser.getDim(), otherLaser.getX(), otherLaser.getY(), otherLaser.getZ()};
-        else
-            return new Object[]{false, 0, 0, 0, 0};
     }
 
     @Override
