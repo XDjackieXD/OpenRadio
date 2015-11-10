@@ -107,7 +107,7 @@ public class Crafting{
                 "III", "NSL", "III",
                 'I', "ingotIron",
                 'N', li.cil.oc.api.Items.get("cable").createItemStack(1),
-                'S', li.cil.oc.api.Items.get("switch").createItemStack(1),
+                'S', li.cil.oc.api.Items.get("relay").createItemStack(1),
                 'L', new ItemStack(Items.laserSocketItem)));
 
         if(Loader.isModLoaded("appliedenergistics2")){
