@@ -317,6 +317,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(stack != null && stack.stackSize > getInventoryStackLimit()){
             stack.stackSize = getInventoryStackLimit();
         }
+        this.markDirty();
     }
 
     @Override
@@ -341,6 +342,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                     setInventorySlotContents(slot, null);
                 }
             }
+            this.markDirty();
         }
         return stack;
     }
