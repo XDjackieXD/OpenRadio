@@ -135,6 +135,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(!this.getWorldObj().isRemote){
             this.otherLaser = new Location(dim, x, y, z);
             this.distance = distance;
+            this.markDirty();
         }
     }
 
