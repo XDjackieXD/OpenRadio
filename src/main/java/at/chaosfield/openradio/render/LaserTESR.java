@@ -1,14 +1,8 @@
-package at.chaosfield.openradio.common.render;
+package at.chaosfield.openradio.render;
 
-import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.common.init.Blocks;
-import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
-import at.chaosfield.openradio.util.Location;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureMap;
+import at.chaosfield.openradio.init.Blocks;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import org.lwjgl.opengl.GL11;
 
 /**
  * Created by Jakob Riepler (XDjackieXD)

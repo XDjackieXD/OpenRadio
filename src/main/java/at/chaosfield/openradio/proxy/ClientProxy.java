@@ -1,7 +1,7 @@
 package at.chaosfield.openradio.proxy;
 
-import at.chaosfield.openradio.common.render.LaserTESR;
-import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
+import at.chaosfield.openradio.render.LaserTESR;
+import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import cpw.mods.fml.client.registry.ClientRegistry;
 
 /**

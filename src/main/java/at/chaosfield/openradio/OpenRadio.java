@@ -1,11 +1,12 @@
 package at.chaosfield.openradio;
 
-import at.chaosfield.openradio.common.init.Blocks;
-import at.chaosfield.openradio.common.init.Crafting;
-import at.chaosfield.openradio.common.init.Entities;
-import at.chaosfield.openradio.common.init.Items;
+import at.chaosfield.openradio.init.Blocks;
+import at.chaosfield.openradio.init.Crafting;
+import at.chaosfield.openradio.init.Entities;
+import at.chaosfield.openradio.init.Items;
 import at.chaosfield.openradio.gui.GuiHandler;
 import at.chaosfield.openradio.proxy.CommonProxy;
+import at.chaosfield.openradio.util.Settings;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;

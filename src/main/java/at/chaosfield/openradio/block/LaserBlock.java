@@ -1,8 +1,8 @@
-package at.chaosfield.openradio.common.block;
+package at.chaosfield.openradio.block;
 
-import at.chaosfield.openradio.CreativeTab;
+import at.chaosfield.openradio.gui.CreativeTab;
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
+import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.gui.GUIs;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -12,7 +12,6 @@ import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,14 +1,13 @@
-package at.chaosfield.openradio.common.entity;
+package at.chaosfield.openradio.entity;
 
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.common.render.LaserParticle;
-import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
+import at.chaosfield.openradio.render.LaserParticle;
+import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.util.Location;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityReddustFX;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.init.Blocks;
@@ -34,7 +33,7 @@ public class LaserEntity extends Entity implements IProjectile{
     private double distance = 1;
     private double maxDistance = 0;
 
-    private float colourR = 1.0F, colourG = 0, colourB = 0;
+    private float colorR = 1.0F, colorG = 0, colorB = 0;
     Vec3 lastParticle = Vec3.createVectorHelper(0, 0, 0);
     private int lastParticleDim;
 
@@ -194,15 +193,15 @@ public class LaserEntity extends Entity implements IProjectile{
 
     @SideOnly(Side.CLIENT)
     private void renderParticle(){
-        LaserParticle particle = new LaserParticle(this.worldObj, this.posX, this.posY, this.posZ, 0.75F, this.colourR, this.colourG, this.colourB);
-        particle.setRBGColorF(this.colourR, this.colourG, this.colourB);
+        LaserParticle particle = new LaserParticle(this.worldObj, this.posX, this.posY, this.posZ, 0.75F, this.colorR, this.colorG, this.colorB);
+        particle.setRBGColorF(this.colorR, this.colorG, this.colorB);
         Minecraft.getMinecraft().effectRenderer.addEffect(particle);
     }
 
     public void writeEntityToNBT(NBTTagCompound tagCompound) {
         tagCompound.setTag("direction", this.newDoubleNBTList(this.motionX, this.motionY, this.motionZ));
         tagCompound.setIntArray("senderLaser", new int[]{this.senderLaser.getDim(), this.senderLaser.getX(), this.senderLaser.getY(), this.senderLaser.getZ()});
-        tagCompound.setTag("colour", this.newFloatNBTList(this.colourR, this.colourG, this.colourB));
+        tagCompound.setTag("color", this.newFloatNBTList(this.colorR, this.colorG, this.colorB));
         tagCompound.setInteger("lastParticleDim", this.lastParticleDim);
         tagCompound.setDouble("distance", this.distance);
         tagCompound.setDouble("macDistance", this.maxDistance);
@@ -220,11 +219,10 @@ public class LaserEntity extends Entity implements IProjectile{
         int[] sender = tagCompound.getIntArray("senderLaser");
         this.senderLaser = new Location(sender[0], sender[1], sender[2], sender[3]);
 
-        NBTTagList nbttaglist = tagCompound.getTagList("colour", 5);
-        this.colourR = nbttaglist.func_150308_e(0);
-        this.colourG = nbttaglist.func_150308_e(1);
-        this.colourB = nbttaglist.func_150308_e(2);
-OpenRadio.logger.info(this.colourR + " " + this.colourG + " " + this.colourB);
+        NBTTagList nbttaglist = tagCompound.getTagList("color", 5);
+        this.colorR = nbttaglist.func_150308_e(0);
+        this.colorG = nbttaglist.func_150308_e(1);
+        this.colorB = nbttaglist.func_150308_e(2);
         this.lastParticleDim = tagCompound.getInteger("lastParticleDim");
         this.distance = tagCompound.getDouble("distance");
         this.maxDistance = tagCompound.getDouble("maxDistance");

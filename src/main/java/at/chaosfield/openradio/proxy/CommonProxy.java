@@ -1,8 +1,8 @@
 package at.chaosfield.openradio.proxy;
 
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.common.tileentity.AEEncoderTileEntity;
-import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
+import at.chaosfield.openradio.tileentity.AEEncoderTileEntity;
+import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 

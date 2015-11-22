@@ -1,7 +1,7 @@
-package at.chaosfield.openradio.common.init;
+package at.chaosfield.openradio.init;
 
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.common.item.*;
+import at.chaosfield.openradio.item.*;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**

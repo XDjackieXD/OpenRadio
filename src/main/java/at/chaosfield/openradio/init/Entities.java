@@ -1,7 +1,7 @@
-package at.chaosfield.openradio.common.init;
+package at.chaosfield.openradio.init;
 
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.common.entity.LaserEntity;
+import at.chaosfield.openradio.entity.LaserEntity;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 /**

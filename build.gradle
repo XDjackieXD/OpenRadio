@@ -23,7 +23,7 @@ group = "at.chaosfield.openradio" // http://maven.apache.org/guides/mini/guide-n
 archivesBaseName = "OpenRadio"
 
 minecraft {
-    version = "1.7.10-10.13.4.1448-1.7.10"
+    version = "1.7.10-10.13.4.1558-1.7.10"
     runDir = "eclipse"
 }
 

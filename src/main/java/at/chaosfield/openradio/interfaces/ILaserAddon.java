@@ -1,6 +1,6 @@
 package at.chaosfield.openradio.interfaces;
 
-import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
+import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 /**

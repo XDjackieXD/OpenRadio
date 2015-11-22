@@ -1,16 +1,13 @@
-package at.chaosfield.openradio.common.container;
+package at.chaosfield.openradio.container;
 
-import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.common.init.Items;
-import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
+import at.chaosfield.openradio.init.Items;
+import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.gui.RestrictedSlot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-
-import java.awt.image.TileObserver;
 
 /**
  * Created by Jakob Riepler (XDjackieXD)

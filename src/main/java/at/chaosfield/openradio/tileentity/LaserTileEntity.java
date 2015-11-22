@@ -1,9 +1,9 @@
-package at.chaosfield.openradio.common.tileentity;
+package at.chaosfield.openradio.tileentity;
 
 
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.common.entity.LaserEntity;
-import at.chaosfield.openradio.common.init.Items;
+import at.chaosfield.openradio.entity.LaserEntity;
+import at.chaosfield.openradio.init.Items;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
 import at.chaosfield.openradio.util.Location;
 import li.cil.oc.api.API;

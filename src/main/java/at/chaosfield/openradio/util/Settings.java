@@ -1,4 +1,4 @@
-package at.chaosfield.openradio;
+package at.chaosfield.openradio.util;
 
 import net.minecraftforge.common.config.Configuration;
 

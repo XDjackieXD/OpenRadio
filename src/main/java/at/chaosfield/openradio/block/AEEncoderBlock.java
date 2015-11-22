@@ -1,8 +1,8 @@
-package at.chaosfield.openradio.common.block;
+package at.chaosfield.openradio.block;
 
-import at.chaosfield.openradio.CreativeTab;
+import at.chaosfield.openradio.gui.CreativeTab;
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.common.tileentity.AEEncoderTileEntity;
+import at.chaosfield.openradio.tileentity.AEEncoderTileEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;

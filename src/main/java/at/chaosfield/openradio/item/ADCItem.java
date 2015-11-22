@@ -1,6 +1,6 @@
-package at.chaosfield.openradio.common.item;
+package at.chaosfield.openradio.item;
 
-import at.chaosfield.openradio.CreativeTab;
+import at.chaosfield.openradio.gui.CreativeTab;
 import at.chaosfield.openradio.OpenRadio;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -16,10 +16,10 @@ import java.util.List;
 /**
  * Created by Jakob Riepler (XDjackieXD)
  */
-public class DSPItem extends Item{
-    public DSPItem(){
+public class ADCItem extends Item{
+    public ADCItem(){
         maxStackSize = 64;
-        setUnlocalizedName(OpenRadio.MODID + ":dsp");
+        setUnlocalizedName(OpenRadio.MODID + ":adc");
         setHasSubtypes(true);
         setCreativeTab(CreativeTab.instance);
     }
@@ -32,9 +32,9 @@ public class DSPItem extends Item{
     public void registerIcons(IIconRegister par1IconRegister)
     {
         icons = new IIcon[3];
-        icons[0] = par1IconRegister.registerIcon(OpenRadio.MODID + ":dspt1");
-        icons[1] = par1IconRegister.registerIcon(OpenRadio.MODID + ":dspt2");
-        icons[2] = par1IconRegister.registerIcon(OpenRadio.MODID + ":dspt3");
+        icons[0] = par1IconRegister.registerIcon(OpenRadio.MODID + ":adct1");
+        icons[1] = par1IconRegister.registerIcon(OpenRadio.MODID + ":adct2");
+        icons[2] = par1IconRegister.registerIcon(OpenRadio.MODID + ":adct3");
     }
 
     public static final String[] names = new String[] { "t1", "t2", "t3" };

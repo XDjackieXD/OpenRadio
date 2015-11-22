@@ -1,6 +1,6 @@
-package at.chaosfield.openradio.common.item;
+package at.chaosfield.openradio.item;
 
-import at.chaosfield.openradio.CreativeTab;
+import at.chaosfield.openradio.gui.CreativeTab;
 import at.chaosfield.openradio.OpenRadio;
 import net.minecraft.item.Item;
 

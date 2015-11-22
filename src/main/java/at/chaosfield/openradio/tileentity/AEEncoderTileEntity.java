@@ -1,4 +1,4 @@
-package at.chaosfield.openradio.common.tileentity;
+package at.chaosfield.openradio.tileentity;
 
 import appeng.api.AEApi;
 import appeng.api.exceptions.FailedConnection;
@@ -7,8 +7,7 @@ import appeng.me.cache.helpers.ConnectionWrapper;
 import appeng.tile.TileEvent;
 import appeng.tile.events.TileEventType;
 import appeng.tile.grid.AENetworkTile;
-import at.chaosfield.openradio.Settings;
-import at.chaosfield.openradio.common.init.Items;
+import at.chaosfield.openradio.init.Items;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.DimensionManager;

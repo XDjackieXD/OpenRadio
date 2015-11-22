@@ -1,7 +1,8 @@
-package at.chaosfield.openradio;
+package at.chaosfield.openradio.gui;
 
-import at.chaosfield.openradio.common.init.Blocks;
-import at.chaosfield.openradio.common.init.Items;
+import at.chaosfield.openradio.OpenRadio;
+import at.chaosfield.openradio.init.Blocks;
+import at.chaosfield.openradio.init.Items;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

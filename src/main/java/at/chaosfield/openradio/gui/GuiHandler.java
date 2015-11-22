@@ -1,8 +1,8 @@
 package at.chaosfield.openradio.gui;
 
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.common.container.LaserContainer;
-import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
+import at.chaosfield.openradio.container.LaserContainer;
+import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.entity.player.EntityPlayer;
