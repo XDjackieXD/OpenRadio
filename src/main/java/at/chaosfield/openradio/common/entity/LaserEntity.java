@@ -1,6 +1,7 @@
 package at.chaosfield.openradio.common.entity;
 
 import at.chaosfield.openradio.OpenRadio;
+import at.chaosfield.openradio.common.render.LaserParticle;
 import at.chaosfield.openradio.common.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.util.Location;
 import cpw.mods.fml.relauncher.Side;
@@ -193,7 +194,7 @@ public class LaserEntity extends Entity implements IProjectile{
 
     @SideOnly(Side.CLIENT)
     private void renderParticle(){
-        EntityReddustFX particle = new EntityReddustFX(this.worldObj, this.posX, this.posY, this.posZ, 0.75F, this.colourR, this.colourG, this.colourB);
+        LaserParticle particle = new LaserParticle(this.worldObj, this.posX, this.posY, this.posZ, 0.75F, this.colourR, this.colourG, this.colourB);
         particle.setRBGColorF(this.colourR, this.colourG, this.colourB);
         Minecraft.getMinecraft().effectRenderer.addEffect(particle);
     }
