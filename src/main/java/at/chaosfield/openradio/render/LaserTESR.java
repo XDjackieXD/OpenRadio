@@ -1,8 +1,13 @@
 package at.chaosfield.openradio.render;
 
+import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.init.Blocks;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.AdvancedModelLoader;
+import net.minecraftforge.client.model.IModelCustom;
+import org.lwjgl.opengl.GL11;
 
 /**
  * Created by Jakob Riepler (XDjackieXD)
@@ -10,66 +15,50 @@ import net.minecraft.tileentity.TileEntity;
  */
 public class LaserTESR extends TileEntitySpecialRenderer{
 
-    public LaserTESR(){
+    private IModelCustom laserModel;
+    private ResourceLocation laserTexture;
 
+    public LaserTESR(){
+        laserModel = AdvancedModelLoader.loadModel(new ResourceLocation(OpenRadio.MODID + ":" + "models/blocks/laser.obj"));
+        laserTexture = new ResourceLocation(OpenRadio.MODID + ":" + "textures/blocks/Laser.png");
     }
 
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f){
+        GL11.glPushMatrix();
+        GL11.glTranslated(x + 0.5, y, z + 0.5);
 
-        tileEntity.getWorldObj().scheduleBlockUpdate(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, Blocks.laserBlock, 10);
+        if(tileEntity.hasWorldObj())
+            switch(tileEntity.getWorldObj().getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord)){
+                case 0:
+                    GL11.glTranslated(0, 0.5, -0.5);
+                    GL11.glRotated(90, 1, 0, 0);
+                    break;
+                case 1:
+                    GL11.glTranslated(0, 0.5, 0.5);
+                    GL11.glRotated(-90, 1, 0, 0);
+                    break;
+                case 2:
+                    GL11.glRotated(180, 0, 1, 0);
+                    break;
+                case 3:
+                    //GL11.glRotated(0, 0, 1, 0); //no rotation is useless ^^
+                    break;
+                case 4:
+                    GL11.glRotated(270, 0, 1, 0);
+                    break;
+                case 5:
+                    GL11.glRotated(90, 0, 1, 0);
+                    break;
+                default:
+                    break;
+            }
 
-        /*if(((LaserTileEntity) tileEntity).isConnected()){
-            Location otherLaser = ((LaserTileEntity) tileEntity).getOtherLaser();
-            OpenRadio.logger.info("render!");
+        GL11.glScalef(0.03125F, 0.03125F, 0.03125F);
 
-            this.bindTexture(TextureMap.locationBlocksTexture);
+        bindTexture(laserTexture);
+        laserModel.renderAll();
 
-            Tessellator tessellator = Tessellator.instance;
-            GL11.glPushMatrix();
-            GL11.glTranslated(x, y + 1, z); // +1 so that our "drawing" appears 1 block over our block (to get a better view)
-            tessellator.startDrawingQuads();
-
-            tessellator.addVertexWithUV(0.4, 0.4, 0.4, 0, 0);
-            tessellator.addVertexWithUV(0.4, 0.6, 0.4, 0, 1);
-            tessellator.addVertexWithUV(0.4 + (otherLaser.getX() - tileEntity.xCoord), 0.6  + (otherLaser.getY() - tileEntity.yCoord), 0.4 + (otherLaser.getZ() - tileEntity.yCoord), 1, 1);
-            tessellator.addVertexWithUV(0.4 + (otherLaser.getX() - tileEntity.xCoord), 0.4  + (otherLaser.getY() - tileEntity.yCoord), 0.4 + (otherLaser.getZ() - tileEntity.yCoord), 1, 0);
-
-            tessellator.addVertexWithUV(0, 0, 0, 0, 0);
-            tessellator.addVertexWithUV(1, 0, 0, 1, 0);
-            tessellator.addVertexWithUV(1, 1, 0, 1, 1);
-            tessellator.addVertexWithUV(0, 1, 0, 0, 1);
-
-            tessellator.draw();
-            GL11.glPopMatrix();
-        }*/
-
-
-        /*Location otherLaser = ((LaserTileEntity)tileEntity).getOtherLaser();
-        if(otherLaser != null && ((LaserTileEntity)tileEntity).isConnected()){
-
-            GL11.glPushMatrix();
-            GL11.glTranslated(x, y, z);
-
-            GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glDisable(GL11.GL_TEXTURE_2D);
-
-            GL11.glLineWidth(6);
-            GL11.glTranslated(x, y, z);
-            GL11.glColor3ub((byte) 253, (byte) 0, (byte) 0);
-            GL11.glEnable(GL11.GL_LINE_SMOOTH);
-            GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
-
-            GL11.glBegin(GL11.GL_LINE_STRIP);
-            GL11.glVertex3f(0.5f,0.5f,0.5f);
-            GL11.glVertex3f(3.5f,0.5f,0.5f);
-            //GL11.glVertex3f(otherLaser.getX() - tileEntity.xCoord + 0.5f, otherLaser.getY() - tileEntity.yCoord + 0.5f, otherLaser.getZ() - tileEntity.zCoord + 0.5f);
-            GL11.glEnd();
-
-            GL11.glEnable(GL11.GL_LIGHTING);
-            GL11.glEnable(GL11.GL_TEXTURE_2D);
-
-            GL11.glPopMatrix();
-        }*/
+        GL11.glPopMatrix();
     }
 }
