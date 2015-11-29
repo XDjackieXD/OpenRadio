@@ -4,6 +4,7 @@ import at.chaosfield.openradio.gui.CreativeTab;
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.gui.GUIs;
+import at.chaosfield.openradio.util.RenderUtil;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -137,5 +138,19 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
                 item.stackSize = 0;
             }
         }
+    }
+
+    @Override
+    public int getRenderType() {
+        return RenderUtil.laserRenderID;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    public boolean renderAsNormalBlock() {
+        return false;
     }
 }

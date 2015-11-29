@@ -14,10 +14,6 @@ import net.minecraft.world.World;
 public class LaserParticle extends EntityFX{
     float reddustParticleScale;
 
-    public LaserParticle(World worldObj, double posX, double posY, double posZ, float colorR, float colorG, float colorB){
-        this(worldObj, posX, posY, posZ, 1.0F, colorR, colorG, colorB);
-    }
-
     public LaserParticle(World worldObj, double posX, double posY, double posZ, float scale, float colorR, float colorG, float colorB){
         super(worldObj, posX, posY, posZ, 0.0D, 0.0D, 0.0D);
         this.motionX *= 0.10000000149011612D;

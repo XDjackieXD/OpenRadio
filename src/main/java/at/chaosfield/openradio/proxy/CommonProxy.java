@@ -10,6 +10,9 @@ import cpw.mods.fml.common.registry.GameRegistry;
  * Created by Jakob Riepler (XDjackieXD)
  */
 public class CommonProxy{
+
+
+
     public void registerTileEntities(){
         GameRegistry.registerTileEntity(LaserTileEntity.class, OpenRadio.MODID + ":laser");
         if(Loader.isModLoaded("appliedenergistics2"))

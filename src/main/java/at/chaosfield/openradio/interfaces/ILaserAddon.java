@@ -7,10 +7,8 @@ import net.minecraft.tileentity.TileEntity;
  * Created by Jakob Riepler (XDjackieXD)
  */
 public interface ILaserAddon {
-
-    public void connectToLaser(LaserTileEntity laser);
-    public void disconnectFromLaser(LaserTileEntity laser);
-    public TileEntity getTileEntity();
-    public String getAddonName();
-
+    void connectToLaser(LaserTileEntity laser);
+    void disconnectFromLaser(LaserTileEntity laser);
+    TileEntity getTileEntity();
+    String getAddonName();
 }
