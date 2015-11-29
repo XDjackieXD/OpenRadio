@@ -18,13 +18,15 @@ import org.lwjgl.opengl.GL11;
 public class LaserTESR extends TileEntitySpecialRenderer{
 
     private IModelCustom laserModel, lensModel;
-    private ResourceLocation laserTexture, lensTexture1;
+    private ResourceLocation laserTexture, lensTexture1, lensTexture2, lensTexture3;
 
     public LaserTESR(){
         laserModel = AdvancedModelLoader.loadModel(new ResourceLocation(OpenRadio.MODID + ":" + "models/blocks/laser.obj"));
         laserTexture = new ResourceLocation(OpenRadio.MODID + ":" + "textures/blocks/Laser.png");
         lensModel = AdvancedModelLoader.loadModel(new ResourceLocation(OpenRadio.MODID + ":" + "models/blocks/lens.obj"));
         lensTexture1 = new ResourceLocation(OpenRadio.MODID + ":" + "textures/blocks/LensT1.png");
+        lensTexture2 = new ResourceLocation(OpenRadio.MODID + ":" + "textures/blocks/LensT2.png");
+        lensTexture3 = new ResourceLocation(OpenRadio.MODID + ":" + "textures/blocks/LensT3.png");
     }
 
     @Override
@@ -69,8 +71,12 @@ public class LaserTESR extends TileEntitySpecialRenderer{
                 lensModel.renderAll();
                 break;
             case 2:
+                bindTexture(lensTexture2);
+                lensModel.renderAll();
                 break;
             case 3:
+                bindTexture(lensTexture3);
+                lensModel.renderAll();
                 break;
             default:
                 break;
