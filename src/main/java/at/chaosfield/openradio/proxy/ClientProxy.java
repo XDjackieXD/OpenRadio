@@ -1,5 +1,6 @@
 package at.chaosfield.openradio.proxy;
 
+import at.chaosfield.openradio.render.LaserInventoryRender;
 import at.chaosfield.openradio.render.LaserTESR;
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.util.RenderUtil;
@@ -15,6 +16,7 @@ public class ClientProxy extends CommonProxy{
         RenderUtil.laserRenderID = RenderingRegistry.getNextAvailableRenderId();
 
         ClientRegistry.bindTileEntitySpecialRenderer(LaserTileEntity.class, new LaserTESR());
+        RenderingRegistry.registerBlockHandler(new LaserInventoryRender(RenderUtil.laserRenderID));
     }
 
     @Override

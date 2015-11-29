@@ -1,7 +1,6 @@
 package at.chaosfield.openradio.render;
 
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.init.Blocks;
 import at.chaosfield.openradio.init.Items;
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
