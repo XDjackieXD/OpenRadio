@@ -1,8 +1,6 @@
 package at.chaosfield.openradio.render;
 
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.init.Items;
-import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
