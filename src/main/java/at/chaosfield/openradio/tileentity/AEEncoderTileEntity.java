@@ -64,13 +64,13 @@ public class AEEncoderTileEntity extends AENetworkTile implements ILaserAddon {
     private void connectToAEEncoder(AEEncoderTileEntity encoder) {
         this.otherAEEncoder = encoder;
 
-        if (otherAEEncoder != null) {
+        if (otherAEEncoder != null && otherAEEncoder.getActionableNode() != null && this.getActionableNode() != null) {
             if (!otherAEEncoder.isInvalid() && otherAEEncoder.hasAllRequirenments()) {
                 if (this.connection != null && this.connection.connection != null) {
-                    IGridNode a = this.connection.connection.a();
-                    IGridNode b = this.connection.connection.b();
-                    IGridNode sa = this.getActionableNode();
-                    IGridNode sb = otherAEEncoder.getActionableNode();
+                    final IGridNode a = this.connection.connection.a();
+                    final IGridNode b = this.connection.connection.b();
+                    final IGridNode sa = this.getActionableNode();
+                    final IGridNode sb = otherAEEncoder.getActionableNode();
                     if ((a == sa || b == sa) && (a == sb || b == sb)) {
                         return;
                     }
