@@ -189,8 +189,6 @@ public class LaserEntity extends Entity implements IProjectile{
         this.posY += this.motionY;
         this.posZ += this.motionZ;
 
-        OpenRadio.logger.info("World ID: " + this.worldObj.provider.dimensionId + "  Dist: " + this.distance + "  Max Dist: " + this.maxDistance);
-
         this.setPosition(this.posX, this.posY, this.posZ);
     }
 

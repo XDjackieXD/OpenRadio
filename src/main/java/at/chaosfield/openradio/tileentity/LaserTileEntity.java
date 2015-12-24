@@ -262,7 +262,6 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 counter++;
                 if(counter >= 20){
                     counter = 0;
-                    OpenRadio.logger.info("World test: " + worldObj.provider.dimensionId);
                     sendEntity();
                 }
             }else{
