@@ -179,6 +179,7 @@ public class LaserEntity extends Entity implements IProjectile{
             if(movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
                 if(this.worldObj.getBlock(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ) == Blocks.portal){
                     this.setInPortal();
+                    //this.inPortal = true;
                 }else if(this.worldObj.getBlock(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ).getMaterial().isSolid()){ //only collide with solid blocks
                     this.onImpact(movingobjectposition);
                 }
@@ -187,6 +188,8 @@ public class LaserEntity extends Entity implements IProjectile{
         this.posX += this.motionX;
         this.posY += this.motionY;
         this.posZ += this.motionZ;
+
+        OpenRadio.logger.info("World ID: " + this.worldObj.provider.dimensionId + "  Dist: " + this.distance + "  Max Dist: " + this.maxDistance);
 
         this.setPosition(this.posX, this.posY, this.posZ);
     }
@@ -204,7 +207,7 @@ public class LaserEntity extends Entity implements IProjectile{
         tagCompound.setTag("color", this.newFloatNBTList(this.colorR, this.colorG, this.colorB));
         tagCompound.setInteger("lastParticleDim", this.lastParticleDim);
         tagCompound.setDouble("distance", this.distance);
-        tagCompound.setDouble("macDistance", this.maxDistance);
+        tagCompound.setDouble("maxDistance", this.maxDistance);
     }
 
     public void readEntityFromNBT(NBTTagCompound tagCompound) {

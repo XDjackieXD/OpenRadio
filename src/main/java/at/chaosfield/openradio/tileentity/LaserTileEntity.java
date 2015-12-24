@@ -24,6 +24,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.ForgeDirection;
+import scala.tools.cmd.gen.AnyValReps;
 
 
 /**
@@ -261,6 +262,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 counter++;
                 if(counter >= 20){
                     counter = 0;
+                    OpenRadio.logger.info("World test: " + worldObj.provider.dimensionId);
                     sendEntity();
                 }
             }else{
