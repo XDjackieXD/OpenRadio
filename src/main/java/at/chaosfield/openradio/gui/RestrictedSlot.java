@@ -29,5 +29,4 @@ public class RestrictedSlot extends Slot{
     public int getSlotStackLimit(){
         return limit;
     }
-
 }

@@ -1,7 +1,8 @@
 package at.chaosfield.openradio.render;
 
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.init.Blocks;
+import at.chaosfield.openradio.init.Items;
+import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -15,12 +16,16 @@ import org.lwjgl.opengl.GL11;
  */
 public class LaserTESR extends TileEntitySpecialRenderer{
 
-    private IModelCustom laserModel;
-    private ResourceLocation laserTexture;
+    private IModelCustom laserModel, lensModel;
+    private ResourceLocation laserTexture, lensTexture1, lensTexture2, lensTexture3;
 
     public LaserTESR(){
         laserModel = AdvancedModelLoader.loadModel(new ResourceLocation(OpenRadio.MODID + ":" + "models/blocks/laser.obj"));
         laserTexture = new ResourceLocation(OpenRadio.MODID + ":" + "textures/blocks/Laser.png");
+        lensModel = AdvancedModelLoader.loadModel(new ResourceLocation(OpenRadio.MODID + ":" + "models/blocks/lens.obj"));
+        lensTexture1 = new ResourceLocation(OpenRadio.MODID + ":" + "textures/blocks/LensT1.png");
+        lensTexture2 = new ResourceLocation(OpenRadio.MODID + ":" + "textures/blocks/LensT2.png");
+        lensTexture3 = new ResourceLocation(OpenRadio.MODID + ":" + "textures/blocks/LensT3.png");
     }
 
     @Override
@@ -58,6 +63,23 @@ public class LaserTESR extends TileEntitySpecialRenderer{
 
         bindTexture(laserTexture);
         laserModel.renderAll();
+
+        switch(((LaserTileEntity) tileEntity).getItemTier(LaserTileEntity.SLOT_LENS, Items.lensItem)){
+            case 1:
+                bindTexture(lensTexture1);
+                lensModel.renderAll();
+                break;
+            case 2:
+                bindTexture(lensTexture2);
+                lensModel.renderAll();
+                break;
+            case 3:
+                bindTexture(lensTexture3);
+                lensModel.renderAll();
+                break;
+            default:
+                break;
+        }
 
         GL11.glPopMatrix();
     }
