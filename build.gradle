@@ -74,3 +74,9 @@ processResources
         }
 
 idea { module { inheritOutputDirs = true } }
+
+// Why is OpenComputers one of the only mods that has a readable build.gradle? (Thank you Sangar!) :D
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'dev'
+}
