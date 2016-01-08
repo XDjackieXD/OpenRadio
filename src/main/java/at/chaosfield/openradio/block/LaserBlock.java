@@ -4,15 +4,16 @@ import at.chaosfield.openradio.gui.CreativeTab;
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.gui.GUIs;
-import at.chaosfield.openradio.util.RenderUtil;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockPos;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,9 +21,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Property;
 
 import java.util.Random;
 
@@ -31,14 +32,13 @@ import java.util.Random;
  */
 public class LaserBlock extends BlockContainer implements ITileEntityProvider{
 
-    //Textures for the block faces (Client side only)
-    @SideOnly(Side.CLIENT)
-    private IIcon[] Icons;
+    public static final PropertyDirection FACING = PropertyDirection.create("facing");
+    public static final PropertyInteger LENS = PropertyInteger.create("lens", 0, 3);
 
     public LaserBlock(){
-        super(Material.iron);                       //Material is like Iron
-        setBlockName(OpenRadio.MODID + ":laser");   //Set localized Block name (/src/main/resources/assets/openradio/lang/)
-        setHardness(3.0F);                          //Set hardness to 3
+        super(Material.iron);                           //Material is like Iron
+        setUnlocalizedName(OpenRadio.MODID + ".laser"); //Set unlocalized Block name (/src/main/resources/assets/openradio/lang/)
+        setHardness(3.0F);                              //Set hardness to 3
         setCreativeTab(CreativeTab.instance);
     }
 
@@ -48,67 +48,65 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
     }
 
     @Override
-    public boolean hasTileEntity(int metadata){
+    public boolean hasTileEntity(IBlockState state){
         return true;
     }
 
-    //Register all Textures (client side only)
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void registerBlockIcons(IIconRegister register){
-        Icons = new IIcon[2];
-        Icons[0] = register.registerIcon(OpenRadio.MODID + ":LaserFront");
-        Icons[1] = register.registerIcon(OpenRadio.MODID + ":LaserSide");
+    @Override protected BlockState createBlockState() {
+        return new BlockState(this, new IProperty[]{FACING, LENS});
     }
 
-    //This method is only used when the block is rendered in an inventory
-    @SideOnly(Side.CLIENT)
+    /**
+     * Convert the given metadata into a BlockState for this Block
+     */
     @Override
-    public IIcon getIcon(int side, int meta){
-        if(side == 4) return Icons[0];
-        else return Icons[1];
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta));
     }
 
-    @SideOnly(Side.CLIENT)
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
     @Override
-    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){ //side 0=bottom, 1=top, 2=north, 3=south, 4=west, 5=east
-        return (side == world.getBlockMetadata(x, y, z)) ? this.Icons[0] : this.Icons[1];
+    public int getMetaFromState(IBlockState state)
+    {
+        return state.getValue(FACING).getIndex();
     }
-
 
     //On right click open the GUI (only on the server side and if the player isn't sneaking)
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+        OpenRadio.logger.info("metadata: " + this.getMetaFromState(state));
         if(!world.isRemote) {
-            if (world.getTileEntity(x, y, z) != null && !player.isSneaking())
-                player.openGui(OpenRadio.instance, GUIs.LASER.ordinal(), world, x, y, z);
+            if (world.getTileEntity(pos) != null && !player.isSneaking())
+                player.openGui(OpenRadio.instance, GUIs.LASER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             return true;
         }
         return true;
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         // no need to figure out the right orientation again when the piston block can do it for us
-        int direction = BlockPistonBase.determineOrientation(world, x, y, z, entity);
-        world.setBlockMetadataWithNotify(x, y, z, direction, 2);
+        world.setBlockState(pos, state.withProperty(FACING, BlockPistonBase.getFacingFromEntity(world, pos, placer)));
     }
 
     //If the block gets broken, drop all items on the floor
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
-        dropItems(world, x, y, z);
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
+        dropItems(world, pos);
+        TileEntity tileEntity = world.getTileEntity(pos);
         if(tileEntity instanceof LaserTileEntity)
             ((LaserTileEntity)tileEntity).disconnect();
-        super.breakBlock(world, x, y, z, par5, par6);
+        super.breakBlock(world, pos, state);
     }
 
     //randomly drop the items around the block
-    private void dropItems(World world, int x, int y, int z){
+    private void dropItems(World world, BlockPos pos){
         Random rand = new Random();
 
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        TileEntity tileEntity = world.getTileEntity(pos);
         if (!(tileEntity instanceof IInventory)) {
             return;
         }
@@ -123,7 +121,7 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
                 float rz = rand.nextFloat() * 0.8F + 0.1F;
 
                 EntityItem entityItem = new EntityItem(world,
-                        x + rx, y + ry, z + rz,
+                        pos.getX() + rx, pos.getY() + ry, pos.getZ() + rz,
                         new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
                 if (item.hasTagCompound()) {
@@ -142,15 +140,11 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
 
     @Override
     public int getRenderType() {
-        return RenderUtil.laserRenderID;
+        return 3;
     }
 
     @Override
     public boolean isOpaqueCube() {
-        return false;
-    }
-
-    public boolean renderAsNormalBlock() {
         return false;
     }
 }

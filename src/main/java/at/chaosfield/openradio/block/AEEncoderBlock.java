@@ -1,22 +1,24 @@
 package at.chaosfield.openradio.block;
+/*
+ * No AE for 1.8.9 yet :(
+ *
 
 import at.chaosfield.openradio.gui.CreativeTab;
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.tileentity.AEEncoderTileEntity;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Created by Jakob Riepler (XDjackieXD)
  */
+/*
 public class AEEncoderBlock extends Block implements ITileEntityProvider {
 
     @SideOnly(Side.CLIENT)
@@ -24,7 +26,7 @@ public class AEEncoderBlock extends Block implements ITileEntityProvider {
 
     public AEEncoderBlock() {
         super(Material.iron);
-        setBlockName(OpenRadio.MODID + ":aeencoder");   //Set localized Block name (/src/main/resources/assets/openradio/lang/)
+        setBlockName(OpenRadio.MODID + ".aeencoder");   //Set localized Block name (/src/main/resources/assets/openradio/lang/)
         setHardness(3.0F);                              //Set hardness to 3
         setCreativeTab(CreativeTab.instance);
     }
@@ -59,3 +61,4 @@ public class AEEncoderBlock extends Block implements ITileEntityProvider {
         return icon;
     }
 }
+*/

@@ -2,7 +2,7 @@ package at.chaosfield.openradio.init;
 
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.item.*;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * Created by Jakob Riepler (XDjackieXD)

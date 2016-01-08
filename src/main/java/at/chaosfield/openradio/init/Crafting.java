@@ -1,8 +1,6 @@
 package at.chaosfield.openradio.init;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
@@ -110,13 +108,13 @@ public class Crafting{
                 'S', li.cil.oc.api.Items.get("relay").createItemStack(1),
                 'L', new ItemStack(Items.laserSocketItem)));
 
-        if(Loader.isModLoaded("appliedenergistics2")){
+        /*if(Loader.isModLoaded("appliedenergistics2")){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.aeencoderBlock),
                     "INI", "CMC", "INI",
                     'I', "ingotIron",
                     'N', li.cil.oc.api.Items.get("cable").createItemStack(1),
                     'M', Item.itemRegistry.getObject("appliedenergistics2:tile.BlockController"),
                     'C', appeng.api.AEApi.instance().definitions().parts().cableSmart().stack(appeng.api.util.AEColor.Transparent, 1)));
-        }
+        }*/
     }
 }

@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "lens=0,facing=down": { "model": "openradio:laser", "x": 90 },
+    "lens=0,facing=up": { "model": "openradio:laser", "x": 270 },
+    "lens=0,facing=north": { "model": "openradio:laser" },
+    "lens=0,facing=south": { "model": "openradio:laser", "y": 180 },
+    "lens=0,facing=west": { "model": "openradio:laser", "y": 270 },
+    "lens=0,facing=east": { "model": "openradio:laser", "y": 90 },
+    "lens=1,facing=down": { "model": "openradio:laser_lens_t1", "x": 90 },
+    "lens=1,facing=up": { "model": "openradio:laser_lens_t1", "x": 270 },
+    "lens=1,facing=north": { "model": "openradio:laser_lens_t1" },
+    "lens=1,facing=south": { "model": "openradio:laser_lens_t1", "y": 180 },
+    "lens=1,facing=west": { "model": "openradio:laser_lens_t1", "y": 270 },
+    "lens=1,facing=east": { "model": "openradio:laser_lens_t1", "y": 90 }
+    "lens=2,facing=down": { "model": "openradio:laser_lens_t2", "x": 90 },
+    "lens=2,facing=up": { "model": "openradio:laser_lens_t2", "x": 270 },
+    "lens=2,facing=north": { "model": "openradio:laser_lens_t2" },
+    "lens=2,facing=south": { "model": "openradio:laser_lens_t2", "y": 180 },
+    "lens=2,facing=west": { "model": "openradio:laser_lens_t2", "y": 270 },
+    "lens=2,facing=east": { "model": "openradio:laser_lens_t2", "y": 90 }
+    "lens=3,facing=down": { "model": "openradio:laser_lens_t1", "x": 90 },
+    "lens=3,facing=up": { "model": "openradio:laser_lens_t3", "x": 270 },
+    "lens=3,facing=north": { "model": "openradio:laser_lens_t3" },
+    "lens=3,facing=south": { "model": "openradio:laser_lens_t3", "y": 180 },
+    "lens=3,facing=west": { "model": "openradio:laser_lens_t3", "y": 270 },
+    "lens=3,facing=east": { "model": "openradio:laser_lens_t3", "y": 90 }
+  }
+}

@@ -1,25 +1,25 @@
 package at.chaosfield.openradio.init;
 
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.block.AEEncoderBlock;
+//import at.chaosfield.openradio.block.AEEncoderBlock;
 import at.chaosfield.openradio.block.LaserBlock;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.GameRegistry;
+//import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * Created by Jakob Riepler (XDjackieXD)
  */
 public class Blocks {
     public static LaserBlock laserBlock = null;
-    public static AEEncoderBlock aeencoderBlock = null;
+    //public static AEEncoderBlock aeencoderBlock = null;
 
     //Register all blocks (Has to be called during FML Init)
     public static void init(){
         laserBlock = new LaserBlock();
         GameRegistry.registerBlock(laserBlock, OpenRadio.MODID + ".laser");
-        if(Loader.isModLoaded("appliedenergistics2")) {
+        /*if(Loader.isModLoaded("appliedenergistics2")) {
             aeencoderBlock = new AEEncoderBlock();
             GameRegistry.registerBlock(aeencoderBlock, OpenRadio.MODID + ".aeencoder");
-        }
+        }*/
     }
 }

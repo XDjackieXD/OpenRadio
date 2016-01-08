@@ -1,4 +1,8 @@
 package at.chaosfield.openradio.tileentity;
+/*
+ * No AE for 1.8.9 yet :(
+ *
+
 
 import appeng.api.AEApi;
 import appeng.api.exceptions.FailedConnection;
@@ -15,6 +19,8 @@ import net.minecraftforge.common.DimensionManager;
 /**
  * Created by Jakob Riepler (XDjackieXD)
  */
+
+/*
 public class AEEncoderTileEntity extends AENetworkTile implements ILaserAddon {
 
     LaserTileEntity laser = null;
@@ -132,3 +138,4 @@ public class AEEncoderTileEntity extends AENetworkTile implements ILaserAddon {
         return "aeencoder";
     }
 }
+*/

@@ -9,4 +9,4 @@ Ks 0.500000 0.500000 0.500000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /home/jakob/Projekte/OpenRadio/src/main/resources/assets/openradio/textures/blocks/Laser.png
+map_Kd openradio:textures/blocks/Laser.png

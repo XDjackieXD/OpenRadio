@@ -5,26 +5,28 @@ buildscript {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
     }
 }
 
-apply plugin: 'idea'
-apply plugin: 'forge'
+plugins {
+    id "net.minecraftforge.gradle.forge" version "2.0.2"
+}
 
-version = "0.6.1"
-group = "at.chaosfield.openradio" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+apply plugin: 'idea'
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = "0.6.1-MC1.8.9"
+group = "at.chaosfield.openradio"
 archivesBaseName = "OpenRadio"
 
 minecraft {
-    version = "1.7.10-10.13.4.1558-1.7.10"
-    runDir = "eclipse"
+    version = "1.8.9-11.15.0.1688"
+    runDir = "run"
+
+    mappings = "stable_20"
 }
 
 repositories {
@@ -35,22 +37,11 @@ repositories {
 }
 
 dependencies {
-    // you may put jars on which you depend on in ./libs
-    // or you may define them like so..
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
+    compile "li.cil.oc:OpenComputers:MC1.8.9-1.5.+:api"
 
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
-    compile "li.cil.oc:OpenComputers:MC1.7.10-1.5.+:api"
+    //no 1.8.9 version of ae yet :(
     //compile "appeng:appliedenergistics2:rv2-stable-10:dev"
-    compile files('lib/appliedenergistics2-rv2-stable-10-dev.jar')
+    //compile files('lib/appliedenergistics2-rv2-stable-10-dev.jar')
 }
 
 processResources

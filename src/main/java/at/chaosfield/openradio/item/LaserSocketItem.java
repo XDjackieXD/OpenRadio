@@ -10,8 +10,7 @@ import net.minecraft.item.Item;
 public class LaserSocketItem extends Item{
     public LaserSocketItem(){
         maxStackSize = 64;
-        setUnlocalizedName(OpenRadio.MODID + ":lasersocket");
-        setTextureName(OpenRadio.MODID + ":lasersocket");
+        setUnlocalizedName(OpenRadio.MODID + ".lasersocket");
         setCreativeTab(CreativeTab.instance);
     }
 }

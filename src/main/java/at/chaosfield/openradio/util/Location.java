@@ -1,5 +1,7 @@
 package at.chaosfield.openradio.util;
 
+import net.minecraft.util.BlockPos;
+
 /**
  * Created by Jakob Riepler (XDjackieXD
  */
@@ -11,6 +13,11 @@ public class Location{
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    public Location(int dim, BlockPos pos){
+        this.dim = dim;
+        setPos(pos);
     }
 
     public int getX(){
@@ -43,5 +50,15 @@ public class Location{
 
     public void setDim(int dim){
         this.dim = dim;
+    }
+
+    public void setPos(BlockPos pos){
+        this.x = pos.getX();
+        this.y = pos.getY();
+        this.z = pos.getZ();
+    }
+
+    public BlockPos getPos(){
+        return new BlockPos(this.x, this.y, this.z);
     }
 }

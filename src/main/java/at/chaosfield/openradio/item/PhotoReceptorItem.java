@@ -10,8 +10,7 @@ import net.minecraft.item.Item;
 public class PhotoReceptorItem extends Item{
     public PhotoReceptorItem(){
         maxStackSize = 64;
-        setUnlocalizedName(OpenRadio.MODID + ":photoreceptor");
-        setTextureName(OpenRadio.MODID + ":photoreceptor");
+        setUnlocalizedName(OpenRadio.MODID + ".photoreceptor");
         setCreativeTab(CreativeTab.instance);
     }
 }

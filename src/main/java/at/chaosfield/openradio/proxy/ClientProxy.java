@@ -1,11 +1,11 @@
 package at.chaosfield.openradio.proxy;
 
-import at.chaosfield.openradio.render.LaserInventoryRender;
-import at.chaosfield.openradio.render.LaserTESR;
-import at.chaosfield.openradio.tileentity.LaserTileEntity;
-import at.chaosfield.openradio.util.RenderUtil;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
+import at.chaosfield.openradio.OpenRadio;
+import at.chaosfield.openradio.init.Blocks;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.model.obj.OBJLoader;
 
 /**
  * Created by Jakob Riepler (XDjackieXD)
@@ -13,10 +13,8 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 public class ClientProxy extends CommonProxy{
     @Override
     public void registerRenders(){
-        RenderUtil.laserRenderID = RenderingRegistry.getNextAvailableRenderId();
-
-        ClientRegistry.bindTileEntitySpecialRenderer(LaserTileEntity.class, new LaserTESR());
-        RenderingRegistry.registerBlockHandler(new LaserInventoryRender(RenderUtil.laserRenderID));
+        OBJLoader.instance.addDomain(OpenRadio.MODID);
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(Blocks.laserBlock), 0, new ModelResourceLocation("openradio:laser", "inventory"));
     }
 
     @Override

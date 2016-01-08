@@ -3,6 +3,7 @@ package at.chaosfield.openradio.tileentity;
 
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.entity.LaserEntity;
+import at.chaosfield.openradio.init.Blocks;
 import at.chaosfield.openradio.init.Items;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
 import at.chaosfield.openradio.util.Location;
@@ -14,6 +15,8 @@ import li.cil.oc.api.network.Connector;
 import li.cil.oc.api.network.Message;
 import li.cil.oc.api.network.Visibility;
 import li.cil.oc.api.prefab.TileEntityEnvironment;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -22,9 +25,11 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.util.ForgeDirection;
-import scala.tools.cmd.gen.AnyValReps;
 
 
 /**
@@ -56,85 +61,101 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(OpenRadio.instance.settings.EnergyBuffer).create();
         inv = new ItemStack[5];
         if(otherLaser != null && !worldObj.isRemote){
-            TileEntity otherLaserTe = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
+            TileEntity otherLaserTe = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getPos());
             if(otherLaserTe instanceof LaserTileEntity){
-                ((LaserTileEntity) otherLaserTe).setDestination(this.getWorldObj().provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, this.distance);
+                ((LaserTileEntity) otherLaserTe).setDestination(this.getWorld().provider.getDimensionId(), this.getPos(), this.distance);
             }else{
                 disconnect();
             }
         }
     }
 
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate)
+    {
+        return (oldState.getBlock() != newSate.getBlock());
+    }
+
     public String getName(){
         return OpenRadio.MODID + ".laser";
+    }
+
+    @Override
+    public boolean hasCustomName(){
+        return false;
+    }
+
+    @Override
+    public IChatComponent getDisplayName(){
+        return null;
     }
 
     public void sendEntity(){
         double posX, posY, posZ, accX, accY, accZ;
         switch(this.getBlockMetadata()){
             case 0:
-                posX = this.xCoord + 0.5;
-                posY = this.yCoord + 0.5 - 1;
-                posZ = this.zCoord + 0.5;
+                posX = this.getPos().getX() + 0.5;
+                posY = this.getPos().getY() + 0.5 - 1;
+                posZ = this.getPos().getZ() + 0.5;
                 accX = 0;
                 accY = -OpenRadio.instance.settings.EntitySpeed;
                 accZ = 0;
                 break;
             case 1:
-                posX = this.xCoord + 0.5;
-                posY = this.yCoord + 0.5 + 1;
-                posZ = this.zCoord + 0.5;
+                posX = this.getPos().getX() + 0.5;
+                posY = this.getPos().getY() + 0.5 + 1;
+                posZ = this.getPos().getZ() + 0.5;
                 accX = 0;
                 accY = OpenRadio.instance.settings.EntitySpeed;
                 accZ = 0;
                 break;
             case 2:
-                posX = this.xCoord + 0.5;
-                posY = this.yCoord + 0.5;
-                posZ = this.zCoord + 0.5 - 1;
+                posX = this.getPos().getX() + 0.5;
+                posY = this.getPos().getY() + 0.5;
+                posZ = this.getPos().getZ() + 0.5 - 1;
                 accX = 0;
                 accY = 0;
                 accZ = -OpenRadio.instance.settings.EntitySpeed;
                 break;
             case 3:
-                posX = this.xCoord + 0.5;
-                posY = this.yCoord + 0.5;
-                posZ = this.zCoord + 0.5 + 1;
+                posX = this.getPos().getX() + 0.5;
+                posY = this.getPos().getY() + 0.5;
+                posZ = this.getPos().getZ() + 0.5 + 1;
                 accX = 0;
                 accY = 0;
                 accZ = OpenRadio.instance.settings.EntitySpeed;
                 break;
             case 4:
-                posX = this.xCoord + 0.5 - 1;
-                posY = this.yCoord + 0.5;
-                posZ = this.zCoord + 0.5;
+                posX = this.getPos().getX() + 0.5 - 1;
+                posY = this.getPos().getY() + 0.5;
+                posZ = this.getPos().getZ() + 0.5;
                 accX = -OpenRadio.instance.settings.EntitySpeed;
                 accY = 0;
                 accZ = 0;
                 break;
             case 5:
-                posX = this.xCoord + 0.5 + 1;
-                posY = this.yCoord + 0.5;
-                posZ = this.zCoord + 0.5;
+                posX = this.getPos().getX() + 0.5 + 1;
+                posY = this.getPos().getY() + 0.5;
+                posZ = this.getPos().getZ() + 0.5;
                 accX = OpenRadio.instance.settings.EntitySpeed;
                 accY = 0;
                 accZ = 0;
                 break;
             default:
-                posX = this.xCoord + 0.5;
-                posY = this.yCoord + 0.5 + 1;
-                posZ = this.zCoord + 0.5;
+                posX = this.getPos().getX() + 0.5;
+                posY = this.getPos().getY() + 0.5 + 1;
+                posZ = this.getPos().getZ() + 0.5;
                 accX = 0;
                 accY = 0;
                 accZ = 0;
         }
 
-        this.getWorldObj().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, getMaxDistance()));
+        this.getWorld().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, this.getWorld().provider.getDimensionId(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), getMaxDistance()));
     }
 
-    public void setDestination(int dim, int x, int y, int z, double distance){
-        if(!this.getWorldObj().isRemote){
-            this.otherLaser = new Location(dim, x, y, z);
+    public void setDestination(int dim, BlockPos pos, double distance){
+        if(!this.getWorld().isRemote){
+            this.otherLaser = new Location(dim, pos);
             this.distance = distance;
             this.markDirty();
         }
@@ -237,7 +258,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         super.onMessage(message);
         if(message.name().equals("network.message")){
             if(isConnected()){
-                TileEntity tileEntity = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getX(), otherLaser.getY(), otherLaser.getZ());
+                TileEntity tileEntity = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getPos());
                 if(tileEntity instanceof LaserTileEntity){
                     ((LaserTileEntity) tileEntity).node.sendToReachable("network.message", message.data());
                 }else{
@@ -250,8 +271,8 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
 
     @Override
-    public void updateEntity(){
-        super.updateEntity();
+    public void update(){
+        super.update();
         if(!worldObj.isRemote){
 
             if(hasNeededComponents()){
@@ -268,35 +289,37 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 disconnect();
             }
 
-            if(this.worldObj.getTileEntity(this.xCoord + 1, this.yCoord, this.zCoord) instanceof ILaserAddon){ //east
-                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.xCoord + 1, this.yCoord, this.zCoord), ForgeDirection.EAST.ordinal());
+
+            //TODO don't do this every tick...
+            if(this.worldObj.getTileEntity(this.getPos().add(1,0,0)) instanceof ILaserAddon){ //east
+                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.getPos().add(1,0,0)), EnumFacing.EAST.getIndex());
             }else{
-                disconnectAddon(ForgeDirection.EAST.ordinal());
+                disconnectAddon(EnumFacing.EAST.getIndex());
             }
-            if(this.worldObj.getTileEntity(this.xCoord - 1, this.yCoord, this.zCoord) instanceof ILaserAddon){ //west
-                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.xCoord - 1, this.yCoord, this.zCoord), ForgeDirection.WEST.ordinal());
+            if(this.worldObj.getTileEntity(this.getPos().add(-1,0,0)) instanceof ILaserAddon){ //west
+                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.getPos().add(-1,0,0)), EnumFacing.WEST.getIndex());
             }else{
-                disconnectAddon(ForgeDirection.WEST.ordinal());
+                disconnectAddon(EnumFacing.WEST.getIndex());
             }
-            if(this.worldObj.getTileEntity(this.xCoord, this.yCoord + 1, this.zCoord) instanceof ILaserAddon){ //top
-                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.xCoord, this.yCoord + 1, this.zCoord), ForgeDirection.UP.ordinal());
+            if(this.worldObj.getTileEntity(this.getPos().add(0,1,0)) instanceof ILaserAddon){ //top
+                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.getPos().add(0,1,0)), EnumFacing.UP.getIndex());
             }else{
-                disconnectAddon(ForgeDirection.UP.ordinal());
+                disconnectAddon(EnumFacing.UP.getIndex());
             }
-            if(this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord) instanceof ILaserAddon){ //bottom
-                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord), ForgeDirection.DOWN.ordinal());
+            if(this.worldObj.getTileEntity(this.getPos().add(0,-1,0)) instanceof ILaserAddon){ //bottom
+                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.getPos().add(0,-1,0)), EnumFacing.DOWN.getIndex());
             }else{
-                disconnectAddon(ForgeDirection.DOWN.ordinal());
+                disconnectAddon(EnumFacing.DOWN.getIndex());
             }
-            if(this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord + 1) instanceof ILaserAddon){ //south
-                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord + 1), ForgeDirection.SOUTH.ordinal());
+            if(this.worldObj.getTileEntity(this.getPos().add(0,0,1)) instanceof ILaserAddon){ //south
+                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.getPos().add(0,0,1)), EnumFacing.SOUTH.getIndex());
             }else{
-                disconnectAddon(ForgeDirection.SOUTH.ordinal());
+                disconnectAddon(EnumFacing.SOUTH.getIndex());
             }
-            if(this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord - 1) instanceof ILaserAddon){ //north
-                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord - 1), ForgeDirection.NORTH.ordinal());
+            if(this.worldObj.getTileEntity(this.getPos().add(0,0,-1)) instanceof ILaserAddon){ //north
+                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.getPos().add(0,0,-1)), EnumFacing.NORTH.getIndex());
             }else{
-                disconnectAddon(ForgeDirection.NORTH.ordinal());
+                disconnectAddon(EnumFacing.NORTH.getIndex());
             }
 
         }
@@ -319,17 +342,11 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(stack != null && stack.stackSize > getInventoryStackLimit()){
             stack.stackSize = getInventoryStackLimit();
         }
+        if(slot == this.SLOT_LENS){
+            if(stack != null)
+                this.worldObj.setBlockState(pos, this.worldObj.getBlockState(this.pos).withProperty(Blocks.laserBlock.LENS, getItemTier(this.SLOT_LENS, Items.lensItem)));
+        }
         this.markDirty();
-    }
-
-    @Override
-    public String getInventoryName(){
-        return OpenRadio.MODID + ".laser";
-    }
-
-    @Override
-    public boolean hasCustomInventoryName(){
-        return false;
     }
 
     @Override
@@ -350,13 +367,18 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     @Override
+    public ItemStack removeStackFromSlot(int index){
+        return null;
+    }
+
+    /*@Override
     public ItemStack getStackInSlotOnClosing(int slot){
         ItemStack stack = getStackInSlot(slot);
         if(stack != null){
             setInventorySlotContents(slot, null);
         }
         return stack;
-    }
+    }*/
 
     @Override
     public int getInventoryStackLimit(){
@@ -365,27 +387,56 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer player){
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
+        return worldObj.getTileEntity(this.getPos()) == this && player.getDistanceSq(this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getX() + 0.5) < 64;
     }
 
     @Override
-    public void openInventory(){
+    public void openInventory(EntityPlayer player){
 
     }
 
     @Override
-    public void closeInventory(){
+    public void closeInventory(EntityPlayer player){
 
     }
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemStack){
         switch(slot){
+            case 0:
+                return itemStack.getItem() == Items.dspItem;
+            case 1:
+                return itemStack.getItem() == Items.photoReceptorItem;
+            case 2:
+                return itemStack.getItem() == Items.mirrorItem;
             case 3:
-                return itemStack.getItem().getUnlocalizedName().equals(OpenRadio.MODID + ":lens");
+                return itemStack.getItem() == Items.lensItem;
+            case 4:
+                return itemStack.getItem() == Items.laserItem;
             default:
                 return false;
         }
+    }
+
+    @Override
+    public int getField(int id){
+        return 0;
+    }
+
+    @Override
+    public void setField(int id, int value){
+
+    }
+
+    @Override
+    public int getFieldCount(){
+        return 0;
+    }
+
+    @Override
+    public void clear(){
+        for(int i=0; i<this.getSizeInventory(); i++)
+            this.setInventorySlotContents(i, null);
     }
 
     @Override
@@ -441,11 +492,11 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public net.minecraft.network.Packet getDescriptionPacket(){
         NBTTagCompound tag = new NBTTagCompound();
         writeToNBT(tag);
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
+        return new S35PacketUpdateTileEntity(this.getPos(), 1, tag);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
-        readFromNBT(pkt.func_148857_g());
+        readFromNBT(pkt.getNbtCompound());
     }
 }

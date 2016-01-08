@@ -1,9 +1,11 @@
 package at.chaosfield.openradio.render;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.particle.EntityFX;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.World;
 
 /**
@@ -32,40 +34,35 @@ public class LaserParticle extends EntityFX{
         this.noClip = false;
     }
 
-    public void renderParticle(Tessellator tesselator, float par2, float par3, float par4, float par5, float par6, float par7){
-        float f14 = ((float) this.particleAge + par2) / (float) this.particleMaxAge * 32.0F;
-
-        if(f14 < 0.0F){
-            f14 = 0.0F;
-        }
-
-        if(f14 > 1.0F){
-            f14 = 1.0F;
-        }
-
+    @Override
+    public void renderParticle(WorldRenderer worldRendererIn, Entity entityIn, float partialTicks, float p_180434_4_, float p_180434_5_, float p_180434_6_, float p_180434_7_, float p_180434_8_){
+        float f14 = ((float) this.particleAge + partialTicks) / (float) this.particleMaxAge * 32.0F;
+        f14 = MathHelper.clamp_float(f14, 0.0F, 1.0F);
         this.particleScale = this.reddustParticleScale * f14;
-        float f6 = (float) this.particleTextureIndexX / 16.0F;
-        float f7 = f6 + 0.0624375F;
-        float f8 = (float) this.particleTextureIndexY / 16.0F;
-        float f9 = f8 + 0.0624375F;
-        float f10 = 0.1F * this.particleScale;
+
+        float f = (float) this.particleTextureIndexX / 16.0F;
+        float f1 = f + 0.0624375F;
+        float f2 = (float) this.particleTextureIndexY / 16.0F;
+        float f3 = f2 + 0.0624375F;
+        float f4 = 0.1F * this.particleScale;
 
         if(this.particleIcon != null){
-            f6 = this.particleIcon.getMinU();
-            f7 = this.particleIcon.getMaxU();
-            f8 = this.particleIcon.getMinV();
-            f9 = this.particleIcon.getMaxV();
+            f = this.particleIcon.getMinU();
+            f1 = this.particleIcon.getMaxU();
+            f2 = this.particleIcon.getMinV();
+            f3 = this.particleIcon.getMaxV();
         }
 
-        float f11 = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) par2 - interpPosX);
-        float f12 = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) par2 - interpPosY);
-        float f13 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) par2 - interpPosZ);
-        tesselator.setColorRGBA_F(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha);
-        tesselator.setBrightness(255);
-        tesselator.addVertexWithUV((double) (f11 - par3 * f10 - par6 * f10), (double) (f12 - par4 * f10), (double) (f13 - par5 * f10 - par7 * f10), (double) f7, (double) f9);
-        tesselator.addVertexWithUV((double) (f11 - par3 * f10 + par6 * f10), (double) (f12 + par4 * f10), (double) (f13 - par5 * f10 + par7 * f10), (double) f7, (double) f8);
-        tesselator.addVertexWithUV((double) (f11 + par3 * f10 + par6 * f10), (double) (f12 + par4 * f10), (double) (f13 + par5 * f10 + par7 * f10), (double) f6, (double) f8);
-        tesselator.addVertexWithUV((double) (f11 + par3 * f10 - par6 * f10), (double) (f12 - par4 * f10), (double) (f13 + par5 * f10 - par7 * f10), (double) f6, (double) f9);
+        float f5 = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks - interpPosX);
+        float f6 = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) partialTicks - interpPosY);
+        float f7 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) partialTicks - interpPosZ);
+        int i = this.getBrightnessForRender(partialTicks);
+        int j = i >> 16 & 65535;
+        int k = i & 65535;
+        worldRendererIn.pos((double) (f5 - p_180434_4_ * f4 - p_180434_7_ * f4), (double) (f6 - p_180434_5_ * f4), (double) (f7 - p_180434_6_ * f4 - p_180434_8_ * f4)).tex((double) f1, (double) f3).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
+        worldRendererIn.pos((double) (f5 - p_180434_4_ * f4 + p_180434_7_ * f4), (double) (f6 + p_180434_5_ * f4), (double) (f7 - p_180434_6_ * f4 + p_180434_8_ * f4)).tex((double) f1, (double) f2).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
+        worldRendererIn.pos((double) (f5 + p_180434_4_ * f4 + p_180434_7_ * f4), (double) (f6 + p_180434_5_ * f4), (double) (f7 + p_180434_6_ * f4 + p_180434_8_ * f4)).tex((double) f, (double) f2).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
+        worldRendererIn.pos((double) (f5 + p_180434_4_ * f4 - p_180434_7_ * f4), (double) (f6 - p_180434_5_ * f4), (double) (f7 + p_180434_6_ * f4 - p_180434_8_ * f4)).tex((double) f, (double) f3).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
     }
 
     /**

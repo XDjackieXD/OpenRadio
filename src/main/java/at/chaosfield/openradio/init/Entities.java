@@ -2,7 +2,7 @@ package at.chaosfield.openradio.init;
 
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.entity.LaserEntity;
-import cpw.mods.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 /**
  * Created by Jakob Riepler (XDjackieXD)

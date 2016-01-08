@@ -10,8 +10,7 @@ import net.minecraft.item.Item;
 public class MirrorItem extends Item{
     public MirrorItem(){
         maxStackSize = 64;
-        setUnlocalizedName(OpenRadio.MODID + ":mirror");
-        setTextureName(OpenRadio.MODID + ":mirror");
+        setUnlocalizedName(OpenRadio.MODID + ".mirror");
         setCreativeTab(CreativeTab.instance);
     }
 }

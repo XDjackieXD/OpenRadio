@@ -3,9 +3,9 @@ package at.chaosfield.openradio.gui;
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.init.Blocks;
 import at.chaosfield.openradio.init.Items;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+//import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -31,8 +31,8 @@ public class CreativeTab extends CreativeTabs{
 
         this.addBlock(Blocks.laserBlock);
 
-        if(Loader.isModLoaded("appliedenergistics2"))
-            this.addBlock(Blocks.aeencoderBlock);
+        //if(Loader.isModLoaded("appliedenergistics2"))
+        //    this.addBlock(Blocks.aeencoderBlock);
 
         this.addItem(Items.laserSocketItem);
         this.addItem(Items.lensItem);
