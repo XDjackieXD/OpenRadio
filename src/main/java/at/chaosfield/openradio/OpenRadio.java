@@ -44,6 +44,7 @@ public class OpenRadio{
 
         Blocks.init();                  //Register all Blocks
         Items.init();                   //Register all Items
+        proxy.preInit(event);           //Register Variants
         logger.info("Pre init complete.");
     }
 
@@ -53,9 +54,7 @@ public class OpenRadio{
         GuiHandler.init();              //Register the GUIs
         Entities.init();                //Register the Entities
         Crafting.init();                //Register the crafting recipes
-        proxy.registerTileEntities();   //Register the TileEntities
-        proxy.registerRenders();
-        proxy.registerSounds();
+        proxy.init(event);              //Register TileEntities, Renders and other things
 
         logger.info("Init complete.");
     }

@@ -2,8 +2,8 @@ package at.chaosfield.openradio.tileentity;
 
 
 import at.chaosfield.openradio.OpenRadio;
+import at.chaosfield.openradio.block.LaserBlock;
 import at.chaosfield.openradio.entity.LaserEntity;
-import at.chaosfield.openradio.init.Blocks;
 import at.chaosfield.openradio.init.Items;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
 import at.chaosfield.openradio.util.Location;
@@ -341,11 +341,11 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(stack != null && stack.stackSize > getInventoryStackLimit()){
             stack.stackSize = getInventoryStackLimit();
         }
-        if(slot == this.SLOT_LENS){
+        if(slot == SLOT_LENS){
             if(stack != null)
-                this.worldObj.setBlockState(pos, this.worldObj.getBlockState(this.pos).withProperty(Blocks.laserBlock.LENS, getItemTier(this.SLOT_LENS, Items.lensItem)));
+                this.worldObj.setBlockState(pos, this.worldObj.getBlockState(this.pos).withProperty(LaserBlock.LENS, getItemTier(SLOT_LENS, Items.lensItem)));
             else
-                this.worldObj.setBlockState(pos, this.worldObj.getBlockState(this.pos).withProperty(Blocks.laserBlock.LENS, 0));
+                this.worldObj.setBlockState(pos, this.worldObj.getBlockState(this.pos).withProperty(LaserBlock.LENS, 0));
         }
         this.markDirty();
     }

@@ -1,7 +1,9 @@
 package at.chaosfield.openradio.proxy;
 
-import at.chaosfield.openradio.OpenRadio;
+
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
@@ -9,14 +11,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public class CommonProxy{
 
-
-
-    public void registerTileEntities(){
-        GameRegistry.registerTileEntity(LaserTileEntity.class, OpenRadio.MODID + ":laser");
+    public void init(FMLInitializationEvent event){
+        GameRegistry.registerTileEntity(LaserTileEntity.class, "laser");
         //if(Loader.isModLoaded("appliedenergistics2"))
         //    GameRegistry.registerTileEntity(AEEncoderTileEntity.class, OpenRadio.MODID + ":aeencoder");
     }
+    public void preInit(FMLPreInitializationEvent event){}
 
-    public void registerRenders(){}
-    public void registerSounds(){}
 }
