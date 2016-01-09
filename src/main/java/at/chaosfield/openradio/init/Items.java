@@ -1,6 +1,5 @@
 package at.chaosfield.openradio.init;
 
-import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.item.*;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -18,12 +17,12 @@ public class Items{
 
     //Register all items (Has to be called during FML Init)
     public static void init(){
-        GameRegistry.registerItem(lensItem = new LensItem(), OpenRadio.MODID + ".lens");
-        GameRegistry.registerItem(laserSocketItem = new LaserSocketItem(), OpenRadio.MODID + ".lasersocket");
-        GameRegistry.registerItem(dspItem = new DSPItem(), OpenRadio.MODID + ".dsp");
-        GameRegistry.registerItem(photoReceptorItem = new PhotoReceptorItem(), OpenRadio.MODID + ".photoreceptor");
-        GameRegistry.registerItem(adcItem = new ADCItem(), OpenRadio.MODID + ".adc");
-        GameRegistry.registerItem(mirrorItem = new MirrorItem(), OpenRadio.MODID + ".mirror");
-        GameRegistry.registerItem(laserItem = new LaserItem(), OpenRadio.MODID + ".laserItem");
+        GameRegistry.registerItem(lensItem = new LensItem(), "lens");
+        GameRegistry.registerItem(laserSocketItem = new LaserSocketItem(), "lasersocket");
+        GameRegistry.registerItem(dspItem = new DSPItem(), "dsp");
+        GameRegistry.registerItem(photoReceptorItem = new PhotoReceptorItem(), "photoreceptor");
+        GameRegistry.registerItem(adcItem = new ADCItem(), "adc");
+        GameRegistry.registerItem(mirrorItem = new MirrorItem(), "mirror");
+        GameRegistry.registerItem(laserItem = new LaserItem(), "laserItem");
     }
 }

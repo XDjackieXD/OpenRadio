@@ -15,7 +15,6 @@ import li.cil.oc.api.network.Connector;
 import li.cil.oc.api.network.Message;
 import li.cil.oc.api.network.Visibility;
 import li.cil.oc.api.prefab.TileEntityEnvironment;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -345,6 +344,8 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(slot == this.SLOT_LENS){
             if(stack != null)
                 this.worldObj.setBlockState(pos, this.worldObj.getBlockState(this.pos).withProperty(Blocks.laserBlock.LENS, getItemTier(this.SLOT_LENS, Items.lensItem)));
+            else
+                this.worldObj.setBlockState(pos, this.worldObj.getBlockState(this.pos).withProperty(Blocks.laserBlock.LENS, 0));
         }
         this.markDirty();
     }
@@ -375,7 +376,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public ItemStack getStackInSlotOnClosing(int slot){
         ItemStack stack = getStackInSlot(slot);
         if(stack != null){
-            setInventorySlotContents(slot, null);
+            setInventorySlotContents(slot, null);e
         }
         return stack;
     }*/
@@ -387,7 +388,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer player){
-        return worldObj.getTileEntity(this.getPos()) == this && player.getDistanceSq(this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getX() + 0.5) < 64;
+        return player.getDistanceSq(this.getPos().getX()+0.5D, this.pos.getY()+0.5D, this.pos.getZ()+0.5D) <= 64;
     }
 
     @Override

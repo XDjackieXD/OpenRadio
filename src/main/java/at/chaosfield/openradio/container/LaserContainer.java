@@ -4,8 +4,8 @@ import at.chaosfield.openradio.init.Items;
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.gui.RestrictedSlot;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 public class LaserContainer extends Container{
     protected LaserTileEntity tileEntity;
 
-    public LaserContainer(InventoryPlayer inventoryPlayer, LaserTileEntity te){
+    public LaserContainer(IInventory inventoryPlayer, LaserTileEntity te){
         tileEntity = te;
 
         addSlotToContainer(new RestrictedSlot(Items.dspItem, 1, tileEntity, LaserTileEntity.SLOT_DSP, 33, 27));     //DSP
@@ -34,7 +34,7 @@ public class LaserContainer extends Container{
     }
 
 
-    protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
+    protected void bindPlayerInventory(IInventory inventoryPlayer) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
                 addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,

@@ -23,7 +23,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Property;
 
 import java.util.Random;
 
@@ -37,6 +36,7 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
 
     public LaserBlock(){
         super(Material.iron);                           //Material is like Iron
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(LENS, 0));
         setUnlocalizedName(OpenRadio.MODID + ".laser"); //Set unlocalized Block name (/src/main/resources/assets/openradio/lang/)
         setHardness(3.0F);                              //Set hardness to 3
         setCreativeTab(CreativeTab.instance);
@@ -77,7 +77,7 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
     //On right click open the GUI (only on the server side and if the player isn't sneaking)
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
-        OpenRadio.logger.info("metadata: " + this.getMetaFromState(state));
+        OpenRadio.logger.info("state: FACING: " + state.getValue(FACING).getName() + " LENS: " + state.getValue(LENS));
         if(!world.isRemote) {
             if (world.getTileEntity(pos) != null && !player.isSneaking())
                 player.openGui(OpenRadio.instance, GUIs.LASER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
@@ -89,7 +89,7 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         // no need to figure out the right orientation again when the piston block can do it for us
-        world.setBlockState(pos, state.withProperty(FACING, BlockPistonBase.getFacingFromEntity(world, pos, placer)));
+        world.setBlockState(pos, state.withProperty(FACING, BlockPistonBase.getFacingFromEntity(world, pos, placer)).withProperty(LENS, Integer.valueOf(0)));
     }
 
     //If the block gets broken, drop all items on the floor
@@ -145,6 +145,11 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
 
     @Override
     public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube(){
         return false;
     }
 }
