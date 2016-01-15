@@ -459,6 +459,10 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 inv[slot] = ItemStack.loadItemStackFromNBT(tag);
             }
         }
+
+        if(this.pos != null && this.worldObj != null && this.worldObj.getBlockState(this.pos) != null){
+            this.worldObj.setBlockState(this.pos, this.worldObj.getBlockState(this.pos).withProperty(LaserBlock.LENS, Integer.valueOf(getItemTier(SLOT_LENS, Items.lensItem))));
+        }
     }
 
     @Override

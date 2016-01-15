@@ -29,7 +29,7 @@ public class LaserGui extends GuiContainer{
     protected void drawGuiContainerBackgroundLayer(float renderPartialTicks, int mouseX, int mouseY){
         this.mc.getTextureManager().bindTexture(backgroundImage);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 183);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("container." + OpenRadio.MODID + ".laser.name"), 8, 8, 4210752);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, 89, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("container." + OpenRadio.MODID + ".laser.name"), this.guiLeft + 8, this.guiTop + 8, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), this.guiLeft + 8, this.guiTop + 89, 4210752);
     }
 }

@@ -1,7 +1,8 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "laser": "openradio:blocks/laser"
+        "laser": "openradio:blocks/laser",
+        "particle": "openradio:blocks/laser"
     },
     "elements": [
         {

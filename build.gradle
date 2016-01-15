@@ -18,12 +18,12 @@ plugins {
 apply plugin: 'idea'
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "0.6.1-MC1.8.9"
+version = "0.6.1-alpha-MC1.8.9"
 group = "at.chaosfield.openradio"
 archivesBaseName = "OpenRadio"
 
 minecraft {
-    version = "1.8.9-11.15.0.1688"
+    version = "1.8.9-11.15.0.1697"
     runDir = "run"
 
     mappings = "stable_20"

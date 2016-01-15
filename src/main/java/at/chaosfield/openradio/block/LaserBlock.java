@@ -36,7 +36,7 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
 
     public LaserBlock(){
         super(Material.iron);                           //Material is like Iron
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(LENS, 0));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(LENS, Integer.valueOf(0)));
         setUnlocalizedName(OpenRadio.MODID + ".laser"); //Set unlocalized Block name (/src/main/resources/assets/openradio/lang/)
         setHardness(3.0F);                              //Set hardness to 3
         setCreativeTab(CreativeTab.instance);
@@ -77,7 +77,7 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
     //On right click open the GUI (only on the server side and if the player isn't sneaking)
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
-        OpenRadio.logger.info("state: FACING: " + state.getValue(FACING).getName() + " LENS: " + state.getValue(LENS));
+        //OpenRadio.logger.info("state: FACING: " + state.getValue(FACING).getName() + " LENS: " + state.getValue(LENS));
         if(!world.isRemote) {
             if (world.getTileEntity(pos) != null && !player.isSneaking())
                 player.openGui(OpenRadio.instance, GUIs.LASER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
