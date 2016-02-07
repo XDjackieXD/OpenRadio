@@ -1,0 +1,255 @@
+{
+    "__createdwith": "opl's Model Creator",
+    "ambientocclusion": false,
+    "elements": [
+        {
+            "from": [0,0,0],
+            "to": [16,0.5,16],
+            "faces": {
+                "up": {
+                    "texture": "missingtexture"
+                },
+                "down": {
+                    "texture": "missingtexture"
+                },
+                "west": {
+                    "texture": "missingtexture"
+                },
+                "east": {
+                    "texture": "missingtexture"
+                },
+                "north": {
+                    "texture": "missingtexture"
+                },
+                "south": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [0,15.5,0],
+            "to": [16,16,16],
+            "faces": {
+                "up": {
+                    "texture": "missingtexture"
+                },
+                "down": {
+                    "texture": "missingtexture"
+                },
+                "west": {
+                    "texture": "missingtexture"
+                },
+                "east": {
+                    "texture": "missingtexture"
+                },
+                "north": {
+                    "texture": "missingtexture"
+                },
+                "south": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [0.5,0.5,10.5],
+            "to": [15.5,15.5,15.5],
+            "faces": {
+                "north": {
+                    "texture": "missingtexture"
+                },
+                "south": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [0,0.5,0],
+            "to": [0.5,15.5,16],
+            "faces": {
+                "west": {
+                    "texture": "missingtexture"
+                },
+                "east": {
+                    "texture": "missingtexture"
+                },
+                "north": {
+                    "texture": "missingtexture"
+                },
+                "south": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [15.5,0.5,0],
+            "to": [16,15.5,16],
+            "faces": {
+                "west": {
+                    "texture": "missingtexture"
+                },
+                "east": {
+                    "texture": "missingtexture"
+                },
+                "north": {
+                    "texture": "missingtexture"
+                },
+                "south": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [0.5,10,2],
+            "to": [15.5,15.5,10.5],
+            "faces": {
+                "down": {
+                    "texture": "missingtexture"
+                },
+                "north": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [0.5,0.5,2],
+            "to": [15.5,6,10.5],
+            "faces": {
+                "up": {
+                    "texture": "missingtexture"
+                },
+                "north": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [0.5,6,2],
+            "to": [6,10,10.5],
+            "faces": {
+                "east": {
+                    "texture": "missingtexture"
+                },
+                "north": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [10,6,2],
+            "to": [15.5,10,10.5],
+            "faces": {
+                "west": {
+                    "texture": "missingtexture"
+                },
+                "north": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [0.5,0.5,1],
+            "to": [15.5,5.5,2],
+            "faces": {
+                "up": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [0.5,10.5,1],
+            "to": [15.5,15.5,2],
+            "faces": {
+                "down": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [0.5,10,0.5],
+            "to": [15.5,15.5,1],
+            "faces": {
+                "down": {
+                    "texture": "missingtexture"
+                },
+                "north": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [0.5,0.5,0.5],
+            "to": [15.5,6,1],
+            "faces": {
+                "up": {
+                    "texture": "missingtexture"
+                },
+                "north": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [0.5,6,0.5],
+            "to": [6,10,1],
+            "faces": {
+                "east": {
+                    "texture": "missingtexture"
+                },
+                "north": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [10,6,0.5],
+            "to": [15.5,10,1],
+            "faces": {
+                "west": {
+                    "texture": "missingtexture"
+                },
+                "north": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [3.5,9,15.5],
+            "to": [12.5,12.5,16],
+            "faces": {
+                "up": {
+                    "texture": "missingtexture"
+                },
+                "down": {
+                    "texture": "missingtexture"
+                },
+                "west": {
+                    "texture": "missingtexture"
+                },
+                "east": {
+                    "texture": "missingtexture"
+                },
+                "south": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [0.5,5.5,1],
+            "to": [5.5,10.5,2],
+            "faces": {
+                "east": {
+                    "texture": "missingtexture"
+                }
+            }
+        },
+        {
+            "from": [10.5,5.5,1],
+            "to": [15.5,10.5,2],
+            "faces": {
+                "west": {
+                    "texture": "missingtexture"
+                }
+            }
+        }
+    ]
+}

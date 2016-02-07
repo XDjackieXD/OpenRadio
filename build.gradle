@@ -23,7 +23,7 @@ group = "at.chaosfield.openradio"
 archivesBaseName = "OpenRadio"
 
 minecraft {
-    version = "1.8.9-11.15.0.1697"
+    version = "1.8.9-11.15.1.1722"
     runDir = "run"
 
     mappings = "stable_20"

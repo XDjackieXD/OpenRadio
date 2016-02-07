@@ -1,28 +1,41 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "laser": "openradio:blocks/laser"
+    },
+    "model": "openradio:laser",
+    "particle": "openradio:blocks/laser"
+  },
   "variants": {
-    "facing=down,lens=0": { "model": "openradio:laser", "x": 90 },
-    "facing=up,lens=0": { "model": "openradio:laser", "x": 270 },
-    "facing=north,lens=0": { "model": "openradio:laser" },
-    "facing=south,lens=0": { "model": "openradio:laser", "y": 180 },
-    "facing=west,lens=0": { "model": "openradio:laser", "y": 270 },
-    "facing=east,lens=0": { "model": "openradio:laser", "y": 90 },
-    "facing=down,lens=1": { "model": "openradio:laser_lens_t1", "x": 90 },
-    "facing=up,lens=1": { "model": "openradio:laser_lens_t1", "x": 270 },
-    "facing=north,lens=1": { "model": "openradio:laser_lens_t1" },
-    "facing=south,lens=1": { "model": "openradio:laser_lens_t1", "y": 180 },
-    "facing=west,lens=1": { "model": "openradio:laser_lens_t1", "y": 270 },
-    "facing=east,lens=1": { "model": "openradio:laser_lens_t1", "y": 90 },
-    "facing=down,lens=2": { "model": "openradio:laser_lens_t2", "x": 90 },
-    "facing=up,lens=2": { "model": "openradio:laser_lens_t2", "x": 270 },
-    "facing=north,lens=2": { "model": "openradio:laser_lens_t2" },
-    "facing=south,lens=2": { "model": "openradio:laser_lens_t2", "y": 180 },
-    "facing=west,lens=2": { "model": "openradio:laser_lens_t2", "y": 270 },
-    "facing=east,lens=2": { "model": "openradio:laser_lens_t2", "y": 90 },
-    "facing=down,lens=3": { "model": "openradio:laser_lens_t3", "x": 90 },
-    "facing=up,lens=3": { "model": "openradio:laser_lens_t3", "x": 270 },
-    "facing=north,lens=3": { "model": "openradio:laser_lens_t3" },
-    "facing=south,lens=3": { "model": "openradio:laser_lens_t3", "y": 180 },
-    "facing=west,lens=3": { "model": "openradio:laser_lens_t3", "y": 270 },
-    "facing=east,lens=3": { "model": "openradio:laser_lens_t3", "y": 90 }
+    "facing":{
+      "down": {"x": 90},
+      "up": {"x": 270},
+      "north": {},
+      "south": {"y": 180},
+      "west": {"y": 270},
+      "east": {"y": 90}
+    },
+    "lens": {
+      "0": {  },
+      "1": {
+        "textures": {"lens": "openradio:blocks/LensT1"},
+        "submodel": {
+          "lens": { "model": "openradio:lens" }
+        }
+      },
+      "2": {
+        "textures": {"lens": "openradio:blocks/LensT2"},
+        "submodel": {
+          "lens": { "model": "openradio:lens" }
+        }
+      },
+      "3": {
+        "textures": {"lens": "openradio:blocks/LensT3"},
+        "submodel": {
+          "lens": { "model": "openradio:lens" }
+        }
+      }
+    }
   }
 }

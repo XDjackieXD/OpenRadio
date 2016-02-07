@@ -341,12 +341,12 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(stack != null && stack.stackSize > getInventoryStackLimit()){
             stack.stackSize = getInventoryStackLimit();
         }
-        if(slot == SLOT_LENS){
+        /*if(slot == SLOT_LENS){
             if(stack != null)
                 this.worldObj.setBlockState(pos, this.worldObj.getBlockState(this.pos).withProperty(LaserBlock.LENS, getItemTier(SLOT_LENS, Items.lensItem)));
             else
                 this.worldObj.setBlockState(pos, this.worldObj.getBlockState(this.pos).withProperty(LaserBlock.LENS, 0));
-        }
+        }*/
         this.markDirty();
     }
 
@@ -460,9 +460,9 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             }
         }
 
-        if(this.pos != null && this.worldObj != null && this.worldObj.getBlockState(this.pos) != null){
-            this.worldObj.setBlockState(this.pos, this.worldObj.getBlockState(this.pos).withProperty(LaserBlock.LENS, Integer.valueOf(getItemTier(SLOT_LENS, Items.lensItem))));
-        }
+        /*if(this.pos != null && this.worldObj != null && this.worldObj.getBlockState(this.pos) != null){
+            this.worldObj.setBlockState(this.pos, this.worldObj.getBlockState(this.pos).withProperty(LaserBlock.LENS, getItemTier(SLOT_LENS, Items.lensItem)));
+        }*/
     }
 
     @Override
