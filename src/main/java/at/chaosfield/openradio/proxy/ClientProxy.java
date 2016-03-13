@@ -20,7 +20,6 @@ public class ClientProxy extends CommonProxy{
     public void preInit(FMLPreInitializationEvent event){
         ModelBakery.registerItemVariants(Items.dspItem, new ResourceLocation(OpenRadio.MODID, "dspt1"), new ResourceLocation(OpenRadio.MODID, "dspt2"), new ResourceLocation(OpenRadio.MODID, "dspt3"));
         ModelBakery.registerItemVariants(Items.adcItem, new ResourceLocation(OpenRadio.MODID, "adct1"), new ResourceLocation(OpenRadio.MODID, "adct2"), new ResourceLocation(OpenRadio.MODID, "adct3"));
-        ModelBakery.registerItemVariants(Items.lensItem, new ResourceLocation(OpenRadio.MODID, "lenst1"), new ResourceLocation(OpenRadio.MODID, "lenst2"), new ResourceLocation(OpenRadio.MODID, "lenst3"));
         ModelBakery.registerItemVariants(Items.laserItem, new ResourceLocation(OpenRadio.MODID, "lasert1"), new ResourceLocation(OpenRadio.MODID, "lasert2"), new ResourceLocation(OpenRadio.MODID, "lasert3"));
     }
 
@@ -29,15 +28,16 @@ public class ClientProxy extends CommonProxy{
         super.init(event);
 
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(Blocks.laserBlock), 0, new ModelResourceLocation("openradio:laser", "inventory"));
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(Blocks.lensBlock1), 0, new ModelResourceLocation("openradio:lenst1", "inventory"));
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(Blocks.lensBlock2), 0, new ModelResourceLocation("openradio:lenst2", "inventory"));
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(Blocks.lensBlock3), 0, new ModelResourceLocation("openradio:lenst3", "inventory"));
+
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.dspItem, 0, new ModelResourceLocation("openradio:dspt1", "inventory"));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.dspItem, 1, new ModelResourceLocation("openradio:dspt2", "inventory"));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.dspItem, 2, new ModelResourceLocation("openradio:dspt3", "inventory"));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.adcItem, 0, new ModelResourceLocation("openradio:adct1", "inventory"));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.adcItem, 1, new ModelResourceLocation("openradio:adct2", "inventory"));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.adcItem, 2, new ModelResourceLocation("openradio:adct3", "inventory"));
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.lensItem, 0, new ModelResourceLocation("openradio:lenst1", "inventory"));
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.lensItem, 1, new ModelResourceLocation("openradio:lenst2", "inventory"));
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.lensItem, 2, new ModelResourceLocation("openradio:lenst3", "inventory"));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.laserItem, 0, new ModelResourceLocation("openradio:lasert1", "inventory"));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.laserItem, 1, new ModelResourceLocation("openradio:lasert2", "inventory"));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.laserItem, 2, new ModelResourceLocation("openradio:lasert3", "inventory"));
