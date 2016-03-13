@@ -4,9 +4,7 @@ import at.chaosfield.openradio.gui.CreativeTab;
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.gui.GUIs;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
@@ -32,11 +30,10 @@ import java.util.Random;
 public class LaserBlock extends BlockContainer implements ITileEntityProvider{
 
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
-    public static final PropertyInteger LENS = PropertyInteger.create("lens", 0, 3);
 
     public LaserBlock(){
         super(Material.iron);                           //Material is like Iron
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(LENS, 0));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         setUnlocalizedName(OpenRadio.MODID + ".laser"); //Set unlocalized Block name (/src/main/resources/assets/openradio/lang/)
         setHardness(3.0F);                              //Set hardness to 3
         setCreativeTab(CreativeTab.instance);
@@ -53,7 +50,7 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
     }
 
     @Override protected BlockState createBlockState() {
-        return new BlockState(this, FACING, LENS);
+        return new BlockState(this, FACING);
     }
 
     /**
@@ -62,7 +59,7 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta)).withProperty(LENS, 0);
+        return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta));
     }
 
     /**
@@ -87,9 +84,16 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
     }
 
     @Override
+    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+    {
+        // no need to figure out the right orientation again when the piston block can do it for us
+        return this.getDefaultState().withProperty(FACING, BlockPistonBase.getFacingFromEntity(worldIn, pos, placer));
+    }
+
+    @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         // no need to figure out the right orientation again when the piston block can do it for us
-        world.setBlockState(pos, state.withProperty(FACING, BlockPistonBase.getFacingFromEntity(world, pos, placer)).withProperty(LENS, 0));
+        world.setBlockState(pos, state.withProperty(FACING, BlockPistonBase.getFacingFromEntity(world, pos, placer)), 2);
     }
 
     //If the block gets broken, drop all items on the floor

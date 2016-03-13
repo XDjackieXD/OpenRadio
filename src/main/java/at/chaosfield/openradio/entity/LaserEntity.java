@@ -1,9 +1,14 @@
 package at.chaosfield.openradio.entity;
 
 import at.chaosfield.openradio.OpenRadio;
+import at.chaosfield.openradio.block.LaserBlock;
+import at.chaosfield.openradio.interfaces.ILaserModifier;
 import at.chaosfield.openradio.render.LaserParticle;
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.util.Location;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.*;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -14,11 +19,11 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -27,11 +32,14 @@ import net.minecraftforge.common.DimensionManager;
 
 public class LaserEntity extends Entity implements IProjectile{
 
+    private List<Location> appliedModifier = new ArrayList<Location>();
+
     private Location senderLaser;
     private Location locNow;
 
     private double distance = 1;
     private double maxDistance = 0;
+    private double multiplier = 1;
 
     private float colorR = 1.0F, colorG = 0, colorB = 0;
     Vec3 lastParticle = new Vec3(0, 0, 0);
@@ -104,7 +112,70 @@ public class LaserEntity extends Entity implements IProjectile{
         this.lastTickPosX = this.posX;
         this.lastTickPosY = this.posY;
         this.lastTickPosZ = this.posZ;
-        super.onUpdate();
+
+
+        /**** Replace Super onUpdate because some not-needed stuff in there ****/
+        this.worldObj.theProfiler.startSection("entityBaseTick");
+
+        if(this.ridingEntity != null && this.ridingEntity.isDead){
+            this.ridingEntity = null;
+        }
+
+        this.prevDistanceWalkedModified = this.distanceWalkedModified;
+        this.prevPosX = this.posX;
+        this.prevPosY = this.posY;
+        this.prevPosZ = this.posZ;
+        this.prevRotationPitch = this.rotationPitch;
+        this.prevRotationYaw = this.rotationYaw;
+
+        if(!this.worldObj.isRemote && this.worldObj instanceof WorldServer){
+            this.worldObj.theProfiler.startSection("portal");
+            MinecraftServer minecraftserver = ((WorldServer) this.worldObj).getMinecraftServer();
+            int i = this.getMaxInPortalTime();
+
+            if(this.inPortal){
+                if(minecraftserver.getAllowNether()){
+                    if(this.ridingEntity == null && this.portalCounter++ >= i){
+                        this.portalCounter = i;
+                        this.timeUntilPortal = this.getPortalCooldown();
+                        int j;
+
+                        if(this.worldObj.provider.getDimensionId() == -1){
+                            j = 0;
+                        }else{
+                            j = -1;
+                        }
+
+                        this.travelToDimension(j);
+                    }
+
+                    this.inPortal = false;
+                }
+            }else{
+                if(this.portalCounter > 0){
+                    this.portalCounter -= 4;
+                }
+
+                if(this.portalCounter < 0){
+                    this.portalCounter = 0;
+                }
+            }
+
+            if(this.timeUntilPortal > 0){
+                --this.timeUntilPortal;
+            }
+
+            this.worldObj.theProfiler.endSection();
+        }
+
+        if(this.posY < -64.0D){
+            this.kill();
+        }
+
+        this.firstUpdate = false;
+        this.worldObj.theProfiler.endSection();
+        /***********************************************************************/
+
 
         if(!worldObj.isRemote){
             if(this.locNow != null){
@@ -123,7 +194,7 @@ public class LaserEntity extends Entity implements IProjectile{
             }else{
                 this.locNow = new Location(worldObj.provider.getDimensionId(), (int) Math.floor(this.posX), (int) Math.floor(this.posY), (int) Math.floor(this.posZ));
             }
-            if(distance > maxDistance){
+            if(distance > maxDistance*multiplier){
                 this.setDead();
             }
         }else{
@@ -137,6 +208,7 @@ public class LaserEntity extends Entity implements IProjectile{
         Vec3 posVec = new Vec3(this.posX, this.posY, this.posZ);
         Vec3 nextPosVec = new Vec3(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
         MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(posVec, nextPosVec);
+
 
         if(movingobjectposition != null){
             if(movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
@@ -155,28 +227,36 @@ public class LaserEntity extends Entity implements IProjectile{
     }
 
     @SideOnly(Side.CLIENT)
+    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean p_180426_10_)
+    {
+        this.setPosition(x, y, z);
+        this.setRotation(yaw, pitch);
+    }
+
+    @SideOnly(Side.CLIENT)
     private void renderParticle(){
         LaserParticle particle = new LaserParticle(this.worldObj, this.posX, this.posY, this.posZ, 0.75F, this.colorR, this.colorG, this.colorB);
         particle.setRBGColorF(this.colorR, this.colorG, this.colorB);
         Minecraft.getMinecraft().effectRenderer.addEffect(particle);
     }
 
-    public void writeEntityToNBT(NBTTagCompound tagCompound) {
+    public void writeEntityToNBT(NBTTagCompound tagCompound){
         tagCompound.setTag("direction", this.newDoubleNBTList(this.motionX, this.motionY, this.motionZ));
         tagCompound.setIntArray("senderLaser", new int[]{this.senderLaser.getDim(), this.senderLaser.getX(), this.senderLaser.getY(), this.senderLaser.getZ()});
         tagCompound.setTag("color", this.newFloatNBTList(this.colorR, this.colorG, this.colorB));
         tagCompound.setInteger("lastParticleDim", this.lastParticleDim);
         tagCompound.setDouble("distance", this.distance);
         tagCompound.setDouble("maxDistance", this.maxDistance);
+        tagCompound.setDouble("multiplier", this.multiplier);
     }
 
-    public void readEntityFromNBT(NBTTagCompound tagCompound) {
-        if(tagCompound.hasKey("direction", 9)) {
+    public void readEntityFromNBT(NBTTagCompound tagCompound){
+        if(tagCompound.hasKey("direction", 9)){
             NBTTagList nbttaglist = tagCompound.getTagList("direction", 6);
             this.motionX = nbttaglist.getDoubleAt(0);
             this.motionY = nbttaglist.getDoubleAt(1);
             this.motionZ = nbttaglist.getDoubleAt(2);
-        } else {
+        }else{
             this.setDead();
         }
         int[] sender = tagCompound.getIntArray("senderLaser");
@@ -189,6 +269,7 @@ public class LaserEntity extends Entity implements IProjectile{
         this.lastParticleDim = tagCompound.getInteger("lastParticleDim");
         this.distance = tagCompound.getDouble("distance");
         this.maxDistance = tagCompound.getDouble("maxDistance");
+        this.multiplier = tagCompound.getDouble("multiplier");
     }
 
     @Override
@@ -198,22 +279,54 @@ public class LaserEntity extends Entity implements IProjectile{
     }
 
     protected void onImpact(MovingObjectPosition mop){
-        this.setDead();
+        TileEntity senderLaserTe = null;
         if(!worldObj.isRemote){
-            TileEntity senderLaserTe = DimensionManager.getWorld(senderLaser.getDim()).getTileEntity(senderLaser.getPos());
-            if(senderLaserTe instanceof LaserTileEntity){
-                if(mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK){
-                    TileEntity te = this.worldObj.getTileEntity(mop.getBlockPos());
-                    if(te instanceof LaserTileEntity){
-                        if(mop.sideHit.getIndex() == te.getBlockMetadata())
-                            ((LaserTileEntity) senderLaserTe).setDestination(this.worldObj.provider.getDimensionId(), mop.getBlockPos(), this.distance);
-                        else
-                            ((LaserTileEntity) senderLaserTe).disconnect();
-                    }else
+            senderLaserTe = DimensionManager.getWorld(senderLaser.getDim()).getTileEntity(senderLaser.getPos());
+        }
+
+        if(mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK){
+            Block hitBlock = this.worldObj.getBlockState(mop.getBlockPos()).getBlock();
+
+            if(hitBlock instanceof LaserBlock && senderLaserTe instanceof LaserTileEntity){
+
+                TileEntity te = this.worldObj.getTileEntity(mop.getBlockPos());
+                if(te instanceof LaserTileEntity){
+                    if(mop.sideHit.getIndex() == te.getBlockMetadata())
+                        ((LaserTileEntity) senderLaserTe).setDestination(this.worldObj.provider.getDimensionId(), mop.getBlockPos(), this.distance);
+                    else
                         ((LaserTileEntity) senderLaserTe).disconnect();
                 }else
                     ((LaserTileEntity) senderLaserTe).disconnect();
+                this.setDead();
+
+            }else if(hitBlock instanceof ILaserModifier){
+                if(!appliedModifier.contains(new Location(this.dimension, mop.getBlockPos()))){
+                    appliedModifier.add(new Location(this.dimension, mop.getBlockPos()));
+                    ((ILaserModifier) hitBlock).hitByLaser(this, mop.getBlockPos(), this.worldObj, mop.sideHit);
+                }
+
+            }else{
+                this.setDead();
+                if(senderLaserTe instanceof LaserTileEntity)
+                    ((LaserTileEntity) senderLaserTe).disconnect();
             }
+
+        }else{
+            this.setDead();
+            if(senderLaserTe instanceof LaserTileEntity)
+                ((LaserTileEntity) senderLaserTe).disconnect();
         }
+    }
+
+    public double getMultiplier(){
+        return multiplier;
+    }
+
+    public void setMultiplier(double multiplier){
+        this.multiplier = multiplier;
+    }
+
+    public double getMaxDistance(){
+        return maxDistance;
     }
 }

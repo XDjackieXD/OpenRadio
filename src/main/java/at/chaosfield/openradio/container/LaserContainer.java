@@ -21,7 +21,6 @@ public class LaserContainer extends Container{
         addSlotToContainer(new RestrictedSlot(Items.dspItem, 1, tileEntity, LaserTileEntity.SLOT_DSP, 33, 27));     //DSP
         addSlotToContainer(new RestrictedSlot(Items.photoReceptorItem, 1, tileEntity, LaserTileEntity.SLOT_PHOTO_RECEPTOR, 56, 27));    //PhotoReceptor
         addSlotToContainer(new RestrictedSlot(Items.mirrorItem, 1, tileEntity, LaserTileEntity.SLOT_MIRROR, 89, 27));    //SemiReflectiveMirror
-        addSlotToContainer(new RestrictedSlot(Items.lensItem, 1, tileEntity, LaserTileEntity.SLOT_LENS, 127, 27));   //Lens
         addSlotToContainer(new RestrictedSlot(Items.laserItem, 1, tileEntity, LaserTileEntity.SLOT_LASER, 89, 60));    //Laser
 
         //commonly used vanilla code that adds the player's inventory
@@ -73,10 +72,6 @@ public class LaserContainer extends Container{
                     }
                 }else if(stackInSlot.getItem() == Items.mirrorItem){
                     if(!this.mergeItemStack(stackInSlot, LaserTileEntity.SLOT_MIRROR, LaserTileEntity.SLOT_MIRROR+1, false)){
-                        return null;
-                    }
-                }else if(stackInSlot.getItem() == Items.lensItem){
-                    if(!this.mergeItemStack(stackInSlot, LaserTileEntity.SLOT_LENS, LaserTileEntity.SLOT_LENS+1, false)){
                         return null;
                     }
                 }else if(stackInSlot.getItem() == Items.laserItem){

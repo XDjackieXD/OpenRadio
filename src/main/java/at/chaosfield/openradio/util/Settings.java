@@ -11,8 +11,8 @@ public class Settings{
     public double EntitySpeed = 1;
     public double DistancePerAir = 1;
     public double DistancePerTransparent = 2;
-    public double LaserMaxDistanceTier[] = {256, 512, 1024}; //Blocks
-    public double LensMultiplierTier[] = {0.5, 0.75, 1};
+    public double LaserMaxDistanceTier[] = {64, 128, 256}; //Blocks
+    public double LensMultiplierTier[] = {1, 3, 7};
     public int EnergyUseLaserTier[] = {25, 50, 100}; // RF/tick
     public int AEEnergyMultiplier = 10;
     public int EnergyBuffer = 100;
@@ -26,13 +26,13 @@ public class Settings{
         DistancePerAir = (double)config.getFloat("LaserDistancePerAir", "distances", 1, 0, 2048, "added distance per air block");
         DistancePerTransparent = (double)config.getFloat("LaserDistancePerTransparent", "distances", 2, 0, 2048, "added distance per transparent non-air block");
 
-        LaserMaxDistanceTier[0] = (double)config.getFloat("LaserTier1MasDistance", "distances", 256, 0, 16384, "maximum distance of a tier 1 laser");
-        LaserMaxDistanceTier[1] = (double)config.getFloat("LaserTier2MasDistance", "distances", 512, 0, 16384, "maximum distance of a tier 2 laser");
-        LaserMaxDistanceTier[2] = (double)config.getFloat("LaserTier3MasDistance", "distances", 1024, 0, 16384, "maximum distance of a tier 3 laser");
+        LaserMaxDistanceTier[0] = (double)config.getFloat("LaserTier1MasDistance", "distances", 64, 0, 16384, "maximum distance of a tier 1 laser");
+        LaserMaxDistanceTier[1] = (double)config.getFloat("LaserTier2MasDistance", "distances", 128, 0, 16384, "maximum distance of a tier 2 laser");
+        LaserMaxDistanceTier[2] = (double)config.getFloat("LaserTier3MasDistance", "distances", 256, 0, 16384, "maximum distance of a tier 3 laser");
 
-        LensMultiplierTier[0] = (double)config.getFloat("LensMultiplierTier1", "distances", 0.5f, 0, 100, "distance multiplier of a tier 1 lens");
-        LensMultiplierTier[1] = (double)config.getFloat("LensMultiplierTier2", "distances", 0.75f, 0, 100, "distance multiplier of a tier 2 lens");
-        LensMultiplierTier[2] = (double)config.getFloat("LensMultiplierTier3", "distances", 1, 0, 100, "distance multiplier of a tier 3 lens");
+        LensMultiplierTier[0] = (double)config.getFloat("LensMultiplierTier1", "distances", 1, 0, 100, "distance multiplier of a tier 1 lens");
+        LensMultiplierTier[1] = (double)config.getFloat("LensMultiplierTier2", "distances", 3, 0, 100, "distance multiplier of a tier 2 lens");
+        LensMultiplierTier[2] = (double)config.getFloat("LensMultiplierTier3", "distances", 7, 0, 100, "distance multiplier of a tier 3 lens");
 
         EnergyUseLaserTier[0] = config.getInt("EnergyUseLaserTier1", "energy", 25, 0, 100000, "energy usage of a tier 1 laser");
         EnergyUseLaserTier[1] = config.getInt("EnergyUseLaserTier2", "energy", 50, 0, 100000, "energy usage of a tier 2 laser");

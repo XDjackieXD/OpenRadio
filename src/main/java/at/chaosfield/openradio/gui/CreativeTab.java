@@ -36,6 +36,9 @@ public class CreativeTab extends CreativeTabs{
 
         this.addItem(Items.laserSocketItem);
         this.addItem(Items.lensItem);
+        this.addBlock(Blocks.lensBlock1);
+        this.addBlock(Blocks.lensBlock2);
+        this.addBlock(Blocks.lensBlock3);
         this.addItem(Items.dspItem);
         this.addItem(Items.adcItem);
         this.addItem(Items.laserItem);

@@ -1,4 +1,7 @@
 tile.openradio.laser.name=Laser
+tile.openradio.lenst1.name=Glass lens
+tile.openradio.lenst2.name=Quartz infused lens
+tile.openradio.lenst3.name=Shaped diamond lens
 tile.openradio.aeencoder.name=AE Encoder
 container.openradio.laser.name=Laser
 item.openradio.lens.name=Lens

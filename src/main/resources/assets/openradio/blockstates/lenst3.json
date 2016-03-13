@@ -2,10 +2,13 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "laser": "openradio:blocks/laser"
+      "laser": "openradio:blocks/laser",
+      "lens": "openradio:blocks/LensT3",
+      "lensBlock": "openradio:blocks/LensBlock",
+      "particle": "openradio:blocks/LensBlock"
     },
-    "model": "openradio:laser",
-    "particle": "openradio:blocks/laser"
+    "model": "openradio:lens",
+    "particle": "openradio:blocks/LensBlock"
   },
   "variants": {
     "facing":{

@@ -2,7 +2,6 @@ package at.chaosfield.openradio.tileentity;
 
 
 import at.chaosfield.openradio.OpenRadio;
-import at.chaosfield.openradio.block.LaserBlock;
 import at.chaosfield.openradio.entity.LaserEntity;
 import at.chaosfield.openradio.init.Items;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
@@ -40,8 +39,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public static final int SLOT_DSP = 0;
     public static final int SLOT_PHOTO_RECEPTOR = 1;
     public static final int SLOT_MIRROR = 2;
-    public static final int SLOT_LENS = 3;
-    public static final int SLOT_LASER = 4;
+    public static final int SLOT_LASER = 3;
 
     private boolean powered;
     private double distance;
@@ -58,7 +56,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public LaserTileEntity(){
         super();
         node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(OpenRadio.instance.settings.EnergyBuffer).create();
-        inv = new ItemStack[5];
+        inv = new ItemStack[4];
         if(otherLaser != null && !worldObj.isRemote){
             TileEntity otherLaserTe = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getPos());
             if(otherLaserTe instanceof LaserTileEntity){
@@ -176,12 +174,10 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         return inv[SLOT_DSP] != null &&
                 inv[SLOT_PHOTO_RECEPTOR] != null &&
                 inv[SLOT_MIRROR] != null &&
-                inv[SLOT_LENS] != null &&
                 inv[SLOT_LASER] != null &&
                 inv[SLOT_DSP].getItem() == Items.dspItem &&
                 inv[SLOT_PHOTO_RECEPTOR].getItem() == Items.photoReceptorItem &&
                 inv[SLOT_MIRROR].getItem() == Items.mirrorItem &&
-                inv[SLOT_LENS].getItem() == Items.lensItem &&
                 inv[SLOT_LASER].getItem() == Items.laserItem;
     }
 
@@ -219,7 +215,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     public double getMaxDistance(){
         if(hasNeededComponents()){
-            return OpenRadio.instance.settings.LaserMaxDistanceTier[getItemTier(SLOT_LASER, Items.laserItem)-1] * OpenRadio.instance.settings.LensMultiplierTier[getItemTier(SLOT_LENS, Items.lensItem)-1];
+            return OpenRadio.instance.settings.LaserMaxDistanceTier[getItemTier(SLOT_LASER, Items.laserItem)-1];
         }else{
             return 0;
         }
@@ -341,12 +337,6 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(stack != null && stack.stackSize > getInventoryStackLimit()){
             stack.stackSize = getInventoryStackLimit();
         }
-        /*if(slot == SLOT_LENS){
-            if(stack != null)
-                this.worldObj.setBlockState(pos, this.worldObj.getBlockState(this.pos).withProperty(LaserBlock.LENS, getItemTier(SLOT_LENS, Items.lensItem)));
-            else
-                this.worldObj.setBlockState(pos, this.worldObj.getBlockState(this.pos).withProperty(LaserBlock.LENS, 0));
-        }*/
         this.markDirty();
     }
 
@@ -371,15 +361,6 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public ItemStack removeStackFromSlot(int index){
         return null;
     }
-
-    /*@Override
-    public ItemStack getStackInSlotOnClosing(int slot){
-        ItemStack stack = getStackInSlot(slot);
-        if(stack != null){
-            setInventorySlotContents(slot, null);e
-        }
-        return stack;
-    }*/
 
     @Override
     public int getInventoryStackLimit(){
@@ -411,8 +392,6 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             case 2:
                 return itemStack.getItem() == Items.mirrorItem;
             case 3:
-                return itemStack.getItem() == Items.lensItem;
-            case 4:
                 return itemStack.getItem() == Items.laserItem;
             default:
                 return false;
@@ -459,10 +438,6 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 inv[slot] = ItemStack.loadItemStackFromNBT(tag);
             }
         }
-
-        /*if(this.pos != null && this.worldObj != null && this.worldObj.getBlockState(this.pos) != null){
-            this.worldObj.setBlockState(this.pos, this.worldObj.getBlockState(this.pos).withProperty(LaserBlock.LENS, getItemTier(SLOT_LENS, Items.lensItem)));
-        }*/
     }
 
     @Override

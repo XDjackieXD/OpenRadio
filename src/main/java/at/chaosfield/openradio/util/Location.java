@@ -61,4 +61,13 @@ public class Location{
     public BlockPos getPos(){
         return new BlockPos(this.x, this.y, this.z);
     }
+
+    @Override
+    public boolean equals(Object object){
+        if(object instanceof Location){
+            Location loc = (Location)object;
+            return loc.getDim()==this.dim && loc.getX()==this.x && loc.getY()==this.y&& loc.getZ()==this.z;
+        }else
+            return false;
+    }
 }
