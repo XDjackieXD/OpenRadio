@@ -27,6 +27,5 @@ A Little OpenComputers addon which adds laser links and (planned) satellites wit
 * add all the fancy stuff from Ideas.txt :3
 
 ## Build instructions
-1. Create a folder called `lib` and put the dev-version of Applied Energistics 2 in there (at least rv2-stable-10)
-2. Setup the workspace: `./gradlew setupDecompWorkspace --refresh-dependencies`
-3. Compile the mod: `./gradlew build` or setup the IDE files for development: `./gradlew idea` or `./gradlew eclipse`
+1. Setup the workspace: `./gradlew setupDecompWorkspace --refresh-dependencies`
+2. Compile the mod: `./gradlew build` or setup the IDE files for development: `./gradlew idea` or `./gradlew eclipse`
