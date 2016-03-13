@@ -4,45 +4,6 @@ OpenRadio Items :
 Items
 --------------------
 
-Lenses :
-
-    Glass Lens
-
-        G... Glass
-
-         :G:
-        G:G:G
-         :G:
-
-    Quartz Infused Lens
-
-        L... Glass Lens
-        Q... Nether Quartz
-
-         :Q:
-        Q:L:Q
-         :Q:
-
-    Shaped Diamond Lens
-
-        L... Quartz Infused Lens
-        G... Gold
-        D... Diamond
-
-        G:D:G
-        D:L:D
-        G:D:G
-
-
-Lens Holder
-
-    I... Iron
-    G... Gold
-
-    I:G:I
-    I: :I
-    I:G:I
-
 Photoreceptor
 
     D... Diamond
@@ -62,18 +23,6 @@ Laser Socket
     I:D:I
     I: :I
     I:D:I
-
-Duplex Unit
-
-    E... Emerald
-    P... Phototransistor
-    I... Iron
-    D... Diamond
-    L... Laser Socket
-
-    E:P:E
-    I:D:I
-    E:L:E
 
 DSP:
 
@@ -159,7 +108,37 @@ Laser:
 Blocks
 --------------------
 
-Laser Tranceiver
+Lenses :
+
+    Glass Lens
+
+        G... Glass
+        I... Iron
+
+        I:G:I
+        G:G:G
+        I:G:I
+
+    Quartz Infused Lens
+
+        L... Glass Lens
+        Q... Nether Quartz
+
+         :Q:
+        Q:L:Q
+         :Q:
+
+    Shaped Diamond Lens
+
+        L... Quartz Infused Lens
+        G... Gold
+        D... Diamond
+
+        G:D:G
+        D:L:D
+        G:D:G
+
+Laser
 
     L... Laser Socket
     N... Network Cable
@@ -181,7 +160,24 @@ AE Encoder
     C:M:C
     I:N:I
 
-Mirror
+
+--------------------
+To Be Done
+--------------------
+
+Duplex Unit (Item)
+
+    E... Emerald
+    P... Phototransistor
+    I... Iron
+    D... Diamond
+    L... Laser Socket
+
+    E:P:E
+    I:D:I
+    E:L:E
+
+Mirror (Block)
 
     G... Glas Panel
     I... Iron
@@ -191,7 +187,7 @@ Mirror
     I:G:I
     I:D:I
 
-NSA'o'mat - Signal Interceptor (needs two lasers, phototransistors and Lenses!
+NSA'o'mat - Signal Interceptor (needs two lasers, phototransistors and Lenses!) (Block)
 
     S... Switch
     D... Duplex Unit

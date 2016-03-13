@@ -1,6 +1,5 @@
 package at.chaosfield.openradio.init;
 
-import at.chaosfield.openradio.OpenRadio;
 //import at.chaosfield.openradio.block.AEEncoderBlock;
 import at.chaosfield.openradio.block.LaserBlock;
 //import net.minecraftforge.fml.common.Loader;

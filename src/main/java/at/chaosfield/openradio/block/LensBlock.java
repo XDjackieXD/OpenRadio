@@ -93,7 +93,6 @@ public class LensBlock extends Block implements ILaserModifier{
     @Override
     public void hitByLaser(LaserEntity laserEntity, BlockPos pos, World world, EnumFacing direction){
         if(!world.isRemote){
-            OpenRadio.logger.info(OpenRadio.instance.settings.LensMultiplierTier[getTier() - 1] + "   " + laserEntity.getMaxDistance() * (laserEntity.getMultiplier() + OpenRadio.instance.settings.LensMultiplierTier[getTier() - 1]));
             if(world.getBlockState(pos).getValue(FACING).getAxis() == direction.getAxis()){
                 if(laserEntity.getMaxDistance() * (laserEntity.getMultiplier() + OpenRadio.instance.settings.LensMultiplierTier[getTier() - 1]) <= (OpenRadio.instance.settings.LensMultiplierTier[2] + 1) * 2 * OpenRadio.instance.settings.LaserMaxDistanceTier[2])
                     laserEntity.setMultiplier(laserEntity.getMultiplier() + OpenRadio.instance.settings.LensMultiplierTier[getTier() - 1]);
