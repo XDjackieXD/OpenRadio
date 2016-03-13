@@ -1,13 +1,12 @@
 {
-    "__createdwith": "opl's Model Creator",
-    "ambientocclusion": false,
+    "ambientocclusion": true,
     "textures": {
         "lensBlock": "openradio:blocks/lensblock"
     },
     "elements": [
         {
-            "from": [0,0,5],
-            "to": [2,16,11],
+            "from": [0,0,6],
+            "to": [2,16,10],
             "faces": {
                 "up": {
                     "uv": [7,8,8,10],
@@ -36,8 +35,8 @@
             }
         },
         {
-            "from": [14,0,5],
-            "to": [16,16,11],
+            "from": [14,0,6],
+            "to": [16,16,10],
             "faces": {
                 "up": {
                     "uv": [0,8,1,10],
@@ -66,8 +65,8 @@
             }
         },
         {
-            "from": [2,14,5],
-            "to": [14,16,11],
+            "from": [2,14,6],
+            "to": [14,16,10],
             "faces": {
                 "up": {
                     "uv": [1,8,7,10],
@@ -88,8 +87,8 @@
             }
         },
         {
-            "from": [2,0,5],
-            "to": [14,2,11],
+            "from": [2,0,6],
+            "to": [14,2,10],
             "faces": {
                 "up": {
                     "uv": [1,8,7,10],

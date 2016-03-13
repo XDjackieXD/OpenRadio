@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -88,6 +89,18 @@ public class LensBlock extends Block implements ILaserModifier{
     public EnumWorldBlockLayer getBlockLayer()
     {
         return EnumWorldBlockLayer.CUTOUT_MIPPED;
+    }
+
+    public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos)
+    {
+        EnumFacing.Axis axis = world.getBlockState(pos).getValue(FACING).getAxis();
+
+        if (axis == EnumFacing.Axis.X)
+            this.setBlockBounds(0.375F, 0, 0, 0.625F, 1, 1);
+        else if (axis == EnumFacing.Axis.Z)
+            this.setBlockBounds(0, 0, 0.375F, 1, 1, 0.625F);
+        else if (axis == EnumFacing.Axis.Y)
+            this.setBlockBounds(0, 0.375F, 0, 1, 0.625F, 1);
     }
 
     @Override
