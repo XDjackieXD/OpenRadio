@@ -18,15 +18,16 @@ plugins {
 apply plugin: 'idea'
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "0.7.0-beta-MC1.8.9"
+version = "0.7.0-alpha-MC1.9"
 group = "at.chaosfield.openradio"
 archivesBaseName = "OpenRadio"
 
 minecraft {
-    version = "1.8.9-11.15.1.1722"
+    version = "1.9-12.16.1.1899"
     runDir = "run"
 
-    mappings = "stable_20"
+    mappings = "snapshot_20160506"
+    //mappings = "stable_20"
 }
 
 repositories {
@@ -37,9 +38,9 @@ repositories {
 }
 
 dependencies {
-    compile "li.cil.oc:OpenComputers:MC1.8.9-1.5.+:api"
+    compile "li.cil.oc:OpenComputers:MC1.9-1.6.+:api"
 
-    //no 1.8.9 version of ae yet :(
+    //no 1.9 version of ae yet :(
     //compile "appeng:appliedenergistics2:rv2-stable-10:dev"
     //compile files('lib/appliedenergistics2-rv2-stable-10-dev.jar')
 }
@@ -65,9 +66,3 @@ processResources
         }
 
 idea { module { inheritOutputDirs = true } }
-
-// Why is OpenComputers one of the only mods that has a readable build.gradle? (Thank you Sangar!) :D
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'dev'
-}

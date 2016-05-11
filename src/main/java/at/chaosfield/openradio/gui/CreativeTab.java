@@ -26,7 +26,7 @@ public class CreativeTab extends CreativeTabs{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayAllReleventItems(List list){
+    public void displayAllRelevantItems(List<ItemStack> list){
         this.list = list;
 
         this.addBlock(Blocks.laserBlock);

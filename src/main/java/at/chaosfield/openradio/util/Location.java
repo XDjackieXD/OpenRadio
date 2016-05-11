@@ -1,6 +1,7 @@
 package at.chaosfield.openradio.util;
 
-import net.minecraft.util.BlockPos;
+
+import net.minecraft.util.math.BlockPos;
 
 /**
  * Created by Jakob Riepler (XDjackieXD

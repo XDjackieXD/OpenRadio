@@ -1,8 +1,8 @@
 package at.chaosfield.openradio.render;
 
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.particle.EntityFX;
@@ -31,11 +31,10 @@ public class LaserParticle extends EntityFX{
         this.reddustParticleScale = this.particleScale;
         this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D));
         this.particleMaxAge = (int) ((float) this.particleMaxAge * scale);
-        this.noClip = false;
     }
 
     @Override
-    public void renderParticle(WorldRenderer worldRendererIn, Entity entityIn, float partialTicks, float p_180434_4_, float p_180434_5_, float p_180434_6_, float p_180434_7_, float p_180434_8_){
+    public void renderParticle(VertexBuffer worldRendererIn, Entity entityIn, float partialTicks, float p_180434_4_, float p_180434_5_, float p_180434_6_, float p_180434_7_, float p_180434_8_){
         float f14 = ((float) this.particleAge + partialTicks) / (float) this.particleMaxAge * 32.0F;
         f14 = MathHelper.clamp_float(f14, 0.0F, 1.0F);
         this.particleScale = this.reddustParticleScale * f14;
@@ -46,11 +45,12 @@ public class LaserParticle extends EntityFX{
         float f3 = f2 + 0.0624375F;
         float f4 = 0.1F * this.particleScale;
 
-        if(this.particleIcon != null){
-            f = this.particleIcon.getMinU();
-            f1 = this.particleIcon.getMaxU();
-            f2 = this.particleIcon.getMinV();
-            f3 = this.particleIcon.getMaxV();
+        if (this.particleTexture != null)
+        {
+            f = this.particleTexture.getMinU();
+            f1 = this.particleTexture.getMaxU();
+            f2 = this.particleTexture.getMinV();
+            f3 = this.particleTexture.getMaxV();
         }
 
         float f5 = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks - interpPosX);
@@ -65,22 +65,22 @@ public class LaserParticle extends EntityFX{
         worldRendererIn.pos((double) (f5 + p_180434_4_ * f4 - p_180434_7_ * f4), (double) (f6 - p_180434_5_ * f4), (double) (f7 + p_180434_6_ * f4 - p_180434_8_ * f4)).tex((double) f, (double) f3).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
     }
 
-    /**
-     * Called to update the entity's position/logic.
-     */
-    public void onUpdate(){
+    public void onUpdate()
+    {
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
 
-        if(this.particleAge++ >= this.particleMaxAge){
-            this.setDead();
+        if (this.particleAge++ >= this.particleMaxAge)
+        {
+            this.setExpired();
         }
 
         this.setParticleTextureIndex(7 - this.particleAge * 8 / this.particleMaxAge);
         this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
-        if(this.posY == this.prevPosY){
+        if (this.posY == this.prevPosY)
+        {
             this.motionX *= 1.1D;
             this.motionZ *= 1.1D;
         }
@@ -89,7 +89,8 @@ public class LaserParticle extends EntityFX{
         this.motionY *= 0.9599999785423279D;
         this.motionZ *= 0.9599999785423279D;
 
-        if(this.onGround){
+        if (this.isCollided)
+        {
             this.motionX *= 0.699999988079071D;
             this.motionZ *= 0.699999988079071D;
         }

@@ -3,7 +3,7 @@ package at.chaosfield.openradio.gui;
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.container.LaserContainer;
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraft.entity.player.EntityPlayer;

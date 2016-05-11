@@ -22,17 +22,17 @@ public class Crafting{
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.adcItem, 1, 0),          //ADC Tier 1
                 "III", "IMI", "ICI",
                 'I', "ingotIron",
-                'C', new ItemStack(net.minecraft.init.Items.comparator),
+                'C', new ItemStack(net.minecraft.init.Items.COMPARATOR),
                 'M', li.cil.oc.api.Items.get("chip1").createItemStack(1)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.adcItem, 1, 1),          //ADC Tier 2
                 "ICI", "IMI", "ICI",
                 'I', "ingotIron",
-                'C', new ItemStack(net.minecraft.init.Items.comparator),
+                'C', new ItemStack(net.minecraft.init.Items.COMPARATOR),
                 'M', li.cil.oc.api.Items.get("chip2").createItemStack(2)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.adcItem, 1, 2),          //ADC Tier 3
                 "ICI", "CMC", "ICI",
                 'I', "ingotIron",
-                'C', new ItemStack(net.minecraft.init.Items.comparator),
+                'C', new ItemStack(net.minecraft.init.Items.COMPARATOR),
                 'M', li.cil.oc.api.Items.get("chip3").createItemStack(1)));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.dspItem, 1, 0),          //DSP Tier 1

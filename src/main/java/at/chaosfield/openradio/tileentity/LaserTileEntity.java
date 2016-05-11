@@ -21,11 +21,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
@@ -60,7 +60,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(otherLaser != null && !worldObj.isRemote){
             TileEntity otherLaserTe = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getPos());
             if(otherLaserTe instanceof LaserTileEntity){
-                ((LaserTileEntity) otherLaserTe).setDestination(this.getWorld().provider.getDimensionId(), this.getPos(), this.distance);
+                ((LaserTileEntity) otherLaserTe).setDestination(this.getWorld().provider.getDimension(), this.getPos(), this.distance);
             }else{
                 disconnect();
             }
@@ -83,7 +83,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     @Override
-    public IChatComponent getDisplayName(){
+    public ITextComponent getDisplayName(){
         return null;
     }
 
@@ -147,7 +147,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 accZ = 0;
         }
 
-        this.getWorld().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, this.getWorld().provider.getDimensionId(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), getMaxDistance()));
+        this.getWorld().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, this.getWorld().provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), getMaxDistance()));
     }
 
     public void setDestination(int dim, BlockPos pos, double distance){
@@ -472,11 +472,11 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public net.minecraft.network.Packet getDescriptionPacket(){
         NBTTagCompound tag = new NBTTagCompound();
         writeToNBT(tag);
-        return new S35PacketUpdateTileEntity(this.getPos(), 1, tag);
+        return new SPacketUpdateTileEntity(this.getPos(), 1, tag);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
         readFromNBT(pkt.getNbtCompound());
     }
 }

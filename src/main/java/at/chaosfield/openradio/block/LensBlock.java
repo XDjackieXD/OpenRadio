@@ -8,13 +8,15 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -28,15 +30,15 @@ public class LensBlock extends Block implements ILaserModifier{
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
     public LensBlock(int tier){
-        super(Material.iron);
+        super(Material.IRON);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         setUnlocalizedName(OpenRadio.MODID + ".lenst" + tier); //Set unlocalized Block name (/src/main/resources/assets/openradio/lang/)
         setHardness(3.0F);                             //Set hardness to 3
         setCreativeTab(CreativeTab.instance);
     }
 
-    @Override protected BlockState createBlockState() {
-        return new BlockState(this, FACING);
+    @Override protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING);
     }
 
     /**
@@ -61,46 +63,52 @@ public class LensBlock extends Block implements ILaserModifier{
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         // no need to figure out the right orientation again when the piston block can do it for us
-        return this.getDefaultState().withProperty(FACING, BlockPistonBase.getFacingFromEntity(worldIn, pos, placer));
+        return this.getDefaultState().withProperty(FACING, BlockPistonBase.getFacingFromEntity(pos, placer));
     }
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         // no need to figure out the right orientation again when the piston block can do it for us
-        world.setBlockState(pos, state.withProperty(FACING, BlockPistonBase.getFacingFromEntity(world, pos, placer)), 2);
+        world.setBlockState(pos, state.withProperty(FACING, BlockPistonBase.getFacingFromEntity(pos, placer)), 2);
     }
 
     @Override
-    public int getRenderType() {
-        return 3;
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override
-    public boolean isOpaqueCube() {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(){
+    public boolean isFullCube(IBlockState state){
         return false;
     }
 
     @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
+    public BlockRenderLayer getBlockLayer()
     {
-        return EnumWorldBlockLayer.CUTOUT_MIPPED;
+        return BlockRenderLayer.CUTOUT_MIPPED;
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos)
-    {
-        EnumFacing.Axis axis = world.getBlockState(pos).getValue(FACING).getAxis();
+    private static final AxisAlignedBB AABB_X = new AxisAlignedBB(0.375F, 0, 0, 0.625F, 1, 1);
+    private static final AxisAlignedBB AABB_Y = new AxisAlignedBB(0, 0, 0.375F, 1, 1, 0.625F);
+    private static final AxisAlignedBB AABB_Z = new AxisAlignedBB(0, 0.375F, 0, 1, 0.625F, 1);
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+        EnumFacing.Axis axis = state.getValue(FACING).getAxis();
 
         if (axis == EnumFacing.Axis.X)
-            this.setBlockBounds(0.375F, 0, 0, 0.625F, 1, 1);
+            return AABB_X;
         else if (axis == EnumFacing.Axis.Z)
-            this.setBlockBounds(0, 0, 0.375F, 1, 1, 0.625F);
+            return AABB_Y;
         else if (axis == EnumFacing.Axis.Y)
-            this.setBlockBounds(0, 0.375F, 0, 1, 0.625F, 1);
+            return AABB_Z;
+
+        return AABB_X;
     }
 
     @Override
