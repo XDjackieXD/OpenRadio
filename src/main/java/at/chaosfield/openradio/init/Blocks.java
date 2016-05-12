@@ -1,9 +1,12 @@
 package at.chaosfield.openradio.init;
 
 //import at.chaosfield.openradio.block.AEEncoderBlock;
+import at.chaosfield.openradio.OpenRadio;
+import at.chaosfield.openradio.block.BaseItemBlock;
 import at.chaosfield.openradio.block.LaserBlock;
 //import net.minecraftforge.fml.common.Loader;
 import at.chaosfield.openradio.block.LensBlock;
+import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
@@ -22,13 +25,22 @@ public class Blocks {
         lensBlock1 = new LensBlock(1);
         lensBlock2 = new LensBlock(2);
         lensBlock3 = new LensBlock(3);
-        GameRegistry.registerBlock(laserBlock, "laser");
-        GameRegistry.registerBlock(lensBlock1, "lenst1");
-        GameRegistry.registerBlock(lensBlock2, "lenst2");
-        GameRegistry.registerBlock(lensBlock3, "lenst3");
+        
+        registerBlock(laserBlock, new BaseItemBlock(laserBlock), "laser");
+        registerBlock(lensBlock1, new BaseItemBlock(lensBlock1), "lenst1");
+        registerBlock(lensBlock2, new BaseItemBlock(lensBlock2), "lenst2");
+        registerBlock(lensBlock3, new BaseItemBlock(lensBlock3), "lenst3");
         /*if(Loader.isModLoaded("appliedenergistics2")) {
             aeencoderBlock = new AEEncoderBlock();
-            GameRegistry.registerBlock(aeencoderBlock, "aeencoder");
+            ItemUtil.registerBlock(aeencoderBlock, "aeencoder");
         }*/
+    }
+
+    public static void registerBlock(Block block, BaseItemBlock itemBlock, String name){
+        block.setUnlocalizedName(OpenRadio.MODID+"."+name);
+        block.setRegistryName(OpenRadio.MODID, name);
+        GameRegistry.register(block);
+        itemBlock.setRegistryName(block.getRegistryName());
+        GameRegistry.register(itemBlock);
     }
 }

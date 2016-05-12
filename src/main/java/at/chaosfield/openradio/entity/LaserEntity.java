@@ -1,10 +1,16 @@
 package at.chaosfield.openradio.entity;
 
 import at.chaosfield.openradio.OpenRadio;
+import at.chaosfield.openradio.block.LaserBlock;
+import at.chaosfield.openradio.interfaces.ILaserModifier;
 import at.chaosfield.openradio.render.LaserParticle;
+import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.util.Location;
+import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -198,19 +204,19 @@ public class LaserEntity extends Entity implements IProjectile{
             }
         }
 
-        /*Vec3d posVec = new Vec3d(this.posX, this.posY, this.posZ);
+        Vec3d posVec = new Vec3d(this.posX, this.posY, this.posZ);
         Vec3d nextPosVec = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-        MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(posVec, nextPosVec);
+        RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(posVec, nextPosVec);
 
 
         if(movingobjectposition != null){
-            if(movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-                if(this.worldObj.getBlockState(movingobjectposition.getBlockPos()).getBlock() == Blocks.portal){
+            if(movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
+                if(this.worldObj.getBlockState(movingobjectposition.getBlockPos()).getBlock() == Blocks.PORTAL){
                     this.setPortal(this.getPosition());
-                }else if(this.worldObj.getBlockState(movingobjectposition.getBlockPos()).getBlock().getMaterial().isOpaque()){ //only collide with non-transparent blocks
+                }else if(this.worldObj.getBlockState(movingobjectposition.getBlockPos()).getBlock().getMaterial(this.worldObj.getBlockState(movingobjectposition.getBlockPos())).isOpaque()){ //only collide with non-transparent blocks
                     this.onImpact(movingobjectposition);
                 }
-        }*/
+        }
 
         this.posX += this.motionX;
         this.posY += this.motionY;
@@ -271,14 +277,13 @@ public class LaserEntity extends Entity implements IProjectile{
         return false;
     }
 
-    //TODO fix impact
-    /*protected void onImpact(MovingObjectPosition mop){
+    protected void onImpact(RayTraceResult mop){
         TileEntity senderLaserTe = null;
         if(!worldObj.isRemote){
             senderLaserTe = DimensionManager.getWorld(senderLaser.getDim()).getTileEntity(senderLaser.getPos());
         }
 
-        if(mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK){
+        if(mop.typeOfHit == RayTraceResult.Type.BLOCK){
             Block hitBlock = this.worldObj.getBlockState(mop.getBlockPos()).getBlock();
 
             if(hitBlock instanceof LaserBlock && senderLaserTe instanceof LaserTileEntity){
@@ -286,7 +291,7 @@ public class LaserEntity extends Entity implements IProjectile{
                 TileEntity te = this.worldObj.getTileEntity(mop.getBlockPos());
                 if(te instanceof LaserTileEntity){
                     if(mop.sideHit.getIndex() == te.getBlockMetadata())
-                        ((LaserTileEntity) senderLaserTe).setDestination(this.worldObj.provider.getDimensionId(), mop.getBlockPos(), this.distance);
+                        ((LaserTileEntity) senderLaserTe).setDestination(this.worldObj.provider.getDimension(), mop.getBlockPos(), this.distance);
                     else
                         ((LaserTileEntity) senderLaserTe).disconnect();
                 }else
@@ -310,7 +315,7 @@ public class LaserEntity extends Entity implements IProjectile{
             if(senderLaserTe instanceof LaserTileEntity)
                 ((LaserTileEntity) senderLaserTe).disconnect();
         }
-    }*/
+    }
 
     public double getMultiplier(){
         return multiplier;
