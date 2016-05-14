@@ -1,9 +1,0 @@
-{
-  "parent": "openradio:block/lens",
-  "textures": {
-    "laser": "openradio:blocks/laser",
-    "lens": "openradio:blocks/LensT1",
-    "lensBlock": "openradio:blocks/LensBlock",
-    "particle": "openradio:blocks/LensBlock"
-  }
-}
