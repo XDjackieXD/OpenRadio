@@ -3,7 +3,7 @@ A Little OpenComputers addon which adds laser links and (planned) satellites wit
 
 ## Current status
 * Lasers check if they have an opponent via regular entities (1 entity per second).
-* Basic AE2 integration is working (DSP tier 3 is required for the AE Encoder to work)
+* (Basic AE2 integration is working (DSP tier 3 is required for the AE Encoder to work)) 1.7.10 only. Blame AlgorithmX2 ^^
 * Lasers need all inventory slots filled with the appropriate items (different tiers currently have no effect except for the laser tube and the DSP)
 * Lenses can be stacked (placed after each other)
  * Maximum Multiplier = (Diamond Lens Multiplier+1)*2
@@ -19,7 +19,7 @@ A Little OpenComputers addon which adds laser links and (planned) satellites wit
  * Laser tier 1: 25 RF/tick
  * Laser tier 2: 50 RF/tick
  * Laser tier 3: 100 RF/tick
- * AE Encoder multiplies this by 10
+ * (AE Encoder multiplies this by 10) 1.7.10 only. Blame AlgorithmX2 ^^
 
 ## TODO
 * I need better textures for the two laser tubes (Laser item tier 2 and 3) and recipes for all three laser tiers.
