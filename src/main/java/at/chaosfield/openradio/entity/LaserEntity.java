@@ -186,7 +186,7 @@ public class LaserEntity extends Entity implements IProjectile{
                     Block block = DimensionManager.getWorld(this.locNow.getDim()).getBlockState(this.locNow.getPos()).getBlock();
                     if(block.isAir(DimensionManager.getWorld(this.locNow.getDim()).getBlockState(this.locNow.getPos()), DimensionManager.getWorld(this.locNow.getDim()), this.locNow.getPos())){
                         distance += OpenRadio.instance.settings.DistancePerAir;
-                    }else if(!block.getMaterial(DimensionManager.getWorld(this.locNow.getDim()).getBlockState(this.locNow.getPos())).isSolid()){
+                    }else if(!block.getBlockState().getBaseState().getMaterial().isSolid()){
                         distance += OpenRadio.instance.settings.DistancePerTransparent;
                     }
                 }
@@ -223,13 +223,6 @@ public class LaserEntity extends Entity implements IProjectile{
         this.posZ += this.motionZ;
 
         this.setPosition(this.posX, this.posY, this.posZ);
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean p_180426_10_)
-    {
-        this.setPosition(x, y, z);
-        this.setRotation(yaw, pitch);
     }
 
     @SideOnly(Side.CLIENT)

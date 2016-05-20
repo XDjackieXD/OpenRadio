@@ -441,7 +441,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tagCompound){
+    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound){
         super.writeToNBT(tagCompound);
 
         if(isConnected()){
@@ -466,10 +466,11 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             }
         }
         tagCompound.setTag("Inventory", itemList);
+        return tagCompound;
     }
 
     @Override
-    public net.minecraft.network.Packet getDescriptionPacket(){
+    public SPacketUpdateTileEntity getUpdatePacket(){
         NBTTagCompound tag = new NBTTagCompound();
         writeToNBT(tag);
         return new SPacketUpdateTileEntity(this.getPos(), 1, tag);

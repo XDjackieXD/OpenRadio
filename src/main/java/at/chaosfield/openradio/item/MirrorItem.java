@@ -11,6 +11,7 @@ public class MirrorItem extends Item{
     public MirrorItem(){
         maxStackSize = 64;
         setUnlocalizedName(OpenRadio.MODID + ".mirror");
+        setRegistryName("mirror");
         setCreativeTab(CreativeTab.instance);
     }
 }

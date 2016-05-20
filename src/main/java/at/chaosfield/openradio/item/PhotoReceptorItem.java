@@ -11,6 +11,7 @@ public class PhotoReceptorItem extends Item{
     public PhotoReceptorItem(){
         maxStackSize = 64;
         setUnlocalizedName(OpenRadio.MODID + ".photoreceptor");
+        setRegistryName("photoreceptor");
         setCreativeTab(CreativeTab.instance);
     }
 }

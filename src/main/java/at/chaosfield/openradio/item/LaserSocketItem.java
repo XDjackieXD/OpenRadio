@@ -11,6 +11,7 @@ public class LaserSocketItem extends Item{
     public LaserSocketItem(){
         maxStackSize = 64;
         setUnlocalizedName(OpenRadio.MODID + ".lasersocket");
+        setRegistryName("lasersocket");
         setCreativeTab(CreativeTab.instance);
     }
 }

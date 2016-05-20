@@ -109,7 +109,7 @@ public class LaserContainer extends Container{
 
         if (stack.isStackable()) {
             while (stack.stackSize > 0 && (!useEndIndex && index < endIndex || useEndIndex && index >= startIndex)) {
-                slot = (Slot) this.inventorySlots.get(index);
+                slot = this.inventorySlots.get(index);
                 stackinslot = slot.getStack();
 
                 if (stackinslot != null && stackinslot.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getItemDamage() == stackinslot.getItemDamage()) && ItemStack.areItemStackTagsEqual(stack, stackinslot)) {
@@ -145,7 +145,7 @@ public class LaserContainer extends Container{
             }
 
             while (!useEndIndex && index < endIndex || useEndIndex && index >= startIndex && stack.stackSize > 0) {
-                slot = (Slot) this.inventorySlots.get(index);
+                slot = this.inventorySlots.get(index);
                 stackinslot = slot.getStack();
 
                 // Forge: Make sure to respect isItemValid in the slot.

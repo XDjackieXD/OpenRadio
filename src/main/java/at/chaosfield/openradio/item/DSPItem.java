@@ -18,6 +18,7 @@ public class DSPItem extends Item{
     public DSPItem(){
         maxStackSize = 64;
         setUnlocalizedName(OpenRadio.MODID + ".dsp");
+        setRegistryName("dsp");
         setHasSubtypes(true);
         setCreativeTab(CreativeTab.instance);
     }

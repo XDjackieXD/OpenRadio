@@ -16,11 +16,11 @@ public class Items{
 
     //Register all items (Has to be called during FML Init)
     public static void init(){
-        GameRegistry.registerItem(laserSocketItem = new LaserSocketItem(), "lasersocket");
-        GameRegistry.registerItem(dspItem = new DSPItem(), "dsp");
-        GameRegistry.registerItem(photoReceptorItem = new PhotoReceptorItem(), "photoreceptor");
-        GameRegistry.registerItem(adcItem = new ADCItem(), "adc");
-        GameRegistry.registerItem(mirrorItem = new MirrorItem(), "mirror");
-        GameRegistry.registerItem(laserItem = new LaserItem(), "laserItem");
+        GameRegistry.register(laserSocketItem = new LaserSocketItem());
+        GameRegistry.register(dspItem = new DSPItem());
+        GameRegistry.register(photoReceptorItem = new PhotoReceptorItem());
+        GameRegistry.register(adcItem = new ADCItem());
+        GameRegistry.register(mirrorItem = new MirrorItem());
+        GameRegistry.register(laserItem = new LaserItem());
     }
 }

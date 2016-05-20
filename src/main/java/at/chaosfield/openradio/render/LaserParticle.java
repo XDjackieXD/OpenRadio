@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.world.World;
 
 /**
@@ -13,7 +13,7 @@ import net.minecraft.world.World;
  */
 
 @SideOnly(Side.CLIENT)
-public class LaserParticle extends EntityFX{
+public class LaserParticle extends Particle{
     float reddustParticleScale;
 
     public LaserParticle(World worldObj, double posX, double posY, double posZ, float scale, float colorR, float colorG, float colorB){

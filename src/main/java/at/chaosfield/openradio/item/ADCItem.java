@@ -18,6 +18,7 @@ public class ADCItem extends Item{
     public ADCItem(){
         maxStackSize = 64;
         setUnlocalizedName(OpenRadio.MODID + ".adc");
+        setRegistryName("adc");
         setHasSubtypes(true);
         setCreativeTab(CreativeTab.instance);
     }

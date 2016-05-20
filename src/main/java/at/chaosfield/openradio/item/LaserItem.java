@@ -18,6 +18,7 @@ public class LaserItem extends Item{
     public LaserItem(){
         maxStackSize = 64;
         setUnlocalizedName(OpenRadio.MODID + ".laser");
+        setRegistryName("laserItem");
         setHasSubtypes(true);
         setCreativeTab(CreativeTab.instance);
     }
