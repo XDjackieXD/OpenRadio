@@ -147,7 +147,11 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 accZ = 0;
         }
 
-        this.getWorld().spawnEntityInWorld(new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ, this.getWorld().provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), getMaxDistance()));
+        LaserEntity laserEntity = new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ,
+                this.getWorld().provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), getMaxDistance(),
+                getItemTier(SLOT_LASER, Items.laserItem));
+
+        this.getWorld().spawnEntityInWorld(laserEntity);
     }
 
     public void setDestination(int dim, BlockPos pos, double distance){

@@ -39,7 +39,6 @@ public class OpenRadio{
     //FML PreInit
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
-
         settings = new Settings(event.getSuggestedConfigurationFile());
 
         Blocks.init();                  //Register all Blocks

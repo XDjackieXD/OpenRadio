@@ -16,6 +16,11 @@ public class Settings{
     public int EnergyUseLaserTier[] = {25, 50, 100}; // RF/tick
     public int AEEnergyMultiplier = 10;
     public int EnergyBuffer = 100;
+    public float LaserColor[][] = {         //R, G, B, A
+            {1.0F,  0,      0,      1.0F},  //Tier1
+            {1.0F,  1.0F,   1.0F,   0.25F}, //Tier2
+            {0,     1.0F,   0,      1.0F}   //Tier3
+    };
 
     public Settings(File configFile){
         Configuration config = new Configuration(configFile);

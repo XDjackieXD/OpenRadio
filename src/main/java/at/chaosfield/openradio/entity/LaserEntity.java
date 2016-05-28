@@ -5,7 +5,9 @@ import at.chaosfield.openradio.block.LaserBlock;
 import at.chaosfield.openradio.interfaces.ILaserModifier;
 import at.chaosfield.openradio.render.LaserParticle;
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
+import at.chaosfield.openradio.util.DamageSourceLaser;
 import at.chaosfield.openradio.util.Location;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
@@ -13,6 +15,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -32,7 +35,7 @@ import java.util.List;
  * Created by Jakob Riepler (XDjackieXD)
  */
 
-public class LaserEntity extends Entity implements IProjectile{
+public class LaserEntity extends Entity implements IProjectile, IEntityAdditionalSpawnData{
 
     private List<Location> appliedModifier = new ArrayList<Location>();
 
@@ -43,7 +46,8 @@ public class LaserEntity extends Entity implements IProjectile{
     private double maxDistance = 0;
     private double multiplier = 1;
 
-    private float colorR = 1.0F, colorG = 0, colorB = 0;
+    private float colorR = 1.0F, colorG = 0, colorB = 0, colorA = 1.0F;
+    private int laserTier = 1;
     Vec3d lastParticle = new Vec3d(0, 0, 0);
     private int lastParticleDim;
 
@@ -64,11 +68,11 @@ public class LaserEntity extends Entity implements IProjectile{
         return false;
     }
 
-    public LaserEntity(World world, double x, double y, double z, double accX, double accY, double accZ, int laserDim, int laserX, int laserY, int laserZ, double maxDistance){
-        super(world);
+    public LaserEntity(World world, double x, double y, double z, double accX, double accY, double accZ, int laserDim, int laserX, int laserY, int laserZ, double maxDistance, int laserTier){
+        this(world);
         this.setSize(0.25F, 0.25F);
         this.setPosition(x, y, z);
-        //this.yOffset = 0.0F;
+
         this.motionX = accX;
         this.motionY = accY;
         this.motionZ = accZ;
@@ -81,6 +85,7 @@ public class LaserEntity extends Entity implements IProjectile{
 
         this.lastParticle = new Vec3d(x, y, z);
         this.lastParticleDim = laserDim;
+        this.laserTier = laserTier;
     }
 
     public void setThrowableHeading(double accX, double accY, double accZ, float accMult, float accRand){
@@ -111,7 +116,7 @@ public class LaserEntity extends Entity implements IProjectile{
     }
 
     @Override
-    public void onEntityUpdate() {
+    public void onEntityUpdate(){
         this.lastTickPosX = this.posX;
         this.lastTickPosY = this.posY;
         this.lastTickPosZ = this.posZ;
@@ -193,7 +198,7 @@ public class LaserEntity extends Entity implements IProjectile{
             }else{
                 this.locNow = new Location(worldObj.provider.getDimension(), (int) Math.floor(this.posX), (int) Math.floor(this.posY), (int) Math.floor(this.posZ));
             }
-            if(distance > maxDistance*multiplier){
+            if(distance > maxDistance * multiplier){
                 this.setDead();
             }
         }else{
@@ -213,9 +218,24 @@ public class LaserEntity extends Entity implements IProjectile{
             if(movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
                 if(this.worldObj.getBlockState(movingobjectposition.getBlockPos()).getBlock() == Blocks.PORTAL){
                     this.setPortal(this.getPosition());
-                }else if(this.worldObj.getBlockState(movingobjectposition.getBlockPos()).getBlock().getMaterial(this.worldObj.getBlockState(movingobjectposition.getBlockPos())).isOpaque()){ //only collide with non-transparent blocks
+                }else if(this.worldObj.getBlockState(movingobjectposition.getBlockPos()).getBlock().getBlockState().getBaseState().getMaterial().isOpaque()){ //only collide with non-transparent blocks
                     this.onImpact(movingobjectposition);
                 }
+            if(movingobjectposition.typeOfHit == RayTraceResult.Type.ENTITY){
+                if(!worldObj.isRemote){
+                    switch(this.laserTier){
+                        case 2:
+                            movingobjectposition.entityHit.attackEntityFrom(DamageSourceLaser.DAMAGE_SOURCE_LASER, 3);
+                            movingobjectposition.entityHit.setFire(1);
+                            break;
+                        case 3:
+                            movingobjectposition.entityHit.attackEntityFrom(DamageSourceLaser.DAMAGE_SOURCE_LASER, 6);
+                            movingobjectposition.entityHit.setFire(10);
+                            break;
+                        default:
+                    }
+                }
+            }
         }
 
         this.posX += this.motionX;
@@ -225,9 +245,16 @@ public class LaserEntity extends Entity implements IProjectile{
         this.setPosition(this.posX, this.posY, this.posZ);
     }
 
+    public void setTier(int laserTier){
+        this.colorR = OpenRadio.instance.settings.LaserColor[laserTier - 1][0];
+        this.colorG = OpenRadio.instance.settings.LaserColor[laserTier - 1][1];
+        this.colorB = OpenRadio.instance.settings.LaserColor[laserTier - 1][2];
+        this.colorA = OpenRadio.instance.settings.LaserColor[laserTier - 1][3];
+    }
+
     @SideOnly(Side.CLIENT)
     private void renderParticle(){
-        LaserParticle particle = new LaserParticle(this.worldObj, this.posX, this.posY, this.posZ, 0.75F, this.colorR, this.colorG, this.colorB);
+        LaserParticle particle = new LaserParticle(this.worldObj, this.posX, this.posY, this.posZ, 0.75F, this.colorR, this.colorG, this.colorB, this.colorA);
         particle.setRBGColorF(this.colorR, this.colorG, this.colorB);
         Minecraft.getMinecraft().effectRenderer.addEffect(particle);
     }
@@ -235,7 +262,7 @@ public class LaserEntity extends Entity implements IProjectile{
     public void writeEntityToNBT(NBTTagCompound tagCompound){
         tagCompound.setTag("direction", this.newDoubleNBTList(this.motionX, this.motionY, this.motionZ));
         tagCompound.setIntArray("senderLaser", new int[]{this.senderLaser.getDim(), this.senderLaser.getX(), this.senderLaser.getY(), this.senderLaser.getZ()});
-        tagCompound.setTag("color", this.newFloatNBTList(this.colorR, this.colorG, this.colorB));
+        tagCompound.setTag("color", this.newFloatNBTList(this.colorR, this.colorG, this.colorB, this.colorA));
         tagCompound.setInteger("lastParticleDim", this.lastParticleDim);
         tagCompound.setDouble("distance", this.distance);
         tagCompound.setDouble("maxDistance", this.maxDistance);
@@ -258,6 +285,7 @@ public class LaserEntity extends Entity implements IProjectile{
         this.colorR = nbttaglist.getFloatAt(0);
         this.colorG = nbttaglist.getFloatAt(1);
         this.colorB = nbttaglist.getFloatAt(2);
+        this.colorA = nbttaglist.getFloatAt(3);
         this.lastParticleDim = tagCompound.getInteger("lastParticleDim");
         this.distance = tagCompound.getDouble("distance");
         this.maxDistance = tagCompound.getDouble("maxDistance");
@@ -320,5 +348,16 @@ public class LaserEntity extends Entity implements IProjectile{
 
     public double getMaxDistance(){
         return maxDistance;
+    }
+
+    @Override
+    public void writeSpawnData(ByteBuf buffer){
+        buffer.writeInt(this.laserTier);
+    }
+
+    @Override
+    public void readSpawnData(ByteBuf additionalData){
+        this.laserTier = additionalData.readInt();
+        setTier(this.laserTier);
     }
 }

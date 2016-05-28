@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 public class LaserParticle extends Particle{
     float reddustParticleScale;
 
-    public LaserParticle(World worldObj, double posX, double posY, double posZ, float scale, float colorR, float colorG, float colorB){
+    public LaserParticle(World worldObj, double posX, double posY, double posZ, float scale, float colorR, float colorG, float colorB, float alpha){
         super(worldObj, posX, posY, posZ, 0.0D, 0.0D, 0.0D);
         this.motionX *= 0.10000000149011612D;
         this.motionY *= 0.10000000149011612D;
@@ -28,6 +28,7 @@ public class LaserParticle extends Particle{
         this.particleBlue = ((float) (Math.random() * 0.20000000298023224D) + 0.8F) * colorB * f4;
         this.particleScale *= 0.75F;
         this.particleScale *= scale;
+        this.particleAlpha = alpha;
         this.reddustParticleScale = this.particleScale;
         this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D));
         this.particleMaxAge = (int) ((float) this.particleMaxAge * scale);
