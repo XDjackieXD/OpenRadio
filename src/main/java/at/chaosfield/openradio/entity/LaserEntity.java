@@ -8,6 +8,7 @@ import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.util.DamageSourceLaser;
 import at.chaosfield.openradio.util.Location;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
@@ -209,10 +210,28 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
             }
         }
 
+        if(!worldObj.isRemote){
+            List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ));
+            for(Entity entity : list){
+                if(entity instanceof EntityLivingBase && entity.canBeCollidedWith()){
+                    switch(this.laserTier){
+                        case 2:
+                            entity.attackEntityFrom(DamageSourceLaser.DAMAGE_SOURCE_LASER, 3);
+                            entity.setFire(1);
+                            break;
+                        case 3:
+                            entity.attackEntityFrom(DamageSourceLaser.DAMAGE_SOURCE_LASER, 6);
+                            entity.setFire(10);
+                            break;
+                        default:
+                    }
+                }
+            }
+        }
+
         Vec3d posVec = new Vec3d(this.posX, this.posY, this.posZ);
         Vec3d nextPosVec = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
         RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(posVec, nextPosVec);
-
 
         if(movingobjectposition != null){
             if(movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
@@ -221,21 +240,6 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
                 }else if(this.worldObj.getBlockState(movingobjectposition.getBlockPos()).getBlock().getBlockState().getBaseState().getMaterial().isOpaque()){ //only collide with non-transparent blocks
                     this.onImpact(movingobjectposition);
                 }
-            if(movingobjectposition.typeOfHit == RayTraceResult.Type.ENTITY){
-                if(!worldObj.isRemote){
-                    switch(this.laserTier){
-                        case 2:
-                            movingobjectposition.entityHit.attackEntityFrom(DamageSourceLaser.DAMAGE_SOURCE_LASER, 3);
-                            movingobjectposition.entityHit.setFire(1);
-                            break;
-                        case 3:
-                            movingobjectposition.entityHit.attackEntityFrom(DamageSourceLaser.DAMAGE_SOURCE_LASER, 6);
-                            movingobjectposition.entityHit.setFire(10);
-                            break;
-                        default:
-                    }
-                }
-            }
         }
 
         this.posX += this.motionX;
