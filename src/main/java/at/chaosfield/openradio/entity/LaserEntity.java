@@ -9,6 +9,7 @@ import at.chaosfield.openradio.util.DamageSourceLaser;
 import at.chaosfield.openradio.util.Location;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
@@ -214,17 +215,18 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
             List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ));
             for(Entity entity : list){
                 if(entity instanceof EntityLivingBase && entity.canBeCollidedWith()){
-                    switch(this.laserTier){
-                        case 2:
-                            entity.attackEntityFrom(DamageSourceLaser.DAMAGE_SOURCE_LASER, 3);
-                            entity.setFire(1);
-                            break;
-                        case 3:
-                            entity.attackEntityFrom(DamageSourceLaser.DAMAGE_SOURCE_LASER, 6);
-                            entity.setFire(10);
-                            break;
-                        default:
-                    }
+                    if(!(entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative()))
+                        switch(this.laserTier){
+                            case 2:
+                                entity.attackEntityFrom(DamageSourceLaser.DAMAGE_SOURCE_LASER, 3);
+                                entity.setFire(1);
+                                break;
+                            case 3:
+                                entity.attackEntityFrom(DamageSourceLaser.DAMAGE_SOURCE_LASER, 6);
+                                entity.setFire(10);
+                                break;
+                            default:
+                        }
                 }
             }
         }
