@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class CommonProxy{
 
     public void init(FMLInitializationEvent event){
-        GameRegistry.registerTileEntityWithAlternatives(LaserTileEntity.class,  OpenRadio.MODID + ":laser");
+        GameRegistry.registerTileEntityWithAlternatives(LaserTileEntity.class,  OpenRadio.MODID + ":laser", "laser");
         //if(Loader.isModLoaded("appliedenergistics2"))
         //    GameRegistry.registerTileEntity(AEEncoderTileEntity.class, OpenRadio.MODID + ":aeencoder");
     }
