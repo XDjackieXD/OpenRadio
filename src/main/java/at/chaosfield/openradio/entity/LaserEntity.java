@@ -237,7 +237,7 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
             if(movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
                 if(this.worldObj.getBlockState(movingobjectposition.getBlockPos()).getBlock() == Blocks.PORTAL){
                     this.setPortal(this.getPosition());
-                }else if(this.worldObj.getBlockState(movingobjectposition.getBlockPos()).getBlock().getBlockState().getBaseState().getMaterial().isOpaque()){ //only collide with non-transparent blocks
+                }else{
                     this.onImpact(movingobjectposition);
                 }
         }
@@ -329,7 +329,7 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
                     ((ILaserModifier) hitBlock).hitByLaser(this, mop.getBlockPos(), this.worldObj, mop.sideHit);
                 }
 
-            }else{
+            }else if(this.worldObj.getBlockState(mop.getBlockPos()).isOpaqueCube()){
                 this.setDead();
                 if(senderLaserTe instanceof LaserTileEntity)
                     ((LaserTileEntity) senderLaserTe).disconnect();

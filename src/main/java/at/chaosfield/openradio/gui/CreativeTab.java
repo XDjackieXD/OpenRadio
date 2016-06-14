@@ -33,6 +33,7 @@ public class CreativeTab extends CreativeTabs{
         this.addBlock(Blocks.lensBlock1);
         this.addBlock(Blocks.lensBlock2);
         this.addBlock(Blocks.lensBlock3);
+        this.addBlock(Blocks.mirrorBlock);
 
         //if(Loader.isModLoaded("appliedenergistics2"))
         //    this.addBlock(Blocks.aeencoderBlock);

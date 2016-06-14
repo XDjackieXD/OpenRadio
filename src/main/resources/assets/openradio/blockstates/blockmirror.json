@@ -1,0 +1,20 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "openradio:mirror",
+    "particle": "openradio:blocks/Mirror",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "facing":{
+      "down": {"x": 270},
+      "up": {"x": 90},
+      "north": {"y": 180},
+      "south": {},
+      "west": {"y": 90},
+      "east": {"y": 270}
+    }
+  }
+}
