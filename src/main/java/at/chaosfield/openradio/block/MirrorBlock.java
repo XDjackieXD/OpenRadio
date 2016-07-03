@@ -87,6 +87,11 @@ public class MirrorBlock extends Block implements ILaserModifier{
         return false;
     }
 
+    @Override
+    public boolean canRenderInLayer(BlockRenderLayer layer){
+        return layer == BlockRenderLayer.TRANSLUCENT || layer == BlockRenderLayer.CUTOUT;
+    }
+
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {
