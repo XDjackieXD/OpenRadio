@@ -111,6 +111,13 @@ public class Crafting{
                 'G', "ingotGold",
                 'D', "gemDiamond"));
 
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.mirrorBlock),            //Laser Block
+                "IQI", "GMG", "IGI",
+                'I', "ingotIron",
+                'M', new ItemStack(Items.mirrorItem),
+                'G', "blockGlass",
+                'Q', new ItemStack(Blocks.lensBlock2)));
+
         /*if(Loader.isModLoaded("appliedenergistics2")){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.aeencoderBlock),
                     "INI", "CMC", "INI",

@@ -14,12 +14,12 @@ buildscript {
 apply plugin: 'idea'
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "0.7.3-MC1.9.4"
+version = "0.8.0-MC1.9.4"
 group = "at.chaosfield.openradio"
 archivesBaseName = "OpenRadio"
 
 minecraft {
-    version = "1.9.4-12.17.0.1954"
+    version = "1.9.4-12.17.0.1976"
     runDir = "run"
 
     mappings = "snapshot_20160606"

@@ -149,6 +149,17 @@ Laser
     N:S:L
     I:I:I
 
+Discouragement Redirection Cube
+
+    G... Glass
+    Q... Quartz Infused Lens
+    I... Iron
+    M... Semi Reflective Mirror
+
+    I:Q:I
+    G:M:G
+    I:G:I
+
 AE Encoder
 
     M... ME Controller
@@ -176,16 +187,6 @@ Duplex Unit (Item)
     E:P:E
     I:D:I
     E:L:E
-
-Mirror (Block)
-
-    G... Glas Panel
-    I... Iron
-    D... Diamond
-
-    I:D:I
-    I:G:I
-    I:D:I
 
 NSA'o'mat - Signal Interceptor (needs two lasers, phototransistors and Lenses!) (Block)
 

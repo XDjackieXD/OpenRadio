@@ -5,7 +5,6 @@ laser link:
 	The probability that a Packet gets lost increases with decrease of signal quality (Transparent blocks & distance decrease quality, better components make link quality better)
 	Blocks: (multiple tiers?)
 		-Laser Casing
-		-Mirror
 		-Laser HV power supply for better Lasers
 		    lasers tier 2 and 3 need a separate power supply which has to be powered by RF
 		-Signal Sniffer (aka the NSA-o-mat (I don't think you will get that pun if you don't speak german ^^)) alternative names: Big Brother, Spy Machine, NSA in a box
@@ -19,6 +18,7 @@ laser link:
 	        flying Entity -> intra-dimensional through portals possible
         AE2 integration:
             maybe link two AE2-networks over a laser link?
+        Mirror
 
 Satellites:
     Satellites and huge multiblock radio dishes :3
