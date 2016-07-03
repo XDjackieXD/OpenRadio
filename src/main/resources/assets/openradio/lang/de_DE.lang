@@ -3,6 +3,7 @@ tile.openradio.lenst1.name=Glaslinse
 tile.openradio.lenst2.name=Quarzlines
 tile.openradio.lenst3.name=Geschliffene Diamantlinse
 tile.openradio.aeencoder.name=AE Codierer
+tile.openradio.blockmirror.name=Umlenkwürfel
 container.openradio.laser.name=Laser
 item.openradio.lens.name=Linse
 item.openradio.lens.glasslens.name=Glaslinse

@@ -4,6 +4,7 @@ import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.entity.LaserEntity;
 import at.chaosfield.openradio.gui.CreativeTab;
 import at.chaosfield.openradio.interfaces.ILaserModifier;
+import at.chaosfield.openradio.util.Settings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
@@ -94,6 +95,14 @@ public class MirrorBlock extends Block implements ILaserModifier{
 
     @Override
     public void hitByLaser(LaserEntity laserEntity, BlockPos pos, World world, EnumFacing direction){
-        laserEntity.setVelocity(direction.getDirectionVec().getX()*OpenRadio.instance.settings.EntitySpeed, direction.getDirectionVec().getY()*OpenRadio.instance.settings.EntitySpeed, direction.getDirectionVec().getZ()*OpenRadio.instance.settings.EntitySpeed);
+        laserEntity.posX = pos.getX() + 0.5;
+        laserEntity.posY = pos.getY() + 0.5;
+        laserEntity.posZ = pos.getZ() + 0.5;
+        laserEntity.setVelocity(
+                world.getBlockState(pos).getValue(FACING).getDirectionVec().getX()*OpenRadio.instance.settings.EntitySpeed,
+                world.getBlockState(pos).getValue(FACING).getDirectionVec().getY()*OpenRadio.instance.settings.EntitySpeed,
+                world.getBlockState(pos).getValue(FACING).getDirectionVec().getZ()*OpenRadio.instance.settings.EntitySpeed
+        );
+        laserEntity.addDistance(OpenRadio.instance.settings.MirrorDistancePenalty);
     }
 }

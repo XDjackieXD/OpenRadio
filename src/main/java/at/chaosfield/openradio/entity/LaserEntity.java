@@ -110,7 +110,6 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
         this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(accY, (double) f3) * 180.0D / 3.141592653589793D);
     }
 
-    @SideOnly(Side.CLIENT)
     public void setVelocity(double accX, double accY, double accZ){
         this.motionX = accX;
         this.motionY = accY;
@@ -256,6 +255,10 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
         this.colorG = OpenRadio.instance.settings.LaserColor[laserTier - 1][1];
         this.colorB = OpenRadio.instance.settings.LaserColor[laserTier - 1][2];
         this.colorA = OpenRadio.instance.settings.LaserColor[laserTier - 1][3];
+    }
+
+    public void addDistance(int blocks){
+        distance += blocks;
     }
 
     @SideOnly(Side.CLIENT)

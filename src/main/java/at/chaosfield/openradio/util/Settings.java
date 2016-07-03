@@ -11,6 +11,7 @@ public class Settings{
     public double EntitySpeed = 1;
     public double DistancePerAir = 1;
     public double DistancePerTransparent = 2;
+    public int MirrorDistancePenalty = 8;
     public double LaserMaxDistanceTier[] = {64, 128, 256}; //Blocks
     public double LensMultiplierTier[] = {1, 3, 7};
     public int EnergyUseLaserTier[] = {25, 50, 100}; // RF/tick
@@ -30,6 +31,8 @@ public class Settings{
         EntitySpeed = (double)config.getFloat("LaserEntitySpeed", "misc", 1, 0.1f, 1, "speed of the connection-check entity (blocks/tick. max 1 for reliable block checking)");
         DistancePerAir = (double)config.getFloat("LaserDistancePerAir", "distances", 1, 0, 2048, "added distance per air block");
         DistancePerTransparent = (double)config.getFloat("LaserDistancePerTransparent", "distances", 2, 0, 2048, "added distance per transparent non-air block");
+
+        MirrorDistancePenalty = config.getInt("MirrorDistancePenalty", "distances", 8, 0, 2048, "added distance per mirror block");
 
         LaserMaxDistanceTier[0] = (double)config.getFloat("LaserTier1MasDistance", "distances", 64, 0, 16384, "maximum distance of a tier 1 laser");
         LaserMaxDistanceTier[1] = (double)config.getFloat("LaserTier2MasDistance", "distances", 128, 0, 16384, "maximum distance of a tier 2 laser");
