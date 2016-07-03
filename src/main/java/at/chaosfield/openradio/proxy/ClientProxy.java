@@ -32,6 +32,7 @@ public class ClientProxy extends CommonProxy{
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(Blocks.lensBlock1), 0, new ModelResourceLocation("openradio:lenst1", "inventory"));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(Blocks.lensBlock2), 0, new ModelResourceLocation("openradio:lenst2", "inventory"));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(Blocks.lensBlock3), 0, new ModelResourceLocation("openradio:lenst3", "inventory"));
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(Blocks.mirrorBlock), 0, new ModelResourceLocation("openradio:blockmirror", "inventory"));
 
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.dspItem, 0, new ModelResourceLocation("openradio:dspt1", "inventory"));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.dspItem, 1, new ModelResourceLocation("openradio:dspt2", "inventory"));
