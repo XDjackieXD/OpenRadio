@@ -20,6 +20,8 @@ A Little OpenComputers addon which adds laser links and (planned) satellites wit
  * Laser tier 2: 50 RF/tick
  * Laser tier 3: 100 RF/tick
  * (AE Encoder multiplies this by 10) 1.7.10 only. Blame AlgorithmX2 ^^
+* Discouragement Redirection Cube (totally not a Portal reference...) allows laser beam redirection
+* Discouragement Redirection Cube decreases the maximum distance by 8
 
 ## TODO
 * I need better textures for the two laser tubes (Laser item tier 2 and 3) and recipes for all three laser tiers.
