@@ -112,7 +112,7 @@ public class Crafting{
                 'D', "gemDiamond"));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.mirrorBlock),            //Laser Block
-                "IQI", "GMG", "IGI",
+                "IGI", "GMQ", "IQI",
                 'I', "ingotIron",
                 'M', new ItemStack(Items.mirrorItem),
                 'G', "blockGlass",

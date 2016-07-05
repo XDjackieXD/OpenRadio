@@ -156,9 +156,9 @@ Discouragement Redirection Cube
     I... Iron
     M... Semi Reflective Mirror
 
-    I:Q:I
-    G:M:G
     I:G:I
+    G:M:Q
+    I:Q:I
 
 AE Encoder
 
