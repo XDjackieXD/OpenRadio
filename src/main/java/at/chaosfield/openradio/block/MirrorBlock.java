@@ -7,13 +7,16 @@ import at.chaosfield.openradio.interfaces.ILaserModifier;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,12 +27,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class MirrorBlock extends Block implements ILaserModifier{
 
-    public static final PropertyDirection FACING_HORIZONTAL = PropertyDirection.create("facingh");
-    public static final PropertyDirection FACING_VERTICAL = PropertyDirection.create("facingv");
-
+    public static final PropertyDirection FACING_HORIZONTAL = PropertyDirection.create("facingh", EnumFacing.Plane.HORIZONTAL);
+    public static final PropertyInteger FACING_VERTICAL = PropertyInteger.create("facingv", 0, 3);
     public MirrorBlock(){
         super(Material.IRON);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING_HORIZONTAL, EnumFacing.NORTH).withProperty(FACING_VERTICAL, EnumFacing.UP));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING_HORIZONTAL, EnumFacing.NORTH).withProperty(FACING_VERTICAL, 0));
         setUnlocalizedName(OpenRadio.MODID + ".blockmirror"); //Set unlocalized Block name (/src/main/resources/assets/openradio/lang/)
         setHardness(3.0F);                             //Set hardness to 3
         setCreativeTab(CreativeTab.instance);
@@ -39,6 +41,18 @@ public class MirrorBlock extends Block implements ILaserModifier{
         return new BlockStateContainer(this, FACING_HORIZONTAL, FACING_VERTICAL);
     }
 
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stackPlayer, EnumFacing f6, float f7, float f8, float f9){
+        if(player.isSneaking()){
+            System.out.println("test");
+            int rot = state.getValue(FACING_VERTICAL)+1;
+            if(rot >= 4) rot=0;
+            world.setBlockState(pos, state.withProperty(FACING_VERTICAL, rot));
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Convert the given metadata into a BlockState for this Block
      * being storage-space efficient often results in pretty ugly code >_>
@@ -46,9 +60,8 @@ public class MirrorBlock extends Block implements ILaserModifier{
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        int facingv = 0;
-        int vmeta = ((meta&12)>>>2);
-        switch(meta&3){
+        int facingv = ((meta&12)>>>2);
+        /*switch(meta&3){
             case 0: //S
                 switch(vmeta){
                     case 0: //D
@@ -123,9 +136,9 @@ public class MirrorBlock extends Block implements ILaserModifier{
                 break;
             default:
                 OpenRadio.logger.warn("wtf did just happen?! this should not be able to happen.");
-        }
+        }*/
 
-        return getDefaultState().withProperty(FACING_HORIZONTAL, EnumFacing.getHorizontal(meta&3)).withProperty(FACING_VERTICAL, EnumFacing.getFront(facingv));
+        return getDefaultState().withProperty(FACING_HORIZONTAL, EnumFacing.getHorizontal(meta&3)).withProperty(FACING_VERTICAL, facingv);
     }
 
     /**
@@ -135,11 +148,10 @@ public class MirrorBlock extends Block implements ILaserModifier{
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        int facingv = state.getValue(FACING_VERTICAL).getIndex();
-        int metav=0;
+        int facingv = (state.getValue(FACING_VERTICAL) << 2) & 12;
         int metah = (state.getValue(FACING_HORIZONTAL).getHorizontalIndex()&3);
 
-        switch(metah){
+        /*switch(metah){
             case 0: //S
                 switch(facingv){
                     case 0: //D
@@ -214,22 +226,28 @@ public class MirrorBlock extends Block implements ILaserModifier{
                 break;
             default:
                 OpenRadio.logger.warn("wtf did just happen?! this should not be able to happen.");
-        }
+        }*/
 
-        return metah + metav;
+        return metah + facingv;
+    }
+
+    public EnumFacing getFacingv(int facingvProperty, EnumFacing facinghProperty){
+
+
+        return EnumFacing.DOWN;
     }
 
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         // no need to figure out the right orientation again when the piston block can do it for us
-        return this.getDefaultState().withProperty(FACING_HORIZONTAL, placer.getHorizontalFacing().getOpposite()).withProperty(FACING_VERTICAL, EnumFacing.UP);
+        return this.getDefaultState().withProperty(FACING_HORIZONTAL, placer.getHorizontalFacing().getOpposite()).withProperty(FACING_VERTICAL, 0);
     }
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         // no need to figure out the right orientation again when the piston block can do it for us
-        world.setBlockState(pos, state.withProperty(FACING_HORIZONTAL, placer.getHorizontalFacing().getOpposite()).withProperty(FACING_VERTICAL, EnumFacing.UP), 2);
+        world.setBlockState(pos, state.withProperty(FACING_HORIZONTAL, placer.getHorizontalFacing().getOpposite()).withProperty(FACING_VERTICAL, 0), 2);
     }
 
     @Override

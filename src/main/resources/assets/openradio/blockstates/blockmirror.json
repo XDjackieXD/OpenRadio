@@ -8,9 +8,13 @@
   "variants": {
     "normal": [{}],
     "inventory": [{}],
-    "facing":{
-      "down": {"x": 270},
-      "up": {"x": 90},
+    "facingv":{
+      "0": {"x": 0},
+      "1": {"x": 90},
+      "2": {"x": 180},
+      "3": {"x": 270}
+    },
+    "facingh":{
       "north": {"y": 180},
       "south": {},
       "west": {"y": 90},
