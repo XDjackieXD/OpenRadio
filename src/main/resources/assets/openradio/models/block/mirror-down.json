@@ -1,0 +1,4279 @@
+{
+  "elements": [
+    {
+      "from": [
+        10.25,
+        -0.57,
+        11.27
+      ],
+      "to": [
+        10.75,
+        3.43,
+        11.77
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          10.5,
+          1.43,
+          11.52
+        ],
+        "angle": 22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        5.0,
+        -1.0,
+        10.0
+      ],
+      "to": [
+        11.0,
+        0.0,
+        11.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            15.0,
+            1.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            3.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            3.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            3.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            3.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        5.0,
+        -1.0,
+        5.0
+      ],
+      "to": [
+        11.0,
+        0.0,
+        6.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            15.0,
+            1.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            3.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            3.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            3.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            3.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        5.25,
+        -0.57,
+        11.27
+      ],
+      "to": [
+        5.75,
+        3.43,
+        11.77
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          5.5,
+          1.43,
+          11.52
+        ],
+        "angle": 22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        5.25,
+        -0.57,
+        4.27
+      ],
+      "to": [
+        5.75,
+        3.43,
+        4.77
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          5.5,
+          1.43,
+          4.52
+        ],
+        "angle": -22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        10.25,
+        -0.57,
+        4.27
+      ],
+      "to": [
+        10.75,
+        3.43,
+        4.77
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          10.5,
+          1.43,
+          4.52
+        ],
+        "angle": -22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        11.25,
+        -0.57,
+        5.27
+      ],
+      "to": [
+        11.75,
+        3.43,
+        5.77
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "z",
+        "origin": [
+          11.5,
+          1.43,
+          5.52
+        ],
+        "angle": -22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        11.25,
+        -0.57,
+        10.27
+      ],
+      "to": [
+        11.75,
+        3.43,
+        10.77
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "z",
+        "origin": [
+          11.5,
+          1.43,
+          10.52
+        ],
+        "angle": -22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        4.25,
+        -0.57,
+        10.27
+      ],
+      "to": [
+        4.75,
+        3.43,
+        10.77
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "z",
+        "origin": [
+          4.5,
+          1.43,
+          10.52
+        ],
+        "angle": 22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        4.25,
+        -0.57,
+        5.27
+      ],
+      "to": [
+        4.75,
+        3.43,
+        5.77
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "z",
+        "origin": [
+          4.5,
+          1.43,
+          5.52
+        ],
+        "angle": 22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        6.0,
+        -0.53,
+        6.0
+      ],
+      "to": [
+        10.0,
+        -0.47,
+        10.0
+      ],
+      "faces": {
+        "up": {
+          "rotation": 0,
+          "uv": [
+            12.5,
+            11.75,
+            14.5,
+            13.75
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            12.5,
+            11.75,
+            14.5,
+            13.75
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        10.0,
+        -1.0,
+        6.0
+      ],
+      "to": [
+        11.0,
+        0.0,
+        10.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            15.0,
+            3.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            13.5,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            13.5,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            2.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            3.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            3.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        5.0,
+        -1.0,
+        6.0
+      ],
+      "to": [
+        6.0,
+        0.0,
+        10.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            15.0,
+            3.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            13.5,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            13.5,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            2.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            3.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            3.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        11.25,
+        10.25,
+        12.5
+      ],
+      "to": [
+        11.75,
+        10.75,
+        16.5
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "y",
+        "origin": [
+          11.5,
+          10.5,
+          14.5
+        ],
+        "angle": -22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        11.25,
+        5.25,
+        12.5
+      ],
+      "to": [
+        11.75,
+        5.75,
+        16.5
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "y",
+        "origin": [
+          11.5,
+          5.5,
+          14.5
+        ],
+        "angle": -22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        4.25,
+        5.25,
+        12.5
+      ],
+      "to": [
+        4.75,
+        5.75,
+        16.5
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "y",
+        "origin": [
+          4.5,
+          5.5,
+          14.5
+        ],
+        "angle": 22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        12.25,
+        13.75,
+        0.0
+      ],
+      "to": [
+        12.75,
+        14.25,
+        4.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          12.5,
+          14.0,
+          2.0
+        ],
+        "angle": 45.0
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        3.25,
+        13.75,
+        0.0
+      ],
+      "to": [
+        3.75,
+        14.25,
+        4.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          3.5,
+          14.0,
+          2.0
+        ],
+        "angle": 45.0
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        12.25,
+        1.75,
+        0.0
+      ],
+      "to": [
+        12.75,
+        2.25,
+        4.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          12.5,
+          2.0,
+          2.0
+        ],
+        "angle": -45.0
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        3.25,
+        1.75,
+        0.0
+      ],
+      "to": [
+        3.75,
+        2.25,
+        4.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          3.5,
+          2.0,
+          2.0
+        ],
+        "angle": -45.0
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        3.25,
+        13.75,
+        12.0
+      ],
+      "to": [
+        3.75,
+        14.25,
+        16.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          3.5,
+          14.0,
+          14.0
+        ],
+        "angle": -45.0
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        12.25,
+        13.75,
+        12.0
+      ],
+      "to": [
+        12.75,
+        14.25,
+        16.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          12.5,
+          14.0,
+          14.0
+        ],
+        "angle": -45.0
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        12.25,
+        1.75,
+        12.0
+      ],
+      "to": [
+        12.75,
+        2.25,
+        16.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          12.5,
+          2.0,
+          14.0
+        ],
+        "angle": 45.0
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        3.25,
+        1.75,
+        12.0
+      ],
+      "to": [
+        3.75,
+        2.25,
+        16.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          3.5,
+          2.0,
+          14.0
+        ],
+        "angle": 45.0
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        5.25,
+        4.25,
+        12.5
+      ],
+      "to": [
+        5.75,
+        4.75,
+        16.5
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          5.5,
+          4.5,
+          14.5
+        ],
+        "angle": -22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        10.25,
+        4.25,
+        12.5
+      ],
+      "to": [
+        10.75,
+        4.75,
+        16.5
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          10.5,
+          4.5,
+          14.5
+        ],
+        "angle": -22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        10.25,
+        11.25,
+        12.5
+      ],
+      "to": [
+        10.75,
+        11.75,
+        16.5
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          10.5,
+          11.5,
+          14.5
+        ],
+        "angle": 22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        5.0,
+        5.0,
+        16.0
+      ],
+      "to": [
+        11.0,
+        6.0,
+        17.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            15.0,
+            1.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            3.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            3.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            3.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            3.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        10.0,
+        6.0,
+        16.0
+      ],
+      "to": [
+        11.0,
+        10.0,
+        17.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            13.0,
+            1.0,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            13.0,
+            1.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            13.0,
+            1.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            13.0,
+            1.0,
+            15.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        4.0,
+        12.47,
+        4.0
+      ],
+      "to": [
+        12.0,
+        12.53,
+        12.0
+      ],
+      "faces": {
+        "up": {
+          "rotation": 0,
+          "uv": [
+            11.5,
+            10.75,
+            15.5,
+            14.75
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            11.5,
+            10.75,
+            15.5,
+            14.75
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        12.47,
+        4.0,
+        4.0
+      ],
+      "to": [
+        12.53,
+        12.0,
+        12.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            11.5,
+            10.75,
+            15.5,
+            14.75
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            11.5,
+            10.75,
+            15.5,
+            14.75
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        3.0,
+        4.0,
+        3.0
+      ],
+      "to": [
+        4.0,
+        12.0,
+        4.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            11.0,
+            1.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            11.0,
+            1.0,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            11.0,
+            1.0,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            11.0,
+            1.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        3.0,
+        4.0,
+        12.0
+      ],
+      "to": [
+        4.0,
+        12.0,
+        13.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            11.0,
+            1.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            11.0,
+            1.0,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            11.0,
+            1.0,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            11.0,
+            1.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        12.0,
+        4.0,
+        12.0
+      ],
+      "to": [
+        13.0,
+        12.0,
+        13.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            11.0,
+            1.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            11.0,
+            1.0,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            11.0,
+            1.0,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            11.0,
+            1.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        3.0,
+        12.0,
+        4.0
+      ],
+      "to": [
+        4.0,
+        13.0,
+        12.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            15.0,
+            5.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            11.5,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            11.5,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            15.0,
+            5.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        3.0,
+        12.0,
+        3.0
+      ],
+      "to": [
+        13.0,
+        13.0,
+        4.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            5.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            5.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            15.0,
+            1.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            5.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            5.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        3.0,
+        12.0,
+        12.0
+      ],
+      "to": [
+        13.0,
+        13.0,
+        13.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            5.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            5.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            15.0,
+            1.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            5.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            5.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        12.0,
+        12.0,
+        4.0
+      ],
+      "to": [
+        13.0,
+        13.0,
+        12.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            15.0,
+            5.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            11.5,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            11.5,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            15.0,
+            5.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        12.0,
+        3.0,
+        4.0
+      ],
+      "to": [
+        13.0,
+        4.0,
+        12.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            15.0,
+            5.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            11.5,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            11.5,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            15.0,
+            5.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        3.0,
+        3.0,
+        12.0
+      ],
+      "to": [
+        13.0,
+        4.0,
+        13.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            5.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            5.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            15.0,
+            1.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            5.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            5.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        15.0,
+        1.0,
+        0.0
+      ],
+      "to": [
+        16.0,
+        15.0,
+        1.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            7.5,
+            8.5,
+            8.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            7.5,
+            8.5,
+            8.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        15.0,
+        1.0,
+        15.0
+      ],
+      "to": [
+        16.0,
+        15.0,
+        16.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            7.5,
+            8.5,
+            8.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            7.5,
+            8.5,
+            8.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        0.0,
+        1.0,
+        15.0
+      ],
+      "to": [
+        1.0,
+        15.0,
+        16.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            7.5,
+            8.5,
+            8.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            7.5,
+            8.5,
+            8.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        15.0,
+        0.0,
+        1.0
+      ],
+      "to": [
+        16.0,
+        1.0,
+        15.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            8.0,
+            7.5,
+            8.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.0,
+            0.5,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            8.0,
+            7.5,
+            8.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "to": [
+        1.0,
+        1.0,
+        15.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.5,
+            7.5,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.5,
+            7.5,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "to": [
+        16.0,
+        1.0,
+        1.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            15.5,
+            0.5,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            15.5,
+            8.0,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            15.5,
+            8.0,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            7.5,
+            15.5,
+            8.0,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.0,
+            15.5,
+            8.0,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            15.5,
+            8.0,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        0.0,
+        0.0,
+        15.0
+      ],
+      "to": [
+        16.0,
+        1.0,
+        16.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.0,
+            0.5,
+            8.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            8.5
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            8.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            7.5,
+            8.0,
+            8.0,
+            8.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            8.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            8.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        5.0,
+        6.0,
+        16.0
+      ],
+      "to": [
+        6.0,
+        10.0,
+        17.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            13.0,
+            1.0,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            13.0,
+            1.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            13.0,
+            1.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            13.0,
+            1.0,
+            15.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        6.0,
+        6.0,
+        7.75
+      ],
+      "to": [
+        10.0,
+        10.0,
+        8.25
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.25,
+            12.75,
+            9.5,
+            14.75
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            9.25,
+            14.5,
+            11.25,
+            14.75
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            9.25,
+            14.5,
+            11.25,
+            14.75
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.25,
+            12.75,
+            9.5,
+            14.75
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            9.25,
+            12.75,
+            11.25,
+            14.75
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            9.25,
+            12.75,
+            11.25,
+            14.75
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          8.0,
+          8.0,
+          8.0
+        ],
+        "angle": 45.0
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "to": [
+        1.0,
+        15.0,
+        1.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            7.5,
+            8.5,
+            8.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            7.5,
+            8.5,
+            8.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "to": [
+        13.0,
+        4.0,
+        4.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            5.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            5.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            15.0,
+            1.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            5.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            5.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        12.0,
+        4.0,
+        3.0
+      ],
+      "to": [
+        13.0,
+        12.0,
+        4.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            11.0,
+            1.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            11.0,
+            1.0,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            11.0,
+            1.0,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            11.0,
+            1.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        3.0,
+        3.0,
+        4.0
+      ],
+      "to": [
+        4.0,
+        4.0,
+        12.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            15.0,
+            5.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            11.5,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            11.5,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            1.0,
+            15.0,
+            5.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        5.0,
+        10.0,
+        16.0
+      ],
+      "to": [
+        11.0,
+        11.0,
+        17.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            1.0,
+            15.0,
+            1.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            3.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            14.5,
+            3.5,
+            15.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            1.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.0,
+            3.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.0,
+            3.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        5.25,
+        11.25,
+        12.5
+      ],
+      "to": [
+        5.75,
+        11.75,
+        16.5
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            15.75,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            9.0,
+            15.25,
+            11.0,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "x",
+        "origin": [
+          5.5,
+          11.5,
+          14.5
+        ],
+        "angle": 22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        6.0,
+        6.0,
+        16.47
+      ],
+      "to": [
+        10.0,
+        10.0,
+        16.53
+      ],
+      "faces": {
+        "north": {
+          "rotation": 180,
+          "uv": [
+            12.5,
+            11.75,
+            14.5,
+            13.75
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            12.5,
+            11.75,
+            14.5,
+            13.75
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        3.47,
+        4.0,
+        4.0
+      ],
+      "to": [
+        3.53,
+        12.0,
+        12.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            11.5,
+            10.75,
+            15.5,
+            14.75
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            11.5,
+            10.75,
+            15.5,
+            14.75
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        4.0,
+        4.0,
+        3.47
+      ],
+      "to": [
+        12.0,
+        12.0,
+        3.53
+      ],
+      "faces": {
+        "north": {
+          "rotation": 180,
+          "uv": [
+            11.5,
+            10.75,
+            15.5,
+            14.75
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            11.5,
+            10.75,
+            15.5,
+            14.75
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        4.25,
+        10.25,
+        12.5
+      ],
+      "to": [
+        4.75,
+        10.75,
+        16.5
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            8.5,
+            14.0,
+            8.75,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            8.0,
+            14.0,
+            8.25,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "rotation": {
+        "axis": "y",
+        "origin": [
+          4.5,
+          10.5,
+          14.5
+        ],
+        "angle": 22.5
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        0.0,
+        15.0,
+        15.0
+      ],
+      "to": [
+        16.0,
+        16.0,
+        16.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.0,
+            0.5,
+            8.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            8.5
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            8.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            7.5,
+            8.0,
+            8.0,
+            8.5
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            8.5
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            8.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        0.0,
+        15.0,
+        0.0
+      ],
+      "to": [
+        16.0,
+        16.0,
+        1.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            15.5,
+            0.5,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            15.5,
+            8.0,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            15.5,
+            8.0,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            7.5,
+            15.5,
+            8.0,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "north": {
+          "rotation": 180,
+          "uv": [
+            0.0,
+            15.5,
+            8.0,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "south": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            15.5,
+            8.0,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        0.0,
+        15.0,
+        1.0
+      ],
+      "to": [
+        1.0,
+        16.0,
+        15.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            15.5,
+            7.5,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            15.5,
+            7.5,
+            16.0
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    },
+    {
+      "from": [
+        15.0,
+        15.0,
+        1.0
+      ],
+      "to": [
+        16.0,
+        16.0,
+        15.0
+      ],
+      "faces": {
+        "east": {
+          "rotation": 0,
+          "uv": [
+            0.5,
+            8.0,
+            7.5,
+            8.5
+          ],
+          "texture": "#Mirror"
+        },
+        "up": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.5,
+            0.5,
+            15.5
+          ],
+          "texture": "#Mirror"
+        },
+        "down": {
+          "rotation": 0,
+          "uv": [
+            0.0,
+            8.0,
+            0.5,
+            16.0
+          ],
+          "texture": "#Mirror"
+        },
+        "west": {
+          "rotation": 180,
+          "uv": [
+            0.5,
+            8.0,
+            7.5,
+            8.5
+          ],
+          "texture": "#Mirror"
+        }
+      },
+      "__comment": "Cube"
+    }
+  ],
+  "textures": {
+    "Mirror": "openradio:blocks/Mirror"
+  },
+  "ambientocclusion": true,
+  "__comment": "This model was created with freundTech's Blender2Minecraft converter (BETA)"
+}

@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "openradio:mirror",
+    "model": "openradio:mirror-up",
     "particle": "openradio:blocks/Mirror",
     "transform": "forge:default-block"
   },
@@ -9,10 +9,10 @@
     "normal": [{}],
     "inventory": [{}],
     "facingv":{
-      "0": {"x": 0},
-      "1": {"x": 90},
-      "2": {"x": 180},
-      "3": {"x": 270}
+      "0": {"model": "openradio:mirror-up"},
+      "1": {"model": "openradio:mirror-right"},
+      "2": {"model": "openradio:mirror-down"},
+      "3": {"model": "openradio:mirror-left"}
     },
     "facingh":{
       "north": {"y": 180},

@@ -44,7 +44,6 @@ public class MirrorBlock extends Block implements ILaserModifier{
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stackPlayer, EnumFacing f6, float f7, float f8, float f9){
         if(player.isSneaking()){
-            System.out.println("test");
             int rot = state.getValue(FACING_VERTICAL)+1;
             if(rot >= 4) rot=0;
             world.setBlockState(pos, state.withProperty(FACING_VERTICAL, rot));
