@@ -60,82 +60,6 @@ public class MirrorBlock extends Block implements ILaserModifier{
     public IBlockState getStateFromMeta(int meta)
     {
         int facingv = ((meta&12)>>>2);
-        /*switch(meta&3){
-            case 0: //S
-                switch(vmeta){
-                    case 0: //D
-                        facingv = 0;
-                        break;
-                    case 1: //W
-                        facingv = 4;
-                        break;
-                    case 2: //U
-                        facingv = 1;
-                        break;
-                    case 3: //E
-                        facingv = 5;
-                        break;
-                    default:
-                        OpenRadio.logger.warn("wtf did just happen?! this should not be able to happen.");
-                }
-                break;
-            case 1: //W
-                switch(vmeta){
-                    case 0: //D
-                        facingv = 0;
-                        break;
-                    case 1: //N
-                        facingv = 2;
-                        break;
-                    case 2: //U
-                        facingv = 1;
-                        break;
-                    case 3: //S
-                        facingv = 3;
-                        break;
-                    default:
-                        OpenRadio.logger.warn("wtf did just happen?! this should not be able to happen.");
-                }
-                break;
-            case 2: //N
-                switch(vmeta){
-                    case 0: //D
-                        facingv = 0;
-                        break;
-                    case 1: //E
-                        facingv = 5;
-                        break;
-                    case 2: //U
-                        facingv = 1;
-                        break;
-                    case 3: //W
-                        facingv = 4;
-                        break;
-                    default:
-                        OpenRadio.logger.warn("wtf did just happen?! this should not be able to happen.");
-                }
-                break;
-            case 3: //E
-                switch(vmeta){
-                    case 0: //D
-                        facingv = 0;
-                        break;
-                    case 1: //S
-                        facingv = 3;
-                        break;
-                    case 2: //U
-                        facingv = 1;
-                        break;
-                    case 3: //N
-                        facingv = 2;
-                        break;
-                    default:
-                        OpenRadio.logger.warn("wtf did just happen?! this should not be able to happen.");
-                }
-                break;
-            default:
-                OpenRadio.logger.warn("wtf did just happen?! this should not be able to happen.");
-        }*/
 
         return getDefaultState().withProperty(FACING_HORIZONTAL, EnumFacing.getHorizontal(meta&3)).withProperty(FACING_VERTICAL, facingv);
     }
@@ -230,12 +154,6 @@ public class MirrorBlock extends Block implements ILaserModifier{
         return metah + facingv;
     }
 
-    public EnumFacing getFacingv(int facingvProperty, EnumFacing facinghProperty){
-
-
-        return EnumFacing.DOWN;
-    }
-
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
@@ -275,17 +193,94 @@ public class MirrorBlock extends Block implements ILaserModifier{
         return BlockRenderLayer.TRANSLUCENT;
     }
 
+    public EnumFacing facingvFromMetav(int metav, EnumFacing facingh){
+        if(facingh == EnumFacing.NORTH){
+            switch(metav){
+                case 0:
+                    return EnumFacing.UP;
+                case 1:
+                    return EnumFacing.WEST;
+                case 2:
+                    return EnumFacing.DOWN;
+                case 3:
+                    return EnumFacing.EAST;
+                default:
+                    OpenRadio.logger.warn("I think someone is tempering with the universe... o.O");
+            }
+        }else if(facingh == EnumFacing.EAST){
+            switch(metav){
+                case 0:
+                    return EnumFacing.UP;
+                case 1:
+                    return EnumFacing.NORTH;
+                case 2:
+                    return EnumFacing.DOWN;
+                case 3:
+                    return EnumFacing.SOUTH;
+                default:
+                    OpenRadio.logger.warn("I think someone is tempering with the universe... o.O");
+            }
+        }else if(facingh == EnumFacing.SOUTH){
+            switch(metav){
+                case 0:
+                    return EnumFacing.UP;
+                case 1:
+                    return EnumFacing.EAST;
+                case 2:
+                    return EnumFacing.DOWN;
+                case 3:
+                    return EnumFacing.WEST;
+                default:
+                    OpenRadio.logger.warn("I think someone is tempering with the universe... o.O");
+            }
+        }else if(facingh == EnumFacing.WEST){
+            switch(metav){
+                case 0:
+                    return EnumFacing.UP;
+                case 1:
+                    return EnumFacing.SOUTH;
+                case 2:
+                    return EnumFacing.DOWN;
+                case 3:
+                    return EnumFacing.NORTH;
+                default:
+                    OpenRadio.logger.warn("I think someone is tempering with the universe... o.O");
+            }
+        }else{
+            OpenRadio.logger.warn("I think someone is tempering with the universe... o.O");
+        }
+
+        return EnumFacing.UP;
+    }
+
     @Override
     public void hitByLaser(LaserEntity laserEntity, BlockPos pos, World world, EnumFacing direction){
-        //TODO correct this
-        laserEntity.posX = pos.getX() + 0.5;
-        laserEntity.posY = pos.getY() + 0.5;
-        laserEntity.posZ = pos.getZ() + 0.5;
-        laserEntity.setVelocity(
-                world.getBlockState(pos).getValue(FACING_HORIZONTAL).getDirectionVec().getX()*OpenRadio.instance.settings.EntitySpeed,
-                world.getBlockState(pos).getValue(FACING_HORIZONTAL).getDirectionVec().getY()*OpenRadio.instance.settings.EntitySpeed,
-                world.getBlockState(pos).getValue(FACING_HORIZONTAL).getDirectionVec().getZ()*OpenRadio.instance.settings.EntitySpeed
-        );
-        laserEntity.addDistance(OpenRadio.instance.settings.MirrorDistancePenalty);
+        System.out.println(direction.getName());
+        IBlockState state = world.getBlockState(pos);
+        EnumFacing facingv = facingvFromMetav(state.getValue(FACING_VERTICAL), state.getValue(FACING_HORIZONTAL));
+
+        if(direction.equals(facingv)){ //laser is entering the facingv-side
+            laserEntity.posX = pos.getX() + 0.5;
+            laserEntity.posY = pos.getY() + 0.5;
+            laserEntity.posZ = pos.getZ() + 0.5;
+            laserEntity.setVelocity(
+                    state.getValue(FACING_HORIZONTAL).getDirectionVec().getX() * OpenRadio.instance.settings.EntitySpeed,
+                    state.getValue(FACING_HORIZONTAL).getDirectionVec().getY() * OpenRadio.instance.settings.EntitySpeed,
+                    state.getValue(FACING_HORIZONTAL).getDirectionVec().getZ() * OpenRadio.instance.settings.EntitySpeed
+            );
+            laserEntity.addDistance(OpenRadio.instance.settings.MirrorDistancePenalty);
+        }else if(direction.equals(state.getValue(FACING_HORIZONTAL))){ //laser is entering the facingh-side
+            laserEntity.posX = pos.getX() + 0.5;
+            laserEntity.posY = pos.getY() + 0.5;
+            laserEntity.posZ = pos.getZ() + 0.5;
+            laserEntity.setVelocity(
+                    facingv.getDirectionVec().getX() * OpenRadio.instance.settings.EntitySpeed,
+                    facingv.getDirectionVec().getY() * OpenRadio.instance.settings.EntitySpeed,
+                    facingv.getDirectionVec().getZ() * OpenRadio.instance.settings.EntitySpeed
+            );
+            laserEntity.addDistance(OpenRadio.instance.settings.MirrorDistancePenalty);
+        }else{
+            laserEntity.setDead();
+        }
     }
 }
