@@ -13,8 +13,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -141,7 +139,7 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
             int i = this.getMaxInPortalTime();
 
             if(this.inPortal){
-                if(minecraftserver.getAllowNether()){
+                if(minecraftserver != null && minecraftserver.getAllowNether()){
                     if(this.getRidingEntity() == null && this.portalCounter++ >= i){
                         this.portalCounter = i;
                         this.timeUntilPortal = this.getPortalCooldown();
