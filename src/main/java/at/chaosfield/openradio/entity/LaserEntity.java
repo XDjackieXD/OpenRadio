@@ -13,6 +13,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -234,11 +236,17 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
         Vec3d nextPosVec = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
         RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(posVec, nextPosVec);
 
+
         if(movingobjectposition != null){
             if(movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
                 if(this.worldObj.getBlockState(movingobjectposition.getBlockPos()).getBlock() == Blocks.PORTAL){
                     this.setPortal(this.getPosition());
                 }else{
+                    if(movingobjectposition.getBlockPos().getX() == MathHelper.floor_double(this.posX) &&
+                            movingobjectposition.getBlockPos().getY() == MathHelper.floor_double(this.posY) &&
+                            movingobjectposition.getBlockPos().getZ() == MathHelper.floor_double(this.posZ)){
+                        movingobjectposition.sideHit = movingobjectposition.sideHit.getOpposite();
+                    }
                     this.onImpact(movingobjectposition);
                 }
         }
@@ -317,23 +325,20 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
             Block hitBlock = this.worldObj.getBlockState(mop.getBlockPos()).getBlock();
 
             if(hitBlock instanceof LaserBlock && senderLaserTe instanceof LaserTileEntity){
-
                 TileEntity te = this.worldObj.getTileEntity(mop.getBlockPos());
                 if(te instanceof LaserTileEntity){
-                    if(mop.sideHit.getIndex() == te.getBlockMetadata())
+                    if(mop.sideHit.getIndex() == te.getBlockMetadata()){
                         ((LaserTileEntity) senderLaserTe).setDestination(this.worldObj.provider.getDimension(), mop.getBlockPos(), this.distance);
-                    else
+                    }else
                         ((LaserTileEntity) senderLaserTe).disconnect();
                 }else
                     ((LaserTileEntity) senderLaserTe).disconnect();
                 this.setDead();
-
             }else if(hitBlock instanceof ILaserModifier){
                 if(!appliedModifier.contains(new Location(this.dimension, mop.getBlockPos()))){
                     appliedModifier.add(new Location(this.dimension, mop.getBlockPos()));
                     ((ILaserModifier) hitBlock).hitByLaser(this, mop.getBlockPos(), this.worldObj, mop.sideHit);
                 }
-
             }else if(this.worldObj.getBlockState(mop.getBlockPos()).isOpaqueCube()){
                 this.setDead();
                 if(senderLaserTe instanceof LaserTileEntity)

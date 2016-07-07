@@ -255,7 +255,6 @@ public class MirrorBlock extends Block implements ILaserModifier{
 
     @Override
     public void hitByLaser(LaserEntity laserEntity, BlockPos pos, World world, EnumFacing direction){
-        System.out.println(direction.getName());
         IBlockState state = world.getBlockState(pos);
         EnumFacing facingv = facingvFromMetav(state.getValue(FACING_VERTICAL), state.getValue(FACING_HORIZONTAL));
 
