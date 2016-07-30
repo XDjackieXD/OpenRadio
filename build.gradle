@@ -13,6 +13,8 @@ buildscript {
 
 apply plugin: 'idea'
 apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'maven-publish'
+
 
 version = "0.8.1-MC1.9.4"
 group = "at.chaosfield.openradio"
@@ -60,5 +62,48 @@ processResources
                 exclude 'mcmod.info'
             }
         }
+
+javadoc {
+    include 'at/chaosfield/openradio/api/**'
+}
+
+task apiJar(type: Jar) {
+    from sourceSets.main.output
+    from sourceSets.main.java
+    classifier = 'api'
+    include 'at/chaosfield/openradio/api/**'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from 'build/docs/javadoc'
+    classifier 'javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.java
+    classifier = 'sources'
+}
+
+artifacts {
+    //archives apiJar
+    //archives javadocJar
+    archives sourcesJar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+            //artifact apiJar
+            //artifact javadocJar
+            artifact sourcesJar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///srv/nginx/maven"
+        }
+    }
+}
 
 idea { module { inheritOutputDirs = true } }
