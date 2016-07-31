@@ -13,12 +13,15 @@ buildscript {
 
 apply plugin: 'idea'
 apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: 'maven-publish'
 
 
 version = "0.8.1-MC1.9.4"
 group = "at.chaosfield.openradio"
 archivesBaseName = "OpenRadio"
+
+if(hasProperty('buildnumber')){
+    version = "${version}-${this.properties['buildnumber']}"
+}
 
 minecraft {
     version = "1.9.4-12.17.0.1976"
@@ -89,6 +92,8 @@ artifacts {
     //archives javadocJar
     archives sourcesJar
 }
+
+apply plugin: 'maven-publish'
 
 publishing {
     publications {
