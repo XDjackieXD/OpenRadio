@@ -1,5 +1,7 @@
 package at.chaosfield.openradio.integration.actuallyAdditions;
 
+import at.chaosfield.openradio.OpenRadio;
+import at.chaosfield.openradio.integration.Init;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
@@ -19,9 +21,18 @@ public class LaserRelay implements ILaserAddon{
     private TileEntity laserRelayTile;
     private LaserTileEntity laserTileEntity;
     private boolean connected = false;
+    private String addonName;
 
     public LaserRelay(TileEntity laserRelayTile){
         this.laserRelayTile = laserRelayTile;
+        String tileName = laserRelayTile.getBlockType().getRegistryName().toString();
+
+        for(String name: Init.actAddLaserRelayEnergy)
+            if(name.equals(tileName))
+                this.addonName = "LaserRelayEnergy";
+        for(String name: Init.actAddLaserRelayItem)
+            if(name.equals(tileName))
+                this.addonName = "LaserRelayItem";
     }
 
     @Override
@@ -54,21 +65,18 @@ public class LaserRelay implements ILaserAddon{
 
     private void connectLaserRelays(LaserTileEntity laser){
         if(this.laserRelayTile != null && laser != null){
-            System.out.println("connect");
             TileEntity tile = laser.getWorld().getTileEntity(laser.getOtherLaser().getPos());
             if(tile instanceof LaserTileEntity){
                 if(((LaserTileEntity) tile).isConnected())
                     for(ILaserAddon addon : ((LaserTileEntity) tile).getAddons())
-                        if(addon != null && addon.getAddonName().equals("LaserRelay") && addon.getTile() != null)
-                            ActuallyAdditionsAPI.connectionHandler.addConnection(this.laserRelayTile.getPos(), addon.getTile().getPos(), laser.getWorld());
+                        if(addon != null && addon.getAddonName().equals(this.addonName) && addon.getTile() != null)
+                            ActuallyAdditionsAPI.connectionHandler.addConnection(this.laserRelayTile.getPos(), addon.getTile().getPos(), laser.getWorld(), false);
             }
         }
     }
 
     private void disconnectLaserRelays(LaserTileEntity laser){
         if(this.laserRelayTile != null && laser != null){
-            System.out.println("disconnect");
-
             List<BlockPos> otherRelays = new ArrayList<BlockPos>();
 
             if(laser.getOtherLaser() != null){
@@ -76,7 +84,7 @@ public class LaserRelay implements ILaserAddon{
                 if(tile != null){
                     if(tile instanceof LaserTileEntity){
                         for(ILaserAddon addon : ((LaserTileEntity) tile).getAddons())
-                            if(addon != null && addon.getAddonName().equals("LaserRelay") && addon.getTile() != null)
+                            if(addon != null && addon.getAddonName().equals(this.addonName) && addon.getTile() != null)
                                 otherRelays.add(addon.getTile().getPos());
                     }
 
@@ -100,7 +108,7 @@ public class LaserRelay implements ILaserAddon{
 
     @Override
     public int getEnergyUsage(){
-        return 10;
+        return OpenRadio.instance.settings.ActAddLaserRelayUsage;
     }
 
     @Override
@@ -110,6 +118,6 @@ public class LaserRelay implements ILaserAddon{
 
     @Override
     public String getAddonName(){
-        return "LaserRelay";
+        return this.addonName;
     }
 }

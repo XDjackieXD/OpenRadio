@@ -27,3 +27,6 @@ death.openradio.laser.2=%1$s wurde von einem Laser getoastet.
 death.openradio.laser.3=Lasers und %1$s scheinen sich nicht gut zu vertragen...
 death.openradio.laser.4=Das Licht, in das %1$s geschaut hat, war scheinbar ein wenig zu hell...
 death.openradio.laser.5=%1$s verdampfte.
+
+booklet.actuallyadditions.chapter.openradio.laserrelay.name=OpenRadio Integration
+booklet.actuallyadditions.chapter.openradio.laserrelay.text.1=Wenn man ein <item>Laserrelais<r> <imp>auf<r> einen <item>OpenRadio Laser<r> stellt, kann man damit riesige Distanzen von bis zu <laserMaxDistance> Blöcken überwinden.

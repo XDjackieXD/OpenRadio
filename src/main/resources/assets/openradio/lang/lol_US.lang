@@ -27,3 +27,6 @@ death.openradio.laser.2=%1$s was toastered by a fiery lazzzor
 death.openradio.laser.3=%1$s didn't like tha lazzors :(
 death.openradio.laser.4=%1$s died cuz looked into mah lazzorbeam
 death.openradio.laser.5=%1$s likes the nope in form of lazzorbeams
+
+booklet.actuallyadditions.chapter.openradio.laserrelay.name=OpenRadio integration
+booklet.actuallyadditions.chapter.openradio.laserrelay.text.1=Sticking a <item>Lazzzor Relay<r> <imp>on top<r> of an <item>OpenRadio Lazzzor<r> equals ultimate lazzorception with up to <laserMaxDistance> blocks range!

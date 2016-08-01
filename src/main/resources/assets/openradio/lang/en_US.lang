@@ -27,3 +27,6 @@ death.openradio.laser.2=%1$s was toasted by a laser.
 death.openradio.laser.3=Lasers and %1$s apparently don't mix very well...
 death.openradio.laser.4=It seems like this light %1$s looked into was a bit too bright...
 death.openradio.laser.5=%1$s evaporated.
+
+booklet.actuallyadditions.chapter.openradio.laserrelay.name=OpenRadio integration
+booklet.actuallyadditions.chapter.openradio.laserrelay.text.1=By putting a <item>Laser Relay<r> of any type <imp>on top<r> of an <item>OpenRadio Laser<r> allows you to bridge huge distances of up to <laserMaxDistance> blocks.

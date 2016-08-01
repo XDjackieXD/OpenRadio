@@ -16,6 +16,7 @@ public class Settings{
     public double LensMultiplierTier[] = {1, 3, 7};
     public int EnergyUseLaserTier[] = {25, 50, 100}; // RF/tick
     public int AEEnergyMultiplier = 10;
+    public int ActAddLaserRelayUsage = 10;
     public int EnergyBuffer = 100;
     public float LaserColor[][] = {         //R, G, B, A
             {1.0F,  0,      0,      1.0F},  //Tier1
@@ -47,6 +48,7 @@ public class Settings{
         EnergyUseLaserTier[2] = config.getInt("EnergyUseLaserTier3", "energy", 100, 0, 100000, "energy usage of a tier 3 laser");
 
         AEEnergyMultiplier = config.getInt("AEEncoderMultiplier", "energy", 10, 1, 10000, "energy usage multiplier if an AE Encoder is connected");
+        ActAddLaserRelayUsage = config.getInt("ActAddLaserRelayUsage", "energy", 10, 0, 10000, "additional energy usage if a ActuallyAdditions Laser Relay is connected");
 
         EnergyBuffer = config.getInt("EnergyBuffer", "energy", 100, 10, 100000, "internal energy buffer size");
 

@@ -399,16 +399,14 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             return (ILaserAddon) tile;
 
         if(tile != null && Init.isActAddLoaded && side == EnumFacing.UP){
-            if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelay"))
-                return new LaserRelay(tile);
-            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayAdvanced"))
-                return new LaserRelay(tile);
-            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayExtreme"))
-                return new LaserRelay(tile);
-            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayItem"))
-                return new LaserRelay(tile);
-            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayItemWhitelist"))
-                return new LaserRelay(tile);
+            String tileName = tile.getBlockType().getRegistryName().toString();
+
+            for(String name: Init.actAddLaserRelayEnergy)
+                if(name.equals(tileName))
+                    return new LaserRelay(tile);
+            for(String name: Init.actAddLaserRelayItem)
+                if(name.equals(tileName))
+                    return new LaserRelay(tile);
         }
 
         return null;

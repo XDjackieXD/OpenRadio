@@ -5,6 +5,8 @@ import at.chaosfield.openradio.init.Crafting;
 import at.chaosfield.openradio.init.Entities;
 import at.chaosfield.openradio.init.Items;
 import at.chaosfield.openradio.gui.GuiHandler;
+import at.chaosfield.openradio.integration.Init;
+import at.chaosfield.openradio.integration.actuallyAdditions.BookletEntry;
 import at.chaosfield.openradio.proxy.CommonProxy;
 import at.chaosfield.openradio.util.Settings;
 import net.minecraftforge.fml.common.Mod;
@@ -54,6 +56,9 @@ public class OpenRadio{
         Entities.init();                //Register the Entities
         Crafting.init();                //Register the crafting recipes
         proxy.init(event);              //Register TileEntities, Renders and other things
+
+        if(Init.isActAddLoaded)
+            BookletEntry.init();
 
         logger.info("Init complete.");
     }
