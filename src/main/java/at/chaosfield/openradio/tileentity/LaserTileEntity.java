@@ -4,6 +4,8 @@ package at.chaosfield.openradio.tileentity;
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.entity.LaserEntity;
 import at.chaosfield.openradio.init.Items;
+import at.chaosfield.openradio.integration.Init;
+import at.chaosfield.openradio.integration.actuallyAdditions.LaserRelay;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
 import at.chaosfield.openradio.util.Location;
 import li.cil.oc.api.API;
@@ -28,6 +30,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.common.Loader;
 
 
 /**
@@ -44,10 +47,12 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     private boolean powered;
     private double distance;
     private Location otherLaser;
-    private int energyMultiplier = 1;
+    private int addonEnergyUsage = 0;
 
     private ILaserAddon connectedAddons[] = {null, null, null, null, null, null};
     private String connectedAddonsType[] = {null, null, null, null, null, null};
+
+    private boolean first = true;
 
     private ItemStack[] inv;
 
@@ -68,8 +73,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate)
-    {
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate){
         return (oldState.getBlock() != newSate.getBlock());
     }
 
@@ -158,12 +162,24 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(!this.getWorld().isRemote){
             this.otherLaser = new Location(dim, pos);
             this.distance = distance;
+            for(ILaserAddon addon: getAddons())
+                if(addon != null)
+                    addon.laserConnectionStatusChanged(true);
             this.markDirty();
         }
     }
 
     public void disconnect(){
+        for(ILaserAddon addon: getAddons())
+            if(addon != null)
+                addon.laserConnectionStatusChanged(false);
         this.otherLaser = null;
+    }
+
+    public void breakLaser(){
+        for(EnumFacing side: EnumFacing.VALUES){
+            disconnectAddon(side);
+        }
     }
 
     public Location getOtherLaser(){
@@ -185,23 +201,19 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 inv[SLOT_LASER].getItem() == Items.laserItem;
     }
 
-    public void connectAddon(ILaserAddon addon, int side){
-        if(this.connectedAddons[side] != addon){
-            this.connectedAddons[side] = addon;
-            this.connectedAddonsType[side] = addon.getAddonName();
+    public void connectAddon(String name, ILaserAddon addon, EnumFacing side){
+        if(this.connectedAddonsType[side.getIndex()] == null || !this.connectedAddonsType[side.getIndex()].equals(name)){
+            this.connectedAddons[side.getIndex()] = addon;
+            this.connectedAddonsType[side.getIndex()] = addon.getAddonName();
             addon.connectToLaser(this);
-            if(addon.getAddonName().equals("aeencoder"))
-                energyMultiplier *= OpenRadio.instance.settings.AEEnergyMultiplier;
         }
     }
 
-    public void disconnectAddon(int side){
-        if(this.connectedAddons[side] != null){
-            this.connectedAddons[side] = null;
-            if(connectedAddonsType[side] != null)
-                if(connectedAddonsType[side].equals("aeencoder"))
-                    energyMultiplier /= OpenRadio.instance.settings.AEEnergyMultiplier;
-            this.connectedAddonsType[side] = null;
+    public void disconnectAddon(EnumFacing side){
+        if(this.connectedAddons[side.getIndex()] != null){
+            this.connectedAddons[side.getIndex()].disconnectFromLaser(this);
+            this.connectedAddons[side.getIndex()] = null;
+            this.connectedAddonsType[side.getIndex()] = null;
         }
     }
 
@@ -219,7 +231,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     public double getMaxDistance(){
         if(hasNeededComponents()){
-            return OpenRadio.instance.settings.LaserMaxDistanceTier[getItemTier(SLOT_LASER, Items.laserItem)-1];
+            return OpenRadio.instance.settings.LaserMaxDistanceTier[getItemTier(SLOT_LASER, Items.laserItem) - 1];
         }else{
             return 0;
         }
@@ -236,7 +248,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public double calculateBasicEnergyUsage(){
         int usage = 0;
         if(hasNeededComponents()){
-            usage += OpenRadio.instance.settings.EnergyUseLaserTier[getItemTier(SLOT_LASER, Items.laserItem)-1];
+            usage += OpenRadio.instance.settings.EnergyUseLaserTier[getItemTier(SLOT_LASER, Items.laserItem) - 1];
         }
         return usage;
     }
@@ -269,13 +281,80 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     //------------------------------------------------------------------------------------------------------------------
 
 
+    public void onNeighbourChanged(){
+        TileEntity tile;
+        String name;
+
+        tile = this.worldObj.getTileEntity(pos.east());
+        name = checkAddon(tile, EnumFacing.EAST);
+        if(name != null){
+            connectAddon(name, getAddon(tile, EnumFacing.EAST), EnumFacing.EAST);
+        }else{
+            disconnectAddon(EnumFacing.EAST);
+        }
+
+        tile = this.worldObj.getTileEntity(pos.west());
+        name = checkAddon(tile, EnumFacing.WEST);
+        if(name != null){
+            connectAddon(name, getAddon(tile, EnumFacing.WEST), EnumFacing.WEST);
+        }else{
+            disconnectAddon(EnumFacing.WEST);
+        }
+
+        tile = this.worldObj.getTileEntity(pos.south());
+        name = checkAddon(tile, EnumFacing.SOUTH);
+        if(name != null){
+            connectAddon(name, getAddon(tile, EnumFacing.SOUTH), EnumFacing.SOUTH);
+        }else{
+            disconnectAddon(EnumFacing.SOUTH);
+        }
+
+        tile = this.worldObj.getTileEntity(pos.north());
+        name = checkAddon(tile, EnumFacing.NORTH);
+        if(name != null){
+            connectAddon(name, getAddon(tile, EnumFacing.NORTH), EnumFacing.NORTH);
+        }else{
+            disconnectAddon(EnumFacing.NORTH);
+        }
+
+        tile = this.worldObj.getTileEntity(pos.up());
+        name = checkAddon(tile, EnumFacing.UP);
+        if(name != null){
+            connectAddon(name, getAddon(tile, EnumFacing.UP), EnumFacing.UP);
+        }else{
+            disconnectAddon(EnumFacing.UP);
+        }
+
+        tile = this.worldObj.getTileEntity(pos.down());
+        name = checkAddon(tile, EnumFacing.DOWN);
+        if(name != null){
+            connectAddon(name, getAddon(tile, EnumFacing.DOWN), EnumFacing.DOWN);
+        }else{
+            disconnectAddon(EnumFacing.DOWN);
+        }
+
+        addonEnergyUsage = 0;
+        for(ILaserAddon addon: connectedAddons){
+            if(addon != null)
+                addonEnergyUsage += addon.getEnergyUsage();
+        }
+
+        for(ILaserAddon addon: getAddons())
+            if(addon != null)
+                addon.laserConnectionStatusChanged(isConnected());
+    }
+
     @Override
     public void update(){
         super.update();
         if(!worldObj.isRemote){
-
             if(hasNeededComponents()){
-                tryUsePower((int) (calculateBasicEnergyUsage() * energyMultiplier));
+                tryUsePower((int)(calculateBasicEnergyUsage() + addonEnergyUsage));
+            }
+
+            if(first){
+                onNeighbourChanged();
+                first=false;
             }
 
             if(hasNeededComponents() && isPowered()){
@@ -285,44 +364,54 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                     sendEntity();
                 }
             }else{
+                for(ILaserAddon addon: getAddons())
+                    if(addon != null)
+                        addon.laserConnectionStatusChanged(false);
                 disconnect();
             }
-
-
-            //TODO don't do this every tick...
-            if(this.worldObj.getTileEntity(this.getPos().add(1,0,0)) instanceof ILaserAddon){ //east
-                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.getPos().add(1,0,0)), EnumFacing.EAST.getIndex());
-            }else{
-                disconnectAddon(EnumFacing.EAST.getIndex());
-            }
-            if(this.worldObj.getTileEntity(this.getPos().add(-1,0,0)) instanceof ILaserAddon){ //west
-                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.getPos().add(-1,0,0)), EnumFacing.WEST.getIndex());
-            }else{
-                disconnectAddon(EnumFacing.WEST.getIndex());
-            }
-            if(this.worldObj.getTileEntity(this.getPos().add(0,1,0)) instanceof ILaserAddon){ //top
-                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.getPos().add(0,1,0)), EnumFacing.UP.getIndex());
-            }else{
-                disconnectAddon(EnumFacing.UP.getIndex());
-            }
-            if(this.worldObj.getTileEntity(this.getPos().add(0,-1,0)) instanceof ILaserAddon){ //bottom
-                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.getPos().add(0,-1,0)), EnumFacing.DOWN.getIndex());
-            }else{
-                disconnectAddon(EnumFacing.DOWN.getIndex());
-            }
-            if(this.worldObj.getTileEntity(this.getPos().add(0,0,1)) instanceof ILaserAddon){ //south
-                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.getPos().add(0,0,1)), EnumFacing.SOUTH.getIndex());
-            }else{
-                disconnectAddon(EnumFacing.SOUTH.getIndex());
-            }
-            if(this.worldObj.getTileEntity(this.getPos().add(0,0,-1)) instanceof ILaserAddon){ //north
-                connectAddon((ILaserAddon) this.worldObj.getTileEntity(this.getPos().add(0,0,-1)), EnumFacing.NORTH.getIndex());
-            }else{
-                disconnectAddon(EnumFacing.NORTH.getIndex());
-            }
-
         }
 
+    }
+
+    private String checkAddon(TileEntity tile, EnumFacing side){
+
+        if(tile instanceof ILaserAddon)
+            return ((ILaserAddon) tile).getAddonName();
+
+        if(tile != null && Init.isActAddLoaded && side == EnumFacing.UP){
+            if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelay"))
+                return "LaserRelay";
+            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayAdvanced"))
+                return "LaserRelay";
+            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayExtreme"))
+                return "LaserRelay";
+            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayItem"))
+                return "LaserRelay";
+            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayItemWhitelist"))
+                return "LaserRelay";
+        }
+
+        return null;
+    }
+
+    private ILaserAddon getAddon(TileEntity tile, EnumFacing side){
+        if(tile instanceof ILaserAddon)
+            return (ILaserAddon) tile;
+
+        if(tile != null && Init.isActAddLoaded && side == EnumFacing.UP){
+            if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelay"))
+                return new LaserRelay(tile);
+            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayAdvanced"))
+                return new LaserRelay(tile);
+            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayExtreme"))
+                return new LaserRelay(tile);
+            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayItem"))
+                return new LaserRelay(tile);
+            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayItemWhitelist"))
+                return new LaserRelay(tile);
+        }
+
+        return null;
     }
 
     @Override
@@ -373,7 +462,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer player){
-        return player.getDistanceSq(this.getPos().getX()+0.5D, this.pos.getY()+0.5D, this.pos.getZ()+0.5D) <= 64;
+        return player.getDistanceSq(this.getPos().getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D) <= 64;
     }
 
     @Override
@@ -419,7 +508,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     @Override
     public void clear(){
-        for(int i=0; i<this.getSizeInventory(); i++)
+        for(int i = 0; i < this.getSizeInventory(); i++)
             this.setInventorySlotContents(i, null);
     }
 

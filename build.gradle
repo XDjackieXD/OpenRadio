@@ -24,7 +24,7 @@ if(hasProperty('buildnumber')){
 }
 
 minecraft {
-    version = "1.9.4-12.17.0.1976"
+    version = " 1.10.2-12.18.1.2011"
     runDir = "run"
 
     mappings = "snapshot_20160606"
@@ -36,10 +36,15 @@ repositories {
         name = "OpenComputers"
         url = "http://maven.cil.li/"
     }
+    maven {
+        name = "ActuallyAdditions"
+        url = "http://maven.chaosfield.at/"
+    }
 }
 
 dependencies {
     compile "li.cil.oc:OpenComputers:MC1.9.4-1.6.+:api"
+    compile "de.ellpeck.actuallyadditions:ActuallyAdditions-unstable:1.10.2-r56-11:api"
 
     //no 1.9 version of ae yet :(
     //compile "appeng:appliedenergistics2:rv2-stable-10:dev"

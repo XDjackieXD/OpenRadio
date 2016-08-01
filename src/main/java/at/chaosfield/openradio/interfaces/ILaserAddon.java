@@ -9,6 +9,8 @@ import net.minecraft.tileentity.TileEntity;
 public interface ILaserAddon {
     void connectToLaser(LaserTileEntity laser);
     void disconnectFromLaser(LaserTileEntity laser);
-    TileEntity getTileEntity();
+    void laserConnectionStatusChanged(boolean connected);
+    int getEnergyUsage();
+    TileEntity getTile();
     String getAddonName();
 }

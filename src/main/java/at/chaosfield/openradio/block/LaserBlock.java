@@ -4,6 +4,7 @@ import at.chaosfield.openradio.gui.CreativeTab;
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.gui.GUIs;
+import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -14,6 +15,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -103,9 +105,23 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
     public void breakBlock(World world, BlockPos pos, IBlockState state){
         dropItems(world, pos);
         TileEntity tileEntity = world.getTileEntity(pos);
-        if(tileEntity instanceof LaserTileEntity)
-            ((LaserTileEntity)tileEntity).disconnect();
+        if(tileEntity instanceof LaserTileEntity){
+            ((LaserTileEntity) tileEntity).disconnect();
+            ((LaserTileEntity) tileEntity).breakLaser();
+        }
         super.breakBlock(world, pos, state);
+    }
+
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn)
+    {
+        if (!worldIn.isRemote)
+        {
+            LaserTileEntity tile = (LaserTileEntity)worldIn.getTileEntity(pos);
+            if(tile != null){
+                tile.onNeighbourChanged();
+            }
+        }
     }
 
     //randomly drop the items around the block
