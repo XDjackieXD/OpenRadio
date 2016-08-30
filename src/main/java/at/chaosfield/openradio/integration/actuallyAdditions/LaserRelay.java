@@ -70,7 +70,7 @@ public class LaserRelay implements ILaserAddon{
                 if(((LaserTileEntity) tile).isConnected())
                     for(ILaserAddon addon : ((LaserTileEntity) tile).getAddons())
                         if(addon != null && addon.getAddonName().equals(this.addonName) && addon.getTile() != null)
-                            ActuallyAdditionsAPI.connectionHandler.addConnection(this.laserRelayTile.getPos(), addon.getTile().getPos(), laser.getWorld(), false);
+                            ActuallyAdditionsAPI.connectionHandler.addConnection(this.laserRelayTile.getPos(), addon.getTile().getPos(), laser.getWorld(), true);
             }
         }
     }
