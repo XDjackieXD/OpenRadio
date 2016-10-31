@@ -5,7 +5,8 @@ import at.chaosfield.openradio.integration.Init;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.laser.ConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -88,18 +89,18 @@ public class LaserRelay implements ILaserAddon{
                                 otherRelays.add(addon.getTile().getPos());
                     }
 
-                    ConcurrentSet<ConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.laserRelayTile.getPos(), this.laserRelayTile.getWorld());
-                    List<ConnectionPair> newConnections = new ArrayList<ConnectionPair>();
+                    ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.laserRelayTile.getPos(), this.laserRelayTile.getWorld());
+                    List<IConnectionPair> newConnections = new ArrayList<IConnectionPair>();
 
-                    for(ConnectionPair connectionPair : connections){
+                    for(IConnectionPair connectionPair : connections){
                         for(BlockPos otherRelay : otherRelays)
                             if(!connectionPair.contains(otherRelay))
                                 newConnections.add(connectionPair);
                     }
 
                     ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.laserRelayTile.getPos(), this.laserRelayTile.getWorld());
-                    for(ConnectionPair connectionPair : newConnections){
-                        ActuallyAdditionsAPI.connectionHandler.addConnection(connectionPair.positions[0], connectionPair.positions[1], this.laserRelayTile.getWorld());
+                    for(IConnectionPair connectionPair : newConnections){
+                        ActuallyAdditionsAPI.connectionHandler.addConnection(connectionPair.getPositions()[0], connectionPair.getPositions()[1], LaserType.ENERGY, this.laserRelayTile.getWorld());
                     }
                 }
             }
