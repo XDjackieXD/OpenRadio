@@ -8,6 +8,7 @@ import at.chaosfield.openradio.integration.Init;
 import at.chaosfield.openradio.integration.actuallyAdditions.LaserRelay;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
 import at.chaosfield.openradio.util.Location;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import li.cil.oc.api.API;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
@@ -399,16 +400,20 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             return (ILaserAddon) tile;
 
         if(tile != null && Init.isActAddLoaded && side == EnumFacing.UP){
-            String tileName = tile.getBlockType().getRegistryName().toString();
+            if(Integer.parseInt(ActuallyAdditionsAPI.API_VERSION) >= Init.minActAddVersion){
+                String tileName = tile.getBlockType().getRegistryName().toString();
 
-            for(String name: Init.actAddLaserRelayEnergy)
-                if(name.equals(tileName))
-                    return new LaserRelay(tile);
-            for(String name: Init.actAddLaserRelayItem)
-                if(name.equals(tileName))
-                    return new LaserRelay(tile);
+                for(String name : Init.actAddLaserRelayEnergy)
+                    if(name.equals(tileName))
+                        return new LaserRelay(tile);
+                for(String name : Init.actAddLaserRelayItem)
+                    if(name.equals(tileName))
+                        return new LaserRelay(tile);
+                for(String name : Init.actAddLaserRelayFluid)
+                    if(name.equals(tileName))
+                        return new LaserRelay(tile);
+            }
         }
-
         return null;
     }
 
