@@ -15,7 +15,7 @@ apply plugin: 'idea'
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 
-version = "0.9.0-MC1.10.2"
+version = "0.9.1-MC1.10.2"
 group = "at.chaosfield.openradio"
 archivesBaseName = "OpenRadio"
 
