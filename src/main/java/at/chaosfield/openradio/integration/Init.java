@@ -9,4 +9,5 @@ public class Init{
     public static boolean isActAddLoaded = Loader.isModLoaded("actuallyadditions");
     public static String[] actAddLaserRelayEnergy = {"actuallyadditions:blockLaserRelay", "actuallyadditions:blockLaserRelayAdvanced", "actuallyadditions:blockLaserRelayExtreme"};
     public static String[] actAddLaserRelayItem = {"actuallyadditions:blockLaserRelayItem", "actuallyadditions:blockLaserRelayItemWhitelist"};
+    public static String[] actAddLaserRelayFluid = {"actuallyadditions:blockLaserRelayFluids"};
 }

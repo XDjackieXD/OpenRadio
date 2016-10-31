@@ -34,6 +34,9 @@ public class LaserRelay implements ILaserAddon{
         for(String name: Init.actAddLaserRelayItem)
             if(name.equals(tileName))
                 this.addonName = "LaserRelayItem";
+        for(String name: Init.actAddLaserRelayFluid)
+            if(name.equals(tileName))
+                this.addonName = "LaserRelayFluid";
     }
 
     @Override
@@ -71,7 +74,12 @@ public class LaserRelay implements ILaserAddon{
                 if(((LaserTileEntity) tile).isConnected())
                     for(ILaserAddon addon : ((LaserTileEntity) tile).getAddons())
                         if(addon != null && addon.getAddonName().equals(this.addonName) && addon.getTile() != null)
-                            ActuallyAdditionsAPI.connectionHandler.addConnection(this.laserRelayTile.getPos(), addon.getTile().getPos(), laser.getWorld(), true);
+                            if(this.addonName.equals("LaserRelayEnergy"))
+                                ActuallyAdditionsAPI.connectionHandler.addConnection(this.laserRelayTile.getPos(), addon.getTile().getPos(), LaserType.ENERGY, laser.getWorld(), true);
+                            else if(this.addonName.equals("LaserRelayItem"))
+                                ActuallyAdditionsAPI.connectionHandler.addConnection(this.laserRelayTile.getPos(), addon.getTile().getPos(), LaserType.ITEM, laser.getWorld(), true);
+                            else if(this.addonName.equals("LaserRelayFluid"))
+                                ActuallyAdditionsAPI.connectionHandler.addConnection(this.laserRelayTile.getPos(), addon.getTile().getPos(), LaserType.FLUID, laser.getWorld(), true);
             }
         }
     }
@@ -100,7 +108,7 @@ public class LaserRelay implements ILaserAddon{
 
                     ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.laserRelayTile.getPos(), this.laserRelayTile.getWorld());
                     for(IConnectionPair connectionPair : newConnections){
-                        ActuallyAdditionsAPI.connectionHandler.addConnection(connectionPair.getPositions()[0], connectionPair.getPositions()[1], LaserType.ENERGY, this.laserRelayTile.getWorld());
+                        ActuallyAdditionsAPI.connectionHandler.addConnection(connectionPair.getPositions()[0], connectionPair.getPositions()[1], connectionPair.getType(), this.laserRelayTile.getWorld());
                     }
                 }
             }
