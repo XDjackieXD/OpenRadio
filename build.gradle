@@ -46,7 +46,7 @@ dependencies {
     compile "li.cil.oc:OpenComputers:MC1.9.4-1.6.+:api"
     provided "de.ellpeck.actuallyadditions:ActuallyAdditions:1.10.2-r68:api"
 
-    //no 1.9 version of ae yet :(
+    //no 1.10.2 version of ae yet :(
     //compile "appeng:appliedenergistics2:rv2-stable-10:dev"
     //compile files('lib/appliedenergistics2-rv2-stable-10-dev.jar')
 }
