@@ -12,6 +12,7 @@ import at.chaosfield.openradio.util.Settings;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +22,7 @@ import org.apache.logging.log4j.Logger;
  * Created by Jakob Riepler (XDjackieXD)
  */
 
-@Mod(name = "Open Radio", modid = OpenRadio.MODID, version = "0.9.0", modLanguage = "java", dependencies = "required-after:OpenComputers@[1.6.0,)")
+@Mod(name = "Open Radio", modid = OpenRadio.MODID, version = "0.9.3", modLanguage = "java", dependencies = "required-after:OpenComputers@[1.6.0,)")
 public class OpenRadio{
 
     public static final String MODID = "openradio";
@@ -57,9 +58,15 @@ public class OpenRadio{
         Crafting.init();                //Register the crafting recipes
         proxy.init(event);              //Register TileEntities, Renders and other things
 
-        if(Init.isActAddLoaded)
-            BookletEntry.init();
-
         logger.info("Init complete.");
+    }
+
+    //FML Init
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent event){
+        if(Init.isActAddLoaded)
+            BookletEntry.postInit();
+
+        logger.info("Post init complete.");
     }
 }

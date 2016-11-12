@@ -15,7 +15,7 @@ apply plugin: 'idea'
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 
-version = "0.9.2-MC1.10.2"
+version = "0.9.3-MC1.10.2"
 group = "at.chaosfield.openradio"
 archivesBaseName = "OpenRadio"
 
@@ -44,7 +44,7 @@ repositories {
 
 dependencies {
     compile "li.cil.oc:OpenComputers:MC1.9.4-1.6.+:api"
-    provided "de.ellpeck.actuallyadditions:ActuallyAdditions:1.10.2-r68:api"
+    provided "de.ellpeck.actuallyadditions:ActuallyAdditions-unstable:1.10.2-r71-260:api"
 
     //no 1.10.2 version of ae yet :(
     //compile "appeng:appliedenergistics2:rv2-stable-10:dev"
