@@ -163,7 +163,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(!this.getWorld().isRemote){
             this.otherLaser = new Location(dim, pos);
             this.distance = distance;
-            for(ILaserAddon addon: getAddons())
+            for(ILaserAddon addon : getAddons())
                 if(addon != null)
                     addon.laserConnectionStatusChanged(true);
             this.markDirty();
@@ -171,14 +171,14 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     public void disconnect(){
-        for(ILaserAddon addon: getAddons())
+        for(ILaserAddon addon : getAddons())
             if(addon != null)
                 addon.laserConnectionStatusChanged(false);
         this.otherLaser = null;
     }
 
     public void breakLaser(){
-        for(EnumFacing side: EnumFacing.VALUES){
+        for(EnumFacing side : EnumFacing.VALUES){
             disconnectAddon(side);
         }
     }
@@ -335,12 +335,12 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         }
 
         addonEnergyUsage = 0;
-        for(ILaserAddon addon: connectedAddons){
+        for(ILaserAddon addon : connectedAddons){
             if(addon != null)
                 addonEnergyUsage += addon.getEnergyUsage();
         }
 
-        for(ILaserAddon addon: getAddons())
+        for(ILaserAddon addon : getAddons())
             if(addon != null)
                 addon.laserConnectionStatusChanged(isConnected());
     }
@@ -350,12 +350,12 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         super.update();
         if(!worldObj.isRemote){
             if(hasNeededComponents()){
-                tryUsePower((int)(calculateBasicEnergyUsage() + addonEnergyUsage));
+                tryUsePower((int) (calculateBasicEnergyUsage() + addonEnergyUsage));
             }
 
             if(first){
                 onNeighbourChanged();
-                first=false;
+                first = false;
             }
 
             if(hasNeededComponents() && isPowered()){
@@ -365,7 +365,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                     sendEntity();
                 }
             }else{
-                for(ILaserAddon addon: getAddons())
+                for(ILaserAddon addon : getAddons())
                     if(addon != null)
                         addon.laserConnectionStatusChanged(false);
                 disconnect();
@@ -379,17 +379,18 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(tile instanceof ILaserAddon)
             return ((ILaserAddon) tile).getAddonName();
 
-        if(tile != null && Init.isActAddLoaded && side == EnumFacing.UP){
-            if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelay"))
-                return "LaserRelay";
-            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayAdvanced"))
-                return "LaserRelay";
-            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayExtreme"))
-                return "LaserRelay";
-            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayItem"))
-                return "LaserRelay";
-            else if(tile.getBlockType().getRegistryName().toString().equals("actuallyadditions:blockLaserRelayItemWhitelist"))
-                return "LaserRelay";
+        if(tile != null && (Init.loadedActAddVersion >= Init.minActAddVersion) && side == EnumFacing.UP){
+            String tileName = tile.getBlockType().getRegistryName().toString();
+
+            for(String name : Init.actAddLaserRelayEnergy)
+                if(name.equals(tileName))
+                    return "LaserRelayEnergy";
+            for(String name : Init.actAddLaserRelayItem)
+                if(name.equals(tileName))
+                    return "LaserRelayItem";
+            for(String name : Init.actAddLaserRelayFluid)
+                if(name.equals(tileName))
+                    return "LaserRelayFluid";
         }
 
         return null;
@@ -399,20 +400,18 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         if(tile instanceof ILaserAddon)
             return (ILaserAddon) tile;
 
-        if(tile != null && Init.isActAddLoaded && side == EnumFacing.UP){
-            if(Integer.parseInt(ActuallyAdditionsAPI.API_VERSION) >= Init.minActAddVersion){
-                String tileName = tile.getBlockType().getRegistryName().toString();
+        if(tile != null && (Init.loadedActAddVersion >= Init.minActAddVersion) && side == EnumFacing.UP){
+            String tileName = tile.getBlockType().getRegistryName().toString();
 
-                for(String name : Init.actAddLaserRelayEnergy)
-                    if(name.equals(tileName))
-                        return new LaserRelay(tile);
-                for(String name : Init.actAddLaserRelayItem)
-                    if(name.equals(tileName))
-                        return new LaserRelay(tile);
-                for(String name : Init.actAddLaserRelayFluid)
-                    if(name.equals(tileName))
-                        return new LaserRelay(tile);
-            }
+            for(String name : Init.actAddLaserRelayEnergy)
+                if(name.equals(tileName))
+                    return new LaserRelay(tile);
+            for(String name : Init.actAddLaserRelayItem)
+                if(name.equals(tileName))
+                    return new LaserRelay(tile);
+            for(String name : Init.actAddLaserRelayFluid)
+                if(name.equals(tileName))
+                    return new LaserRelay(tile);
         }
         return null;
     }

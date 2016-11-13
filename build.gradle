@@ -15,16 +15,16 @@ apply plugin: 'idea'
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 
-version = "0.9.3-MC1.10.2"
+version = "0.9.4-MC1.10.2"
 group = "at.chaosfield.openradio"
 archivesBaseName = "OpenRadio"
 
-if(hasProperty('buildnumber')){
+if (hasProperty('buildnumber')) {
     version = "${version}-${this.properties['buildnumber']}"
 }
 
 minecraft {
-    version = " 1.10.2-12.18.1.2011"
+    version = "1.10.2-12.18.2.2099"
     runDir = "run"
 
     mappings = "snapshot_20160606"
@@ -44,7 +44,7 @@ repositories {
 
 dependencies {
     compile "li.cil.oc:OpenComputers:MC1.9.4-1.6.+:api"
-    provided "de.ellpeck.actuallyadditions:ActuallyAdditions-unstable:1.10.2-r71-260:api"
+    compile "de.ellpeck.actuallyadditions:ActuallyAdditions-unstable:1.10.2-r71-260:api"
 
     //no 1.10.2 version of ae yet :(
     //compile "appeng:appliedenergistics2:rv2-stable-10:dev"

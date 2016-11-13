@@ -6,11 +6,16 @@ import net.minecraft.tileentity.TileEntity;
 /**
  * Created by Jakob Riepler (XDjackieXD)
  */
-public interface ILaserAddon {
+public interface ILaserAddon{
     void connectToLaser(LaserTileEntity laser);
+
     void disconnectFromLaser(LaserTileEntity laser);
+
     void laserConnectionStatusChanged(boolean connected);
+
     int getEnergyUsage();
+
     TileEntity getTile();
+
     String getAddonName();
 }

@@ -28,13 +28,13 @@ public class LaserRelay implements ILaserAddon{
         this.laserRelayTile = laserRelayTile;
         String tileName = laserRelayTile.getBlockType().getRegistryName().toString();
 
-        for(String name: Init.actAddLaserRelayEnergy)
+        for(String name : Init.actAddLaserRelayEnergy)
             if(name.equals(tileName))
                 this.addonName = "LaserRelayEnergy";
-        for(String name: Init.actAddLaserRelayItem)
+        for(String name : Init.actAddLaserRelayItem)
             if(name.equals(tileName))
                 this.addonName = "LaserRelayItem";
-        for(String name: Init.actAddLaserRelayFluid)
+        for(String name : Init.actAddLaserRelayFluid)
             if(name.equals(tileName))
                 this.addonName = "LaserRelayFluid";
     }
