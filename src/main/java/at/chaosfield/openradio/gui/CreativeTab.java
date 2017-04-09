@@ -4,6 +4,7 @@ import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.init.Blocks;
 import at.chaosfield.openradio.init.Items;
 //import net.minecraftforge.fml.common.Loader;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class CreativeTab extends CreativeTabs{
     public static CreativeTab instance = new CreativeTab();
-    private List list;
+    private NonNullList list;
 
     public CreativeTab(){
         super(OpenRadio.MODID);
@@ -26,7 +27,7 @@ public class CreativeTab extends CreativeTabs{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayAllRelevantItems(List<ItemStack> list){
+    public void displayAllRelevantItems(NonNullList<ItemStack> list){
         this.list = list;
 
         this.addBlock(Blocks.laserBlock);
@@ -47,13 +48,13 @@ public class CreativeTab extends CreativeTabs{
     }
 
     @Override
-    public Item getTabIconItem(){
-        return Item.getItemFromBlock(Blocks.laserBlock);
+    public ItemStack getTabIconItem(){
+        return new ItemStack(Item.getItemFromBlock(Blocks.laserBlock));
     }
 
     @Override
     public ItemStack getIconItemStack(){
-        return new ItemStack(this.getTabIconItem());
+        return this.getTabIconItem();
     }
 
     private void addItem(Item item){

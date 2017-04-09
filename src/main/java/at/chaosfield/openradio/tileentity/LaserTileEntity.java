@@ -8,7 +8,6 @@ import at.chaosfield.openradio.integration.Init;
 import at.chaosfield.openradio.integration.actuallyAdditions.LaserRelay;
 import at.chaosfield.openradio.interfaces.ILaserAddon;
 import at.chaosfield.openradio.util.Location;
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import li.cil.oc.api.API;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
@@ -27,18 +26,18 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.Loader;
 
 
 /**
  * Created by Jakob Riepler (XDjackieXD)
  */
 
-public class LaserTileEntity extends TileEntityEnvironment implements IInventory{
+public class LaserTileEntity extends TileEntityEnvironment implements IInventory, ITickable{
 
     public static final int SLOT_DSP = 0;
     public static final int SLOT_PHOTO_RECEPTOR = 1;
@@ -63,7 +62,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         super();
         node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(OpenRadio.instance.settings.EnergyBuffer).create();
         inv = new ItemStack[4];
-        if(otherLaser != null && !worldObj.isRemote){
+        if(otherLaser != null && !this.getWorld().isRemote){
             TileEntity otherLaserTe = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getPos());
             if(otherLaserTe instanceof LaserTileEntity){
                 ((LaserTileEntity) otherLaserTe).setDestination(this.getWorld().provider.getDimension(), this.getPos(), this.distance);
@@ -152,11 +151,11 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
                 accZ = 0;
         }
 
-        LaserEntity laserEntity = new LaserEntity(this.worldObj, posX, posY, posZ, accX, accY, accZ,
+        LaserEntity laserEntity = new LaserEntity(this.getWorld(), posX, posY, posZ, accX, accY, accZ,
                 this.getWorld().provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), getMaxDistance(),
                 getItemTier(SLOT_LASER, Items.laserItem));
 
-        this.getWorld().spawnEntityInWorld(laserEntity);
+        this.getWorld().spawnEntity(laserEntity);
     }
 
     public void setDestination(int dim, BlockPos pos, double distance){
@@ -282,56 +281,16 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     //------------------------------------------------------------------------------------------------------------------
 
 
-    public void onNeighbourChanged(){
+    public void onNeighbourChanged(BlockPos neighbour){
         TileEntity tile;
         String name;
 
-        tile = this.worldObj.getTileEntity(pos.east());
+        tile = this.getWorld().getTileEntity(neighbour);
         name = checkAddon(tile, EnumFacing.EAST);
         if(name != null){
             connectAddon(name, getAddon(tile, EnumFacing.EAST), EnumFacing.EAST);
         }else{
             disconnectAddon(EnumFacing.EAST);
-        }
-
-        tile = this.worldObj.getTileEntity(pos.west());
-        name = checkAddon(tile, EnumFacing.WEST);
-        if(name != null){
-            connectAddon(name, getAddon(tile, EnumFacing.WEST), EnumFacing.WEST);
-        }else{
-            disconnectAddon(EnumFacing.WEST);
-        }
-
-        tile = this.worldObj.getTileEntity(pos.south());
-        name = checkAddon(tile, EnumFacing.SOUTH);
-        if(name != null){
-            connectAddon(name, getAddon(tile, EnumFacing.SOUTH), EnumFacing.SOUTH);
-        }else{
-            disconnectAddon(EnumFacing.SOUTH);
-        }
-
-        tile = this.worldObj.getTileEntity(pos.north());
-        name = checkAddon(tile, EnumFacing.NORTH);
-        if(name != null){
-            connectAddon(name, getAddon(tile, EnumFacing.NORTH), EnumFacing.NORTH);
-        }else{
-            disconnectAddon(EnumFacing.NORTH);
-        }
-
-        tile = this.worldObj.getTileEntity(pos.up());
-        name = checkAddon(tile, EnumFacing.UP);
-        if(name != null){
-            connectAddon(name, getAddon(tile, EnumFacing.UP), EnumFacing.UP);
-        }else{
-            disconnectAddon(EnumFacing.UP);
-        }
-
-        tile = this.worldObj.getTileEntity(pos.down());
-        name = checkAddon(tile, EnumFacing.DOWN);
-        if(name != null){
-            connectAddon(name, getAddon(tile, EnumFacing.DOWN), EnumFacing.DOWN);
-        }else{
-            disconnectAddon(EnumFacing.DOWN);
         }
 
         addonEnergyUsage = 0;
@@ -347,14 +306,18 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     @Override
     public void update(){
-        super.update();
-        if(!worldObj.isRemote){
+        if(!getWorld().isRemote){
             if(hasNeededComponents()){
                 tryUsePower((int) (calculateBasicEnergyUsage() + addonEnergyUsage));
             }
 
             if(first){
-                onNeighbourChanged();
+                onNeighbourChanged(pos.north());
+                onNeighbourChanged(pos.south());
+                onNeighbourChanged(pos.east());
+                onNeighbourChanged(pos.west());
+                onNeighbourChanged(pos.up());
+                onNeighbourChanged(pos.down());
                 first = false;
             }
 
@@ -422,6 +385,11 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     @Override
+    public boolean isEmpty(){
+        return false;
+    }
+
+    @Override
     public ItemStack getStackInSlot(int slot){
         return inv[slot];
     }
@@ -429,8 +397,8 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     @Override
     public void setInventorySlotContents(int slot, ItemStack stack){
         inv[slot] = stack;
-        if(stack != null && stack.stackSize > getInventoryStackLimit()){
-            stack.stackSize = getInventoryStackLimit();
+        if(stack != null && stack.getCount() > getInventoryStackLimit()){
+            stack.setCount(getInventoryStackLimit());
         }
         this.markDirty();
     }
@@ -439,11 +407,11 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     public ItemStack decrStackSize(int slot, int amt){
         ItemStack stack = getStackInSlot(slot);
         if(stack != null){
-            if(stack.stackSize <= amt){
+            if(stack.getCount() <= amt){
                 setInventorySlotContents(slot, null);
             }else{
                 stack = stack.splitStack(amt);
-                if(stack.stackSize == 0){
+                if(stack.getCount() == 0){
                     setInventorySlotContents(slot, null);
                 }
             }
@@ -463,7 +431,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player){
+    public boolean isUsableByPlayer(EntityPlayer player){
         return player.getDistanceSq(this.getPos().getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D) <= 64;
     }
 
@@ -530,7 +498,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
             byte slot = tag.getByte("Slot");
             if(slot >= 0 && slot < inv.length){
-                inv[slot] = ItemStack.loadItemStackFromNBT(tag);
+                inv[slot] = new ItemStack(tag);
             }
         }
     }

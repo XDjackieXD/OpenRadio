@@ -28,7 +28,7 @@ public class LaserItem extends Item{
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack)
     {
-        int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, 2);
+        int i = MathHelper.clamp(par1ItemStack.getItemDamage(), 0, 2);
         return super.getUnlocalizedName() + "." + names[i];
     }
 

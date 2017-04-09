@@ -81,7 +81,7 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
         this.senderLaser = new Location(laserDim, laserX, laserY, laserZ);
         this.maxDistance = maxDistance;
 
-        if(!worldObj.isRemote){
+        if(!this.getEntityWorld().isRemote){
             this.locNow = new Location(world.provider.getDimension(), (int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
         }
 
@@ -91,7 +91,7 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
     }
 
     public void setThrowableHeading(double accX, double accY, double accZ, float accMult, float accRand){
-        float f2 = MathHelper.sqrt_double(accX * accX + accY * accY + accZ * accZ);
+        float f2 = MathHelper.sqrt(accX * accX + accY * accY + accZ * accZ);
         accX /= (double) f2;
         accY /= (double) f2;
         accZ /= (double) f2;
@@ -104,7 +104,7 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
         this.motionX = accX;
         this.motionY = accY;
         this.motionZ = accZ;
-        float f3 = MathHelper.sqrt_double(accX * accX + accZ * accZ);
+        float f3 = MathHelper.sqrt(accX * accX + accZ * accZ);
         //noinspection SuspiciousNameCombination
         this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(accX, accZ) * 180.0D / 3.141592653589793D);
         this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(accY, (double) f3) * 180.0D / 3.141592653589793D);
@@ -124,7 +124,7 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
 
 
         /**** Replace Super onUpdate because some not-needed stuff in there ****/
-        this.worldObj.theProfiler.startSection("entityBaseTick");
+        this.getEntityWorld().theProfiler.startSection("entityBaseTick");
 
         this.prevDistanceWalkedModified = this.distanceWalkedModified;
         this.prevPosX = this.posX;
@@ -133,9 +133,9 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
         this.prevRotationPitch = this.rotationPitch;
         this.prevRotationYaw = this.rotationYaw;
 
-        if(!this.worldObj.isRemote && this.worldObj instanceof WorldServer){
-            this.worldObj.theProfiler.startSection("portal");
-            MinecraftServer minecraftserver = this.worldObj.getMinecraftServer();
+        if(!this.getEntityWorld().isRemote && this.getEntityWorld() instanceof WorldServer){
+            this.getEntityWorld().theProfiler.startSection("portal");
+            MinecraftServer minecraftserver = this.getEntityWorld().getMinecraftServer();
             int i = this.getMaxInPortalTime();
 
             if(this.inPortal){
@@ -145,7 +145,7 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
                         this.timeUntilPortal = this.getPortalCooldown();
                         int j;
 
-                        if(this.worldObj.provider.getDimension() == -1){
+                        if(this.getEntityWorld().provider.getDimension() == -1){
                             j = 0;
                         }else{
                             j = -1;
@@ -170,7 +170,7 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
                 --this.timeUntilPortal;
             }
 
-            this.worldObj.theProfiler.endSection();
+            this.getEntityWorld().theProfiler.endSection();
         }
 
         if(this.posY < -64.0D){
@@ -178,17 +178,17 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
         }
 
         this.firstUpdate = false;
-        this.worldObj.theProfiler.endSection();
+        this.getEntityWorld().theProfiler.endSection();
         /***********************************************************************/
 
 
-        if(!worldObj.isRemote){
+        if(!this.getEntityWorld().isRemote){
             if(this.locNow != null){
-                if(((int) Math.floor(this.posX) != this.locNow.getX()) || ((int) Math.floor(this.posY) != this.locNow.getY()) || ((int) Math.floor(this.posZ) != this.locNow.getZ()) || (worldObj.provider.getDimension() != this.locNow.getDim())){
+                if(((int) Math.floor(this.posX) != this.locNow.getX()) || ((int) Math.floor(this.posY) != this.locNow.getY()) || ((int) Math.floor(this.posZ) != this.locNow.getZ()) || (this.getEntityWorld().provider.getDimension() != this.locNow.getDim())){
                     this.locNow.setX((int) Math.floor(this.posX));
                     this.locNow.setY((int) Math.floor(this.posY));
                     this.locNow.setZ((int) Math.floor(this.posZ));
-                    this.locNow.setDim(worldObj.provider.getDimension());
+                    this.locNow.setDim(this.getEntityWorld().provider.getDimension());
                     Block block = DimensionManager.getWorld(this.locNow.getDim()).getBlockState(this.locNow.getPos()).getBlock();
                     if(block.isAir(DimensionManager.getWorld(this.locNow.getDim()).getBlockState(this.locNow.getPos()), DimensionManager.getWorld(this.locNow.getDim()), this.locNow.getPos())){
                         distance += OpenRadio.instance.settings.DistancePerAir;
@@ -197,21 +197,21 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
                     }
                 }
             }else{
-                this.locNow = new Location(worldObj.provider.getDimension(), (int) Math.floor(this.posX), (int) Math.floor(this.posY), (int) Math.floor(this.posZ));
+                this.locNow = new Location(this.getEntityWorld().provider.getDimension(), (int) Math.floor(this.posX), (int) Math.floor(this.posY), (int) Math.floor(this.posZ));
             }
             if(distance > maxDistance * multiplier){
                 this.setDead();
             }
         }else{
-            if(lastParticleDim != this.worldObj.provider.getDimension() || ((new Vec3d(this.posX, this.posY, this.posZ)).distanceTo(lastParticle) >= 1.0)){
-                lastParticleDim = this.worldObj.provider.getDimension();
+            if(lastParticleDim != this.getEntityWorld().provider.getDimension() || ((new Vec3d(this.posX, this.posY, this.posZ)).distanceTo(lastParticle) >= 1.0)){
+                lastParticleDim = this.getEntityWorld().provider.getDimension();
                 lastParticle = new Vec3d(this.posX, this.posY, this.posZ);
                 renderParticle();
             }
         }
 
-        if(!worldObj.isRemote){
-            List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ));
+        if(!this.getEntityWorld().isRemote){
+            List<Entity> list = this.getEntityWorld().getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ));
             for(Entity entity : list){
                 if(entity instanceof EntityLivingBase && entity.canBeCollidedWith()){
                     if(!(entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative()))
@@ -232,17 +232,17 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
 
         Vec3d posVec = new Vec3d(this.posX, this.posY, this.posZ);
         Vec3d nextPosVec = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-        RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(posVec, nextPosVec);
+        RayTraceResult movingobjectposition = this.getEntityWorld().rayTraceBlocks(posVec, nextPosVec);
 
 
         if(movingobjectposition != null){
             if(movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
-                if(this.worldObj.getBlockState(movingobjectposition.getBlockPos()).getBlock() == Blocks.PORTAL){
+                if(this.getEntityWorld().getBlockState(movingobjectposition.getBlockPos()).getBlock() == Blocks.PORTAL){
                     this.setPortal(this.getPosition());
                 }else{
-                    if(movingobjectposition.getBlockPos().getX() == MathHelper.floor_double(this.posX) &&
-                            movingobjectposition.getBlockPos().getY() == MathHelper.floor_double(this.posY) &&
-                            movingobjectposition.getBlockPos().getZ() == MathHelper.floor_double(this.posZ)){
+                    if(movingobjectposition.getBlockPos().getX() == MathHelper.floor(this.posX) &&
+                            movingobjectposition.getBlockPos().getY() == MathHelper.floor(this.posY) &&
+                            movingobjectposition.getBlockPos().getZ() == MathHelper.floor(this.posZ)){
                         movingobjectposition.sideHit = movingobjectposition.sideHit.getOpposite();
                     }
                     this.onImpact(movingobjectposition);
@@ -269,7 +269,7 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
 
     @SideOnly(Side.CLIENT)
     private void renderParticle(){
-        LaserParticle particle = new LaserParticle(this.worldObj, this.posX, this.posY, this.posZ, 0.75F, this.colorR, this.colorG, this.colorB, this.colorA);
+        LaserParticle particle = new LaserParticle(this.getEntityWorld(), this.posX, this.posY, this.posZ, 0.75F, this.colorR, this.colorG, this.colorB, this.colorA);
         particle.setRBGColorF(this.colorR, this.colorG, this.colorB);
         Minecraft.getMinecraft().effectRenderer.addEffect(particle);
     }
@@ -315,18 +315,18 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
 
     protected void onImpact(RayTraceResult mop){
         TileEntity senderLaserTe = null;
-        if(!worldObj.isRemote){
+        if(!getEntityWorld().isRemote){
             senderLaserTe = DimensionManager.getWorld(senderLaser.getDim()).getTileEntity(senderLaser.getPos());
         }
 
         if(mop.typeOfHit == RayTraceResult.Type.BLOCK){
-            Block hitBlock = this.worldObj.getBlockState(mop.getBlockPos()).getBlock();
+            Block hitBlock = this.getEntityWorld().getBlockState(mop.getBlockPos()).getBlock();
 
             if(hitBlock instanceof LaserBlock && senderLaserTe instanceof LaserTileEntity){
-                TileEntity te = this.worldObj.getTileEntity(mop.getBlockPos());
+                TileEntity te = this.getEntityWorld().getTileEntity(mop.getBlockPos());
                 if(te instanceof LaserTileEntity){
                     if(mop.sideHit.getIndex() == te.getBlockMetadata()){
-                        ((LaserTileEntity) senderLaserTe).setDestination(this.worldObj.provider.getDimension(), mop.getBlockPos(), this.distance);
+                        ((LaserTileEntity) senderLaserTe).setDestination(this.getEntityWorld().provider.getDimension(), mop.getBlockPos(), this.distance);
                     }else
                         ((LaserTileEntity) senderLaserTe).disconnect();
                 }else
@@ -335,9 +335,9 @@ public class LaserEntity extends Entity implements IProjectile, IEntityAdditiona
             }else if(hitBlock instanceof ILaserModifier){
                 if(!appliedModifier.contains(new Location(this.dimension, mop.getBlockPos()))){
                     appliedModifier.add(new Location(this.dimension, mop.getBlockPos()));
-                    ((ILaserModifier) hitBlock).hitByLaser(this, mop.getBlockPos(), this.worldObj, mop.sideHit);
+                    ((ILaserModifier) hitBlock).hitByLaser(this, mop.getBlockPos(), this.getEntityWorld(), mop.sideHit);
                 }
-            }else if(this.worldObj.getBlockState(mop.getBlockPos()).isOpaqueCube()){
+            }else if(this.getEntityWorld().getBlockState(mop.getBlockPos()).isOpaqueCube()){
                 this.setDead();
                 if(senderLaserTe instanceof LaserTileEntity)
                     ((LaserTileEntity) senderLaserTe).disconnect();

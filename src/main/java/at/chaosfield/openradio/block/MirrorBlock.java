@@ -42,7 +42,7 @@ public class MirrorBlock extends Block implements ILaserModifier{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stackPlayer, EnumFacing f6, float f7, float f8, float f9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing f6, float f7, float f8, float f9){
         if(player.isSneaking()){
             int rot = state.getValue(FACING_VERTICAL)+1;
             if(rot >= 4) rot=0;
@@ -155,13 +155,6 @@ public class MirrorBlock extends Block implements ILaserModifier{
     }
 
     @Override
-    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-    {
-        // no need to figure out the right orientation again when the piston block can do it for us
-        return this.getDefaultState().withProperty(FACING_HORIZONTAL, placer.getHorizontalFacing().getOpposite()).withProperty(FACING_VERTICAL, 0);
-    }
-
-    @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         // no need to figure out the right orientation again when the piston block can do it for us
         world.setBlockState(pos, state.withProperty(FACING_HORIZONTAL, placer.getHorizontalFacing().getOpposite()).withProperty(FACING_VERTICAL, 0), 2);
@@ -183,7 +176,7 @@ public class MirrorBlock extends Block implements ILaserModifier{
     }
 
     @Override
-    public boolean canRenderInLayer(BlockRenderLayer layer){
+    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer){
         return layer == BlockRenderLayer.TRANSLUCENT || layer == BlockRenderLayer.CUTOUT;
     }
 

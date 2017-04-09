@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
  * Created by Jakob Riepler (XDjackieXD)
  */
 
-@Mod(name = "Open Radio", modid = OpenRadio.MODID, version = "0.9.4", modLanguage = "java", dependencies = "required-after:OpenComputers@[1.6.0,)")
+@Mod(name = "Open Radio", modid = OpenRadio.MODID, version = "0.9.5", modLanguage = "java", dependencies = "required-after:opencomputers")
 public class OpenRadio{
 
     public static final String MODID = "openradio";

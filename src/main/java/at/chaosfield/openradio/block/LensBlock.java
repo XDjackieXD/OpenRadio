@@ -5,7 +5,6 @@ import at.chaosfield.openradio.entity.LaserEntity;
 import at.chaosfield.openradio.gui.CreativeTab;
 import at.chaosfield.openradio.interfaces.ILaserModifier;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -60,16 +59,9 @@ public class LensBlock extends Block implements ILaserModifier{
     }
 
     @Override
-    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-    {
-        // no need to figure out the right orientation again when the piston block can do it for us
-        return this.getDefaultState().withProperty(FACING, BlockPistonBase.getFacingFromEntity(pos, placer));
-    }
-
-    @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         // no need to figure out the right orientation again when the piston block can do it for us
-        world.setBlockState(pos, state.withProperty(FACING, BlockPistonBase.getFacingFromEntity(pos, placer)), 2);
+        world.setBlockState(pos, state.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer)), 2);
     }
 
     @Override

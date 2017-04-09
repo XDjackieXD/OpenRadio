@@ -29,7 +29,7 @@ public class LaserContainer extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return tileEntity.isUseableByPlayer(player);
+        return tileEntity.isUsableByPlayer(player);
     }
 
 
@@ -82,16 +82,16 @@ public class LaserContainer extends Container{
             }
 
 
-            if (stackInSlot.stackSize == 0) {
+            if (stackInSlot.getCount() == 0) {
                 slotObject.putStack(null);
             } else {
                 slotObject.onSlotChanged();
             }
 
-            if (stackInSlot.stackSize == currentStack.stackSize) {
+            if (stackInSlot.getCount() == currentStack.getCount()) {
                 return null;
             }
-            slotObject.onPickupFromSlot(player, stackInSlot);
+            slotObject.onTake(player, stackInSlot);
         }
         return currentStack;
     }
@@ -108,22 +108,22 @@ public class LaserContainer extends Container{
         ItemStack stackinslot;
 
         if (stack.isStackable()) {
-            while (stack.stackSize > 0 && (!useEndIndex && index < endIndex || useEndIndex && index >= startIndex)) {
+            while (stack.getCount() > 0 && (!useEndIndex && index < endIndex || useEndIndex && index >= startIndex)) {
                 slot = this.inventorySlots.get(index);
                 stackinslot = slot.getStack();
 
                 if (stackinslot != null && stackinslot.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getItemDamage() == stackinslot.getItemDamage()) && ItemStack.areItemStackTagsEqual(stack, stackinslot)) {
-                    int l = stackinslot.stackSize + stack.stackSize;
+                    int l = stackinslot.getCount() + stack.getCount();
                     int maxsize = Math.min(stack.getMaxStackSize(), slot.getSlotStackLimit());
 
                     if (l <= maxsize) {
-                        stack.stackSize = 0;
-                        stackinslot.stackSize = l;
+                        stack.setCount(0);
+                        stackinslot.setCount(l);
                         slot.onSlotChanged();
                         success = true;
-                    } else if (stackinslot.stackSize < maxsize) {
-                        stack.stackSize -= stack.getMaxStackSize() - stackinslot.stackSize;
-                        stackinslot.stackSize = stack.getMaxStackSize();
+                    } else if (stackinslot.getCount() < maxsize) {
+                        stack.setCount((stack.getMaxStackSize() - stackinslot.getCount()) - stack.getCount());
+                        stackinslot.setCount(stack.getMaxStackSize());
                         slot.onSlotChanged();
                         success = true;
                     }
@@ -137,29 +137,29 @@ public class LaserContainer extends Container{
             }
         }
 
-        if (stack.stackSize > 0) {
+        if (stack.getCount() > 0) {
             if (useEndIndex) {
                 index = endIndex - 1;
             } else {
                 index = startIndex;
             }
 
-            while (!useEndIndex && index < endIndex || useEndIndex && index >= startIndex && stack.stackSize > 0) {
+            while (!useEndIndex && index < endIndex || useEndIndex && index >= startIndex && stack.getCount() > 0) {
                 slot = this.inventorySlots.get(index);
                 stackinslot = slot.getStack();
 
                 // Forge: Make sure to respect isItemValid in the slot.
                 if (stackinslot == null && slot.isItemValid(stack)) {
-                    if (stack.stackSize < slot.getSlotStackLimit()) {
+                    if (stack.getCount() < slot.getSlotStackLimit()) {
                         slot.putStack(stack.copy());
-                        stack.stackSize = 0;
+                        stack.setCount(0);
                         success = true;
                         break;
                     } else {
                         ItemStack newstack = stack.copy();
-                        newstack.stackSize = slot.getSlotStackLimit();
+                        newstack.setCount(slot.getSlotStackLimit());
                         slot.putStack(newstack);
-                        stack.stackSize -= slot.getSlotStackLimit();
+                        stack.setCount(slot.getSlotStackLimit() - stack.getCount());
                         success = true;
                     }
                 }

@@ -4,18 +4,15 @@ import at.chaosfield.openradio.gui.CreativeTab;
 import at.chaosfield.openradio.OpenRadio;
 import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import at.chaosfield.openradio.gui.GUIs;
-import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,6 +21,7 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -77,7 +75,7 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
 
     //On right click open the GUI (only on the server side and if the player isn't sneaking)
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         //OpenRadio.logger.info("state: FACING: " + state.getValue(FACING).getName() + " LENS: " + state.getValue(LENS));
         if(!world.isRemote) {
             if (world.getTileEntity(pos) != null && !player.isSneaking())
@@ -88,16 +86,9 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
     }
 
     @Override
-    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-    {
-        // no need to figure out the right orientation again when the piston block can do it for us
-        return this.getDefaultState().withProperty(FACING, BlockPistonBase.getFacingFromEntity(pos, placer));
-    }
-
-    @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         // no need to figure out the right orientation again when the piston block can do it for us
-        world.setBlockState(pos, state.withProperty(FACING, BlockPistonBase.getFacingFromEntity(pos, placer)), 2);
+        world.setBlockState(pos, state.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer)), 2);
     }
 
     //If the block gets broken, drop all items on the floor
@@ -113,13 +104,13 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn)
+    public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor)
     {
-        if (!worldIn.isRemote)
+        if (!((World)world).isRemote)
         {
-            LaserTileEntity tile = (LaserTileEntity)worldIn.getTileEntity(pos);
+            LaserTileEntity tile = (LaserTileEntity)world.getTileEntity(pos);
             if(tile != null){
-                tile.onNeighbourChanged();
+                tile.onNeighbourChanged(neighbor);
             }
         }
     }
@@ -137,14 +128,14 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
         for (int i = 0; i < inventory.getSizeInventory(); i++) {
             ItemStack item = inventory.getStackInSlot(i);
 
-            if (item != null && item.stackSize > 0) {
+            if (item != null && item.getCount() > 0) {
                 float rx = rand.nextFloat() * 0.8F + 0.1F;
                 float ry = rand.nextFloat() * 0.8F + 0.1F;
                 float rz = rand.nextFloat() * 0.8F + 0.1F;
 
                 EntityItem entityItem = new EntityItem(world,
                         pos.getX() + rx, pos.getY() + ry, pos.getZ() + rz,
-                        new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
+                        new ItemStack(item.getItem(), item.getCount(), item.getItemDamage()));
 
                 if (item.hasTagCompound()) {
                     entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
@@ -154,8 +145,8 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
                 entityItem.motionX = rand.nextGaussian() * factor;
                 entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
                 entityItem.motionZ = rand.nextGaussian() * factor;
-                world.spawnEntityInWorld(entityItem);
-                item.stackSize = 0;
+                world.spawnEntity(entityItem);
+                item.setCount(0);
             }
         }
     }
