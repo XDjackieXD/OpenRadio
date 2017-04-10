@@ -16,7 +16,7 @@ import net.minecraft.util.ResourceLocation;
 @SideOnly(Side.CLIENT)
 public class LaserGui extends GuiContainer{
 
-    private ResourceLocation backgroundImage = new ResourceLocation(OpenRadio.MODID + ":" + "textures/gui/LaserGui.png");   //Get the background Texture
+    private ResourceLocation backgroundImage = new ResourceLocation(OpenRadio.MODID + ":" + "textures/gui/lasergui.png");   //Get the background Texture
 
     public LaserGui(IInventory inventoryPlayer, LaserTileEntity tileEntity){
         super(new LaserContainer(inventoryPlayer, tileEntity));

@@ -31,6 +31,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.items.ItemStackHandler;
 
 
 /**
@@ -58,10 +59,17 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     private int counter = 0;
 
+    public final ItemStackHandler inventory;
+
     public LaserTileEntity(){
         super();
         node = API.network.newNode(this, Visibility.Network).withComponent(getComponentName()).withConnector(OpenRadio.instance.settings.EnergyBuffer).create();
+
         inv = new ItemStack[4];
+        for(int count=0; count<4; count++)
+            inv[count] = ItemStack.EMPTY;
+
+        inventory = new ItemStackHandler(4);
         if(otherLaser != null && !this.getWorld().isRemote){
             TileEntity otherLaserTe = DimensionManager.getWorld(otherLaser.getDim()).getTileEntity(otherLaser.getPos());
             if(otherLaserTe instanceof LaserTileEntity){

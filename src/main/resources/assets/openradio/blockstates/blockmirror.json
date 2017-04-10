@@ -2,7 +2,7 @@
   "forge_marker": 1,
   "defaults": {
     "model": "openradio:mirror-up",
-    "particle": "openradio:blocks/Mirror",
+    "particle": "openradio:blocks/mirror",
     "transform": "forge:default-block"
   },
   "variants": {

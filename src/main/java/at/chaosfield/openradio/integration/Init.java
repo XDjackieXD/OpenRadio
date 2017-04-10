@@ -11,9 +11,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class Init{
     public static int minActAddVersion = 28;
     public static int loadedActAddVersion = 0;
-    public static String[] actAddLaserRelayEnergy = {"actuallyadditions:blockLaserRelay", "actuallyadditions:blockLaserRelayAdvanced", "actuallyadditions:blockLaserRelayExtreme"};
-    public static String[] actAddLaserRelayItem = {"actuallyadditions:blockLaserRelayItem", "actuallyadditions:blockLaserRelayItemWhitelist"};
-    public static String[] actAddLaserRelayFluid = {"actuallyadditions:blockLaserRelayFluids"};
+    public static String[] actAddLaserRelayEnergy = {"actuallyadditions:blocklaserrelay", "actuallyadditions:blocklaserrelayadvanced", "actuallyadditions:blocklaserrelayextreme"};
+    public static String[] actAddLaserRelayItem = {"actuallyadditions:blocklaserrelayitem", "actuallyadditions:blocklaserrelayitemwhitelist"};
+    public static String[] actAddLaserRelayFluid = {"actuallyadditions:blocklaserrelayfluids"};
 
     public static void preInitIntegration(FMLPreInitializationEvent event){
 

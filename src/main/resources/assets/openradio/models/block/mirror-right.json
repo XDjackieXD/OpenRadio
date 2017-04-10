@@ -2,7 +2,7 @@
   "__comment": "This model was created with freundTech's Blender2Minecraft converter (BETA)",
   "ambientocclusion": true,
   "textures": {
-    "Mirror": "openradio:blocks/Mirror"
+    "Mirror": "openradio:blocks/mirror"
   },
   "elements": [
     {

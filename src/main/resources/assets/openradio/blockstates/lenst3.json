@@ -3,12 +3,12 @@
   "defaults": {
     "textures": {
       "laser": "openradio:blocks/laser",
-      "lens": "openradio:blocks/LensT3",
-      "lensBlock": "openradio:blocks/LensBlock",
-      "particle": "openradio:blocks/LensBlock"
+      "lens": "openradio:blocks/lenst3",
+      "lensBlock": "openradio:blocks/lensblock",
+      "particle": "openradio:blocks/lensblock"
     },
     "model": "openradio:lens",
-    "particle": "openradio:blocks/LensBlock",
+    "particle": "openradio:blocks/lensblock",
     "transform": "forge:default-block"
   },
   "variants": {
