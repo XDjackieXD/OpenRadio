@@ -199,10 +199,10 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     public boolean hasNeededComponents(){
-        return inv[SLOT_DSP] != null &&
-                inv[SLOT_PHOTO_RECEPTOR] != null &&
-                inv[SLOT_MIRROR] != null &&
-                inv[SLOT_LASER] != null &&
+        return inv[SLOT_DSP] != ItemStack.EMPTY &&
+                inv[SLOT_PHOTO_RECEPTOR] != ItemStack.EMPTY &&
+                inv[SLOT_MIRROR] != ItemStack.EMPTY &&
+                inv[SLOT_LASER] != ItemStack.EMPTY &&
                 inv[SLOT_DSP].getItem() == Items.dspItem &&
                 inv[SLOT_PHOTO_RECEPTOR].getItem() == Items.photoReceptorItem &&
                 inv[SLOT_MIRROR].getItem() == Items.mirrorItem &&
@@ -230,7 +230,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     }
 
     public int getItemTier(int slot, Object item){
-        if(inv[slot] != null)
+        if(inv[slot] != ItemStack.EMPTY)
             if(inv[slot].getItem() == item)
                 if(inv[slot].getItemDamage() <= 2 && inv[slot].getItemDamage() >= 0)
                     return inv[slot].getItemDamage() + 1;
@@ -294,11 +294,35 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         String name;
 
         tile = this.getWorld().getTileEntity(neighbour);
-        name = checkAddon(tile, EnumFacing.EAST);
+
+        EnumFacing facing = EnumFacing.DOWN;
+        if(neighbour.getX() == this.pos.getX()){
+            if(neighbour.getY() == this.pos.getY()) {
+                if(neighbour.getZ() > this.pos.getZ()) {
+                    facing = EnumFacing.SOUTH;
+                } else {
+                    facing = EnumFacing.NORTH;
+                }
+            } else if(neighbour.getZ() == this.pos.getZ()) {
+                if(neighbour.getY() > this.pos.getY()) {
+                    facing = EnumFacing.UP;
+                } else {
+                    facing = EnumFacing.DOWN;
+                }
+            }
+        } else if(neighbour.getY() == this.pos.getY() && neighbour.getZ() == this.pos.getZ()) {
+            if(neighbour.getX() > this.pos.getX()) {
+                    facing = EnumFacing.EAST;
+                } else {
+                    facing = EnumFacing.WEST;
+                }
+        }
+
+        name = checkAddon(tile, facing);
         if(name != null){
-            connectAddon(name, getAddon(tile, EnumFacing.EAST), EnumFacing.EAST);
+            connectAddon(name, getAddon(tile, facing), facing);
         }else{
-            disconnectAddon(EnumFacing.EAST);
+            disconnectAddon(facing);
         }
 
         addonEnergyUsage = 0;
@@ -405,7 +429,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     @Override
     public void setInventorySlotContents(int slot, ItemStack stack){
         inv[slot] = stack;
-        if(stack != null && stack.getCount() > getInventoryStackLimit()){
+        if(stack != ItemStack.EMPTY && stack.getCount() > getInventoryStackLimit()){
             stack.setCount(getInventoryStackLimit());
         }
         this.markDirty();
@@ -414,13 +438,13 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     @Override
     public ItemStack decrStackSize(int slot, int amt){
         ItemStack stack = getStackInSlot(slot);
-        if(stack != null){
+        if(stack != ItemStack.EMPTY){
             if(stack.getCount() <= amt){
-                setInventorySlotContents(slot, null);
+                setInventorySlotContents(slot, ItemStack.EMPTY);
             }else{
                 stack = stack.splitStack(amt);
                 if(stack.getCount() == 0){
-                    setInventorySlotContents(slot, null);
+                    setInventorySlotContents(slot, ItemStack.EMPTY);
                 }
             }
             this.markDirty();
@@ -430,7 +454,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
 
     @Override
     public ItemStack removeStackFromSlot(int index){
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -487,7 +511,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
     @Override
     public void clear(){
         for(int i = 0; i < this.getSizeInventory(); i++)
-            this.setInventorySlotContents(i, null);
+            this.setInventorySlotContents(i, ItemStack.EMPTY);
     }
 
     @Override
@@ -529,7 +553,7 @@ public class LaserTileEntity extends TileEntityEnvironment implements IInventory
         NBTTagList itemList = new NBTTagList();
         for(int i = 0; i < inv.length; i++){
             ItemStack stack = inv[i];
-            if(stack != null){
+            if(stack != ItemStack.EMPTY){
                 NBTTagCompound tag = new NBTTagCompound();
                 tag.setByte("Slot", (byte) i);
                 stack.writeToNBT(tag);

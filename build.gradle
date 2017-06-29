@@ -24,7 +24,7 @@ if (hasProperty('buildnumber')) {
 }
 
 minecraft {
-    version = "1.11.2-13.20.0.2259"
+    version = "1.11.2-13.20.1.2386"
     runDir = "run"
 
     mappings = "snapshot_20161126"
@@ -44,7 +44,7 @@ repositories {
 
 dependencies {
     compile "li.cil.oc:OpenComputers:MC1.11.2-1.7.+:api"
-    compile "de.ellpeck.actuallyadditions:ActuallyAdditions:1.11.2-r106:api"
+    compile "de.ellpeck.actuallyadditions:ActuallyAdditions-unstable:1.11.2-r110-650:api"
 
     //no 1.11.2 version of ae yet :(
     //compile "appeng:appliedenergistics2:rv2-stable-10:dev"

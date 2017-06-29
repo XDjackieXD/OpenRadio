@@ -128,7 +128,7 @@ public class LaserBlock extends BlockContainer implements ITileEntityProvider{
         for (int i = 0; i < inventory.getSizeInventory(); i++) {
             ItemStack item = inventory.getStackInSlot(i);
 
-            if (item != null && item.getCount() > 0) {
+            if (item != ItemStack.EMPTY && item.getCount() > 0) {
                 float rx = rand.nextFloat() * 0.8F + 0.1F;
                 float ry = rand.nextFloat() * 0.8F + 0.1F;
                 float rz = rand.nextFloat() * 0.8F + 0.1F;

@@ -48,7 +48,7 @@ public class LaserContainer extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
-        ItemStack currentStack = null;
+        ItemStack currentStack = ItemStack.EMPTY;
         Slot slotObject = inventorySlots.get(slot);
 
         if (slotObject != null && slotObject.getHasStack()) {
@@ -58,38 +58,38 @@ public class LaserContainer extends Container{
             //Item is in Container. Transfer to Player inventory
             if (slot < tileEntity.getSizeInventory()) {
                 if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36+tileEntity.getSizeInventory(), true)) {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             //Item is in Player inventory. Transfer into container
             }else if(slot >= tileEntity.getSizeInventory()){
                 if(stackInSlot.getItem() == Items.dspItem){
                     if(!this.mergeItemStack(stackInSlot, LaserTileEntity.SLOT_DSP, LaserTileEntity.SLOT_DSP+1, false)){
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                 }else if(stackInSlot.getItem() == Items.photoReceptorItem){
                     if(!this.mergeItemStack(stackInSlot, LaserTileEntity.SLOT_PHOTO_RECEPTOR, LaserTileEntity.SLOT_PHOTO_RECEPTOR+1, false)){
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                 }else if(stackInSlot.getItem() == Items.mirrorItem){
                     if(!this.mergeItemStack(stackInSlot, LaserTileEntity.SLOT_MIRROR, LaserTileEntity.SLOT_MIRROR+1, false)){
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                 }else if(stackInSlot.getItem() == Items.laserItem){
                     if(!this.mergeItemStack(stackInSlot, LaserTileEntity.SLOT_LASER, LaserTileEntity.SLOT_LASER+1, false)){
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                 }
             }
 
 
             if (stackInSlot.getCount() == 0) {
-                slotObject.putStack(null);
+                slotObject.putStack(ItemStack.EMPTY);
             } else {
                 slotObject.onSlotChanged();
             }
 
             if (stackInSlot.getCount() == currentStack.getCount()) {
-                return null;
+                return ItemStack.EMPTY;
             }
             slotObject.onTake(player, stackInSlot);
         }
@@ -112,7 +112,7 @@ public class LaserContainer extends Container{
                 slot = this.inventorySlots.get(index);
                 stackinslot = slot.getStack();
 
-                if (stackinslot != null && stackinslot.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getItemDamage() == stackinslot.getItemDamage()) && ItemStack.areItemStackTagsEqual(stack, stackinslot)) {
+                if (stackinslot != ItemStack.EMPTY && stackinslot.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getItemDamage() == stackinslot.getItemDamage()) && ItemStack.areItemStackTagsEqual(stack, stackinslot)) {
                     int l = stackinslot.getCount() + stack.getCount();
                     int maxsize = Math.min(stack.getMaxStackSize(), slot.getSlotStackLimit());
 
@@ -149,7 +149,7 @@ public class LaserContainer extends Container{
                 stackinslot = slot.getStack();
 
                 // Forge: Make sure to respect isItemValid in the slot.
-                if (stackinslot == null && slot.isItemValid(stack)) {
+                if (stackinslot == ItemStack.EMPTY && slot.isItemValid(stack)) {
                     if (stack.getCount() < slot.getSlotStackLimit()) {
                         slot.putStack(stack.copy());
                         stack.setCount(0);

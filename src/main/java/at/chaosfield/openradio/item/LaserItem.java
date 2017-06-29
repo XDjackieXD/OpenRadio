@@ -2,6 +2,7 @@ package at.chaosfield.openradio.item;
 
 import at.chaosfield.openradio.gui.CreativeTab;
 import at.chaosfield.openradio.OpenRadio;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,7 +34,7 @@ public class LaserItem extends Item{
     }
 
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List itemList) {
+    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> itemList) {
 
         for (int i = 0; i < 3; ++i) {
             itemList.add(new ItemStack(item, 1, i));
