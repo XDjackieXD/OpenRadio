@@ -1,4 +1,7 @@
 # OpenRadio
+
+This mod is not under active development anymore. Should you be interested in maintaining/updateing/improving the mod, let me know!
+
 A Little OpenComputers addon which adds laser links and (planned) satellites with radios, antennas and other high frequency stuff :3
 
 ## Current status
@@ -24,6 +27,7 @@ A Little OpenComputers addon which adds laser links and (planned) satellites wit
 * Discouragement Redirection Cube decreases the maximum distance by 8
 
 ## TODO
+* Port to recent Minecraft versions
 * I need better textures for the two laser tubes (Laser item tier 2 and 3) and recipes for all three laser tiers.
 * Rendering of laser beams. Quite hard to do. Help and ideas are appreciated!
 * add all the fancy stuff from Ideas.txt :3
