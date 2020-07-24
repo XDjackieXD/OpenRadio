@@ -9,7 +9,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.world.World;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 
 @SideOnly(Side.CLIENT)

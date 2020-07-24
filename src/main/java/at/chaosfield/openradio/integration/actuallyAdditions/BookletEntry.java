@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 public class BookletEntry{
     public static void postInit(){

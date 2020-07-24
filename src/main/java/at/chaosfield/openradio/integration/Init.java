@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 public class Init{
     public static int minActAddVersion = 33;

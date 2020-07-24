@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 public class ClientProxy extends CommonProxy{
 

@@ -5,7 +5,7 @@ import at.chaosfield.openradio.OpenRadio;
 import net.minecraft.item.Item;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 public class LaserSocketItem extends Item{
     public LaserSocketItem(){

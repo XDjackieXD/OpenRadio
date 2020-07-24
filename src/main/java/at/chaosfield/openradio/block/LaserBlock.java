@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 public class LaserBlock extends BlockContainer implements ITileEntityProvider{
 

@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 import java.util.List;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 public class CreativeTab extends CreativeTabs{
     public static CreativeTab instance = new CreativeTab();

@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 import java.util.Random;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 public class DamageSourceLaser extends DamageSource{
     public static final DamageSource DAMAGE_SOURCE_LASER = new DamageSourceLaser("laser", 5).setDamageBypassesArmor();

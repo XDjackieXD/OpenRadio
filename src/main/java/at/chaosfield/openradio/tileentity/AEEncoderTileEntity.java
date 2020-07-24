@@ -17,7 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.DimensionManager;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 
 /*

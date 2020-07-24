@@ -1,7 +1,7 @@
 package at.chaosfield.openradio.util;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 public class LocationPair{
     private Location loc1, loc2;

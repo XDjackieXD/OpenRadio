@@ -11,7 +11,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 @SideOnly(Side.CLIENT)
 public class LaserGui extends GuiContainer{

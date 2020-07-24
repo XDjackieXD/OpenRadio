@@ -34,7 +34,7 @@ import java.util.List;
 
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 
 public class LaserEntity extends Entity implements IProjectile, IEntityAdditionalSpawnData{

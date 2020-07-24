@@ -5,7 +5,7 @@ import net.minecraftforge.common.config.Configuration;
 import java.io.File;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 public class Settings{
     public double EntitySpeed = 1;

@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  * A slot which can be restricted to only allow a special Item
  */
 public class RestrictedSlot extends Slot{

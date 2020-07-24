@@ -35,7 +35,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 
 public class LaserTileEntity extends TileEntityEnvironment implements IInventory, ITickable{

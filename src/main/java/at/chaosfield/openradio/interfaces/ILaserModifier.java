@@ -6,7 +6,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 public interface ILaserModifier{
     void hitByLaser(LaserEntity laserEntity, BlockPos pos, World world, EnumFacing facing);

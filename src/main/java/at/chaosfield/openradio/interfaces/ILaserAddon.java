@@ -4,7 +4,7 @@ import at.chaosfield.openradio.tileentity.LaserTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 public interface ILaserAddon{
     void connectToLaser(LaserTileEntity laser);

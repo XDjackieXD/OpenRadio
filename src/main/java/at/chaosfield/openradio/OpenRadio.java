@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 
 /**
- * Created by Jakob Riepler (XDjackieXD)
+ * Created by Jakob (Jack/XDjackieXD)
  */
 
 @Mod(name = "Open Radio", modid = OpenRadio.MODID, version = "0.9.5", modLanguage = "java", dependencies = "required-after:opencomputers")
